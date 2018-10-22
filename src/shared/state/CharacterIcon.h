@@ -15,7 +15,7 @@ namespace state {
   /// class CharacterIcon - 
   class CharacterIcon : public state::MobileElements {
     // Attributes
-  public:
+  private:
     int position_x;
     int position_y;
     std::string name;

@@ -13,3 +13,12 @@ Element::Element (bool istat){
 //Destructor
 Element::~Element (){
 }
+
+// Setters and Getters
+bool Element::getStaticElement() const{
+  return this->staticElement;
+}
+
+void Element::setStaticElement(bool staticElement){
+  this->staticElement = staticElement;
+}

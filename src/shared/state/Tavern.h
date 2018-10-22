@@ -18,7 +18,7 @@ namespace state {
   class Tavern : public state::StaticElements {
     // Associations
     // Attributes
-  public:
+  private:
     Team* team;
     uint maxteam;
     // Operations

@@ -15,7 +15,7 @@ namespace state {
   /// class Item - 
   class Item : public state::StaticElements {
     // Attributes
-  public:
+  protected:
     std::string name;
     // Operations
   public:

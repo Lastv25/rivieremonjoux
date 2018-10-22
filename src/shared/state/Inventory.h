@@ -17,7 +17,7 @@ namespace state {
   class Inventory {
     // Associations
     // Attributes
-  public:
+  private:
     std::map<std::string,int> listItems;
     uint inventorySize;
     // Operations

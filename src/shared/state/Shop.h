@@ -19,7 +19,7 @@ namespace state {
   class Shop : public state::StaticElements {
     // Associations
     // Attributes
-  public:
+  private:
     std::map<std::string,int> ShopItems;
     Inventory*  inventory;
     int money;

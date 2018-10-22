@@ -15,7 +15,7 @@ namespace state {
   /// class Hero - 
   class Hero : public state::Character {
     // Attributes
-  public:
+  protected:
     bool ishero     = true;
     // Operations
   public:
@@ -24,6 +24,8 @@ namespace state {
     bool isMonster ();
     Hero (int life, int att, int spd, int crit, int def, std::string name);
     // Setters and Getters
+    bool getIshero() const;
+    void setIshero(bool ishero);
   };
 
 };

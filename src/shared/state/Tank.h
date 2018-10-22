@@ -17,7 +17,7 @@ namespace state {
   /// class Tank - 
   class Tank : public state::Hero {
     // Attributes
-  public:
+  private:
     std::string name;
     // Operations
   public:

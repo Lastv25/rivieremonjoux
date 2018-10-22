@@ -17,7 +17,7 @@ namespace state {
   /// class PotionVie - 
   class PotionVie : public state::Item {
     // Attributes
-  public:
+  private:
     int RegenVie;
     // Operations
   public:

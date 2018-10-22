@@ -17,7 +17,7 @@ namespace state {
   /// class Sorcerer - 
   class Sorcerer : public state::Monsters {
     // Attributes
-  public:
+  private:
     std::string name;
     // Operations
   public:

@@ -17,7 +17,7 @@ namespace state {
   /// class PotionSoin - 
   class PotionSoin : public state::Item {
     // Attributes
-  public:
+  private:
     int Regen;
     // Operations
   public:

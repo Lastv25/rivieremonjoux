@@ -17,7 +17,7 @@ namespace state {
   /// class Mage - 
   class Mage : public state::Hero {
     // Attributes
-  public:
+  private:
     std::string name;
     // Operations
   public:

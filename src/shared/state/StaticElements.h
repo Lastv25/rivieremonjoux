@@ -14,7 +14,7 @@ namespace state {
   /// class StaticElements - 
   class StaticElements : public state::Element {
     // Attributes
-  public:
+  protected:
     bool building;
     bool staticElement     = true;
     // Operations
@@ -24,6 +24,10 @@ namespace state {
     StaticElements (bool building);
     ~StaticElements ();
     // Setters and Getters
+    bool getBuilding() const;
+    void setBuilding(bool building);
+    bool getStaticElement() const;
+    void setStaticElement(bool staticElement);
   };
 
 };

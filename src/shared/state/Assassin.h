@@ -17,7 +17,7 @@ namespace state {
   /// class Assassin - 
   class Assassin : public state::Hero {
     // Attributes
-  public:
+  private:
     std::string name;
     // Operations
   public:

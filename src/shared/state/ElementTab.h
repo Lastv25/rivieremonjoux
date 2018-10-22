@@ -17,7 +17,7 @@ namespace state {
   class ElementTab {
     // Associations
     // Attributes
-  public:
+  private:
     size_t width;
     size_t height;
     std::vector<Element*> list;

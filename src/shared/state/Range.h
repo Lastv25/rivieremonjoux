@@ -17,7 +17,7 @@ namespace state {
   /// class Range - 
   class Range : public state::Hero {
     // Attributes
-  public:
+  private:
     std::string name;
     // Operations
   public:

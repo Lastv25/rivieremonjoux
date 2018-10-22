@@ -21,7 +21,7 @@ namespace state {
   class Village : public state::StaticElements {
     // Associations
     // Attributes
-  public:
+  private:
     Inventory* ListItems;
     int Money;
     Tavern* tavern;

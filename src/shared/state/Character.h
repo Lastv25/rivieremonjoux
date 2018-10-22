@@ -16,7 +16,7 @@ namespace state {
   /// class Character - 
   class Character : public state::MobileElements {
     // Attributes
-  public:
+  protected:
     int Life;
     int ATT;
     int DEF;
@@ -49,6 +49,8 @@ namespace state {
     void setName (std::string newName);
     bool isMonster ();
     // Setters and Getters
+    void setLifeMAX(int LifeMAX);
+    void setState(const std::vector<int>& State);
   };
 
 };

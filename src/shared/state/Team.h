@@ -16,7 +16,7 @@ namespace state {
   class Team {
     // Associations
     // Attributes
-  public:
+  private:
     std::vector<Character*> ListPerso;
     // Operations
   public:

@@ -17,7 +17,7 @@ namespace state {
   /// class Blob - 
   class Blob : public state::Monsters {
     // Attributes
-  public:
+  private:
     std::string name;
     // Operations
   public:

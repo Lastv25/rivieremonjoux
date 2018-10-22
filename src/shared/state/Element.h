@@ -8,13 +8,15 @@ namespace state {
   /// class Element - 
   class Element {
     // Attributes
-  public:
+  protected:
     bool staticElement;
     // Operations
   public:
     Element (bool isstat);
     ~Element ();
     // Setters and Getters
+    bool getStaticElement() const;
+    void setStaticElement(bool staticElement);
   };
 
 };

@@ -26,10 +26,10 @@ void Tavern::isTeamFull (){
   }
 }
 void Tavern::getStat (Character* character){
-  cout << "Att: "<<character->ATT << endl;
-  cout << "SPD: "<<character->SPD << endl;
-  cout << "DEF: "<<character->DEF << endl;
-  cout << "Crit: "<<character->Crit << endl;
+  cout << "Att: "<<character->getATT() << endl;
+  cout << "SPD: "<<character->getSPD() << endl;
+  cout << "DEF: "<<character->getDEF() << endl;
+  cout << "Crit: "<<character->getCrit() << endl;
 }
 
 void Tavern::getSkills (Character* character){

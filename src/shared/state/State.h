@@ -15,7 +15,7 @@ namespace state {
   class State {
     // Associations
     // Attributes
-  public:
+  private:
     ElementTab* grid;
     ElementTab* chars;
     int spd_characters;

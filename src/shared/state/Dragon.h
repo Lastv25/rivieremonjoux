@@ -17,7 +17,7 @@ namespace state {
   /// class Dragon - 
   class Dragon : public state::Monsters {
     // Attributes
-  public:
+  private:
     bool boss     = true;
     std::string name;
     // Operations

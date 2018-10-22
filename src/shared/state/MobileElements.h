@@ -14,7 +14,7 @@ namespace state {
   /// class MobileElements - 
   class MobileElements : public state::Element {
     // Attributes
-  public:
+  protected:
     bool staticElement     = false;
     bool ischaracter;
     // Operations
@@ -24,6 +24,10 @@ namespace state {
     MobileElements (bool iscara);
     ~MobileElements ();
     // Setters and Getters
+    bool getStaticElement() const;
+    void setStaticElement(bool staticElement);
+    bool getIscharacter() const;
+    void setIscharacter(bool ischaracter);
   };
 
 };

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <typeinfo>
 #include "string.h"
 #include "state.h"
 #include "render.h"

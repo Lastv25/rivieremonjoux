@@ -25,6 +25,7 @@ namespace state {
     int LifeMAX;
     std::vector<int> State;
     std::string name;
+    bool isboss;
     // Operations
   public:
     Character (int life, int att, int spd, int crit, int def, std::string name);
@@ -48,9 +49,12 @@ namespace state {
     std::string getName ();
     void setName (std::string newName);
     bool isMonster ();
+    bool isBoss ();
     // Setters and Getters
     void setLifeMAX(int LifeMAX);
     void setState(const std::vector<int>& State);
+    bool getIsboss() const;
+    void setIsboss(bool isboss);
   };
 
 };

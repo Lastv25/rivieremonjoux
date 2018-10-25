@@ -17,6 +17,7 @@ namespace state {
     // Attributes
   protected:
     bool ishero     = false;
+    bool isboss;
     // Operations
   public:
     bool isMonster ();
@@ -27,6 +28,8 @@ namespace state {
     // Setters and Getters
     bool getIshero() const;
     void setIshero(bool ishero);
+    bool getIsboss() const;
+    void setIsboss(bool isboss);
   };
 
 };

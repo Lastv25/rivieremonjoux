@@ -30,6 +30,7 @@ namespace state {
     std::map<std::string,int> getInventory ();
     int getItemvalue (std::string name);
     void removeItem (std::string name, int valuetoremove);
+    Inventory ();
     // Setters and Getters
   };
 

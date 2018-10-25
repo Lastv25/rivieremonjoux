@@ -143,3 +143,6 @@ void Character::changeState (int newState){
 bool Character::isMonster (){
   return false;
 }
+bool Character::isBoss (){
+  return isboss;
+}

@@ -5,6 +5,8 @@ using namespace std;
 using namespace state;
 
 //Constructors
+Inventory::Inventory () {
+}
 Inventory::Inventory (uint length) {
   this-> inventorySize =length;
 }

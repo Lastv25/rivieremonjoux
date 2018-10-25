@@ -17,3 +17,6 @@ Monsters::~Monsters (){
 bool Monsters::isMonster (){
   return !this->ishero;
 }
+bool Monsters::isBoss (){
+  return this->isboss;
+}

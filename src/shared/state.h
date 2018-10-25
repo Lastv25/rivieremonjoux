@@ -28,4 +28,6 @@
 #include "state/Tavern.h"
 #include "state/Shop.h"
 #include "state/State.h"
+#include "state/Dungeon.h"
+#include "state/Room.h"
 #endif

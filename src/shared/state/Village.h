@@ -12,8 +12,8 @@ namespace state {
 }
 
 #include "StaticElements.h"
-#include "Inventory.h"
 #include "Team.h"
+#include "Inventory.h"
 
 namespace state {
 

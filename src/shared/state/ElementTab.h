@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <vector>
+#include <string>
 
 namespace state {
   class Element;
@@ -20,12 +21,16 @@ namespace state {
   private:
     size_t width;
     size_t height;
-    std::vector<Element*> list;
+    std::vector<Element*> listElements;
+    std::vector<std::string> listClassNames;
     // Operations
   public:
-    size_t add (Element* e);
+    size_t add (Element* e, std::string elementType);
     Element* get (int i, int j);
     ElementTab (size_t height, size_t width);
+    ElementTab ();
+    std::string getElementType (int i);
+    uint getSize ();
     // Setters and Getters
   };
 

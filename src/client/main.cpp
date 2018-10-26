@@ -89,8 +89,6 @@ int main(int argc,char* argv[])
            MobileElements* e = new MobileElements(true);
            cout <<"is Character:"<< e->isCharacter() << endl;
            cout << "is Static"<<e->isStatic() << endl;
-           cout << "test type name: "<<elementClassNameToString(typeid(e).name()) << endl;
-           cout << "test type name pos: "<<elementClassNameToString(typeid(e).name()).find("MobileElements") << endl;
          };
          {
            affichagebeauTest("Character");

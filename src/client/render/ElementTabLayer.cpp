@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "ElementTabLayer.h"
+#include <typeinfo>
 
 
 using namespace std;

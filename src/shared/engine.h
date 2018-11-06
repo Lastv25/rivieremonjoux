@@ -4,12 +4,12 @@
 
 #include "engine/CommandTypeId.h"
 #include "engine/Command.h"
-#include "engine/CraeteDungeonCommand.h"
-#include "engine/CraeteRoomCommand.h"
+#include "engine/CreateDungeonCommand.h"
+#include "engine/CreateRoomCommand.h"
 #include "engine/UseSkillCommand.h"
 #include "engine/CreateVillageCommand.h"
 #include "engine/Engine.h"
-#include "engine/UseItemCommand.h"
 #include "engine/ChooseDungeonCommand.h"
 #include "engine/ChangeActiveCommand.h"
+#include "engine/CalculateActiveCommand.h"
 #endif

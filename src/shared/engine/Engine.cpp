@@ -27,6 +27,7 @@ void Engine::update (){
   for (uint i=0; i<nbOfPossibleCommands;i++){
     if(this->currentCommands.count(i) != 0){
       this->currentCommands[i]->execute(this->currentState);
+      this->currentCommands.erase(i);
     }
   }
 }

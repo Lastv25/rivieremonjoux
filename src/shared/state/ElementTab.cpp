@@ -25,10 +25,19 @@ Element* ElementTab::get (int i, int j){
 std::string ElementTab::getElementType (int i){
   return this->listClassNames[i];
 }
+std::vector<std::string> ElementTab::getElementsTypes (){
+  return this->listClassNames;
+}
 
 uint ElementTab::getSize(){
    return this->listElements.size();
  }
+
+void ElementTab::replaceElement (Element* e,std::string type,int i){
+  this->listElements.at(i)=e;
+  this->listClassNames.at(i)=type;
+}
+
 Element* ElementTab::Operator (int i, int j){
 
  }

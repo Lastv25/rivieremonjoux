@@ -79,6 +79,15 @@ void affichagebeauTest(std::string testname){
   cout << ' ';}
   cout  << "Test " <<testname<< endl;
 }
+void affichagebeauVect(std::vector<std::string> vect){
+  if (vect.size()!= 0){
+    for (uint i=0;i<vect.size();i++){
+        cout << vect[i] <<endl;
+    }
+  } else {
+        cout << "Empty " <<endl;
+  }
+}
 
 int main(int argc,char* argv[])
 {
@@ -324,6 +333,50 @@ int main(int argc,char* argv[])
           s->registerObserver(o);
           Engine* e = new Engine(s);
 
+          cout << "Affichage des Elements de States" << endl;
+          cout << "Grid" << endl;
+          affichagebeauVect(s->getGrid()->getElementsTypes());
+          cout << "Char" << endl;
+          affichagebeauVect(s->getChar()->getElementsTypes());
+          cout << "Command: Creation of the Village" << endl;
+          e->addCommand(0,new CreateVillageCommand());
+          e->update();
+          cout << "Grid" << endl;
+          affichagebeauVect(s->getGrid()->getElementsTypes());
+          cout << "Char" << endl;
+          affichagebeauVect(s->getChar()->getElementsTypes());
+          cout << "Command: Creation of the Dungeon Without a Team" << endl;
+          e->addCommand(0,new CreateDungeonCommand());
+          e->update();
+          cout << "Grid" << endl;
+          affichagebeauVect(s->getGrid()->getElementsTypes());
+          cout << "Char" << endl;
+          affichagebeauVect(s->getChar()->getElementsTypes());
+          cout << "Command: Creation of the Dungeon With a Team" << endl;
+          cout << "Team composed of a Tank, a Range and an Assassin" << endl;
+          Team* team = new Team();
+          Village* v= (Village*) s->getGrid()->get(0,0);
+          Tank* tank = new Tank(10,20,3,40,5,"Tank");
+          Range* range = new Range(10,20,3,40,5,"Range");
+          Assassin* assassin = new Assassin(10,20,3,40,5,"Assassin");
+          team->addToTeam(tank);
+          team->addToTeam(range);
+          team->addToTeam(assassin);
+          v->setTeam(team);
+          s->getGrid()->replaceElement(v,"Village",0);
+          e->addCommand(0,new CreateDungeonCommand());
+          e->update();
+          cout << "Grid" << endl;
+          affichagebeauVect(s->getGrid()->getElementsTypes());
+          cout << "Char" << endl;
+          affichagebeauVect(s->getChar()->getElementsTypes());
+          cout << "Command: Choose the Dungeon EngineTest" << endl;
+          e->addCommand(0,new ChooseDungeonCommand("EngineTest"));
+          e->update();
+          cout << "Grid" << endl;
+          affichagebeauVect(s->getGrid()->getElementsTypes());
+          cout << "Char" << endl;
+          affichagebeauVect(s->getChar()->getElementsTypes());
 
       } else {
         cout << "Veuillez tapez une des commandes suivantes s'il vous plait." << endl;

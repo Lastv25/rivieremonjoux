@@ -23,7 +23,7 @@ Team* Room::getHeroTeam (){
   return this->heroTeam;
 }
 void Room::setHeroTeam (Team* newTeam){
-  this->heroTeam=newTeam;
+  this->heroTeam=heroTeam;
 }
 Team* Room::getMonsterTeam (){
   return this->monsterTeam;

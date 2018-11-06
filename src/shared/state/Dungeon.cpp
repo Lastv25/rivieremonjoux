@@ -9,6 +9,7 @@ Dungeon::Dungeon ():StaticElements(false){
 }
 Dungeon::Dungeon (std::vector<std::string> maps,Team* heroTeam):StaticElements(false){
   this->mapNames=maps;
+  this->heroTeam = heroTeam;
 }
 
 //Destructor
@@ -33,4 +34,11 @@ const std::string& Dungeon::getCurrentRoom() const{
 }
 void Dungeon::setCurrentRoom(const std::string& currentRoom){
   this->currentRoom=currentRoom;
+}
+
+Team* Dungeon::getHeroTeam (){
+  return this->heroTeam;
+}
+void Dungeon::setHeroTeam (Team* newTeam){
+  this->heroTeam=heroTeam;
 }

@@ -8,7 +8,12 @@ Command::Command (){
 }
 Command::~Command (){
 }
-virtual CommandTypeId Command::getCommandTypeId (){
+CommandTypeId Command::getCommandTypeId (){
+  return this->commandTypeId;
 }
-virtual void Command::execute (state::State* state){
+void Command::execute (state::State* state){
+}
+
+void Command::setCommandTypeId(CommandTypeId commandTypeId){
+  this->commandTypeId = commandTypeId;
 }

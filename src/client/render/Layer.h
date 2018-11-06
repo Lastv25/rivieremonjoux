@@ -6,12 +6,14 @@
 
 namespace render {
   class Surface;
+  class DungeonDisplay;
   class ShopDisplay;
   class VillageDisplay;
   class TavernDisplay;
   class RoomDisplay;
 }
 
+#include "DungeonDisplay.h"
 #include "ShopDisplay.h"
 #include "VillageDisplay.h"
 #include "TavernDisplay.h"
@@ -26,7 +28,8 @@ namespace render {
     // Attributes
   protected:
     std::vector<Surface*> surface;
-    std::vector<std::pair<uint,uint>> coords;
+    std::vector<std::vector<float>> coords;
+    std::vector<float> textcoords;
     // Operations
   public:
     Layer ();
@@ -36,10 +39,12 @@ namespace render {
     void initSurface ();
     void printText ();
     std::vector<Surface*> getSurfaceList ();
-    void addCoords (std::pair<uint,uint> coords);
+    void addCoords (std::vector<float> coords);
     // Setters and Getters
-    const std::vector<std::pair<uint,uint>>& getCoords() const;
-    void setCoords(const std::vector<std::pair<uint,uint>>& coords);
+    const std::vector<std::vector<float>>& getCoords() const;
+    void setCoords(const std::vector<std::vector<float>>& coords);
+    const std::vector<float>& getTextcoords() const;
+    void setTextcoords(const std::vector<float>& textcoords);
   };
 
 };

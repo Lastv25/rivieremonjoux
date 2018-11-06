@@ -3,8 +3,8 @@
 using namespace state ;
 using namespace std ;
 
-State::State(){
-
+State::State() : Observable(){
+  this->chars = new ElementTab();
 }
 
 State::~State(){

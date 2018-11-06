@@ -5,14 +5,16 @@
 
 namespace state {
   class ElementTab;
+  class Observable;
 }
 
+#include "Observable.h"
 #include "ElementTab.h"
 
 namespace state {
 
   /// class State - 
-  class State {
+  class State : public state::Observable {
     // Associations
     // Attributes
   private:

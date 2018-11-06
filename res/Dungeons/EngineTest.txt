@@ -1,0 +1,3 @@
+Room1,Blob
+Room2,Blob,sorcerer
+Room3,DarkKnight

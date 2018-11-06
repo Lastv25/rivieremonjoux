@@ -17,6 +17,10 @@
 #include "state/Sorcerer.h"
 #include "state/DarkKnight.h"
 #include "state/Dragon.h"
+#include "state/EventTypeId.h"
+#include "state/Event.h"
+#include "state/Observer.h"
+#include "state/Observable.h"
 #include "state/ElementTab.h"
 #include "state/StaticElements.h"
 #include "state/Item.h"
@@ -30,4 +34,7 @@
 #include "state/State.h"
 #include "state/Dungeon.h"
 #include "state/Room.h"
+#include "state/StateEventId.h"
+#include "state/StateEvent.h"
+#include "state/TabEvent.h"
 #endif

@@ -27,12 +27,18 @@ void Layer::printText (){
 std::vector<Surface*> Layer::getSurfaceList (){
   return this->surface;
 }
-const std::vector<std::pair<uint,uint>>& Layer::getCoords() const{
+const std::vector<std::vector<float>>& Layer::getCoords() const{
   return this->coords;
 }
-void Layer::setCoords(const std::vector<std::pair<uint,uint>>& coords){
+void Layer::setCoords(const std::vector<std::vector<float>>& coords){
   this->coords=coords;
 }
-void Layer::addCoords(std::pair<uint,uint> coords){
+void Layer::addCoords(std::vector<float> coords){
   this->coords.push_back(coords);
+}
+const std::vector<float>& Layer::getTextcoords() const{
+  return this->textcoords;
+}
+void Layer::setTextcoords(const std::vector<float>& textcoords){
+  this->textcoords = textcoords;
 }

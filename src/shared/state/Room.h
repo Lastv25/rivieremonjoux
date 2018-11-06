@@ -4,32 +4,35 @@
 
 
 namespace state {
+  class Character;
   class Team;
   class Dungeon;
 }
 
 #include "Dungeon.h"
-#include "Team.h"
 
 namespace state {
 
   /// class Room - 
   class Room : public state::Dungeon {
-    // Associations
     // Attributes
+  public:
+    Character* activeCharacter;
   private:
     Team* heroTeam;
     Team* monsterTeam;
     bool bossRoom;
     // Operations
   public:
-    Room (Team* heroTeam, Team* monsterTeam);
+    Room (Team* heroTeam, Team* monsterTeam, bool activeType, int activepos);
     ~Room ();
     Team* getHeroTeam ();
     void setHeroTeam (Team* newTeam);
     Team* getMonsterTeam ();
     void setMonsterTeam (Team* newTeam);
     bool isBossRoom ();
+    void setActive (Character* character);
+    Character* getActive ();
     // Setters and Getters
   };
 

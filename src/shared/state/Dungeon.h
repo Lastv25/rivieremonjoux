@@ -4,28 +4,39 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 namespace state {
+  class Team;
   class StaticElements;
 }
 
 #include "StaticElements.h"
+#include "Team.h"
 
 namespace state {
 
   /// class Dungeon - 
   class Dungeon : public state::StaticElements {
+    // Associations
     // Attributes
   protected:
     std::vector<std::string> mapNames;
+    std::map<std::string,Team*> RoomList;
+    std::string currentRoom;
     // Operations
   public:
     Dungeon ();
     ~Dungeon ();
-    Dungeon (std::vector<std::string> maps);
+    Dungeon (std::vector<std::string> maps, Team* heroTeam);
+    void CreateRoom ();
     // Setters and Getters
     const std::vector<std::string>& getMapNames() const;
     void setMapNames(const std::vector<std::string>& mapNames);
+    const std::map<std::string,Team*>& getRoomList() const;
+    void setRoomList(const std::map<std::string,Team*>& RoomList);
+    const std::string& getCurrentRoom() const;
+    void setCurrentRoom(const std::string& currentRoom);
   };
 
 };

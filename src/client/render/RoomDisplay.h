@@ -7,9 +7,9 @@
 
 namespace state {
   class Team;
+  class Character;
   class Element;
   class Room;
-  class Character;
   class Inventory;
 }
 
@@ -34,6 +34,7 @@ namespace render {
     state::Team*  HeroTeam;
     state::Team*  MonsterTeam;
     std::string characterStats;
+    state::Character* activeCharacter;
     // Operations
   public:
     std::vector<std::string> getRoomImages ();
@@ -43,6 +44,7 @@ namespace render {
     std::string getCharacter ();
     std::string getCharacterStats ();
     RoomDisplay ();
+    std::string getActiveName ();
     // Setters and Getters
   };
 

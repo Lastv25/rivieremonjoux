@@ -4,12 +4,14 @@
 #include "string.h"
 #include "state.h"
 #include "render.h"
+#include "engine.h"
 
 #define quote(x) #x
 
 using namespace std;
 using namespace state;
 using namespace render;
+using namespace engine;
 using namespace sf;
 
 void renderWindow(ElementTabLayer* layer) {
@@ -21,6 +23,13 @@ void renderWindow(ElementTabLayer* layer) {
     font.loadFromFile("res/dc_o.ttf");
     sf::Text title(layer->getTitle(),font,50);
     title.move(600.f,100.f);
+    sf::Text text;
+    if (layer->getText().find("None") == std::string::npos){
+      text.setString(layer->getText());
+      text.setFont(font);
+      text.setCharacterSize(35);
+      text.move(layer->getTextcoords()[0],layer->getTextcoords()[1]);
+    }
 
 
     while (window.isOpen())
@@ -38,7 +47,8 @@ void renderWindow(ElementTabLayer* layer) {
        if (layer->getSurfaceList().size() != 1){
          for (uint i=0;i<layer->getSurfaceList().size();i++){
             sprite = layer->getSurface(i)->getSprite();
-            sprite.setPosition(std::get<0>(layer->getCoords()[i]),std::get<1>(layer->getCoords()[i]));
+            sprite.setPosition(layer->getCoords()[i][0],layer->getCoords()[i][1]);
+            sprite.scale(layer->getCoords()[i][2],layer->getCoords()[i][3]);
             window.draw(sprite);
           }
         } else {
@@ -47,6 +57,7 @@ void renderWindow(ElementTabLayer* layer) {
           window.draw(sprite);
         }
        window.draw(title);
+       window.draw(text);
        window.display();
    }
 
@@ -205,10 +216,11 @@ int main(int argc,char* argv[])
          };
          {
            affichagebeauTest("Dungeon");
+           Team* t=new Team();
            std::vector<std::string> maplist;
            maplist.push_back("Map1");
            maplist.push_back("Map2");
-           Dungeon* d = new Dungeon(maplist);
+           Dungeon* d = new Dungeon(maplist,t);
            for (uint i =0;i<d->getMapNames().size();i++){cout<<"Map name "<<d->getMapNames()[i]<<endl;};
          };
          {
@@ -222,7 +234,7 @@ int main(int argc,char* argv[])
            t1->addToTeam(e2);
            Team* t2=new Team();
            t1->addToTeam(b3);
-           Room* r = new Room(t1,t2);
+           Room* r = new Room(t1,t2,false,0);
          };
          {
            affichagebeauTest("Items");
@@ -280,22 +292,45 @@ int main(int argc,char* argv[])
           Team* t1=new Team();
           Team* t2=new Team();
           Sorcerer* sorcerer = new Sorcerer(10,20,3,40,5,"Sorcerer");
+          Tank* tank = new Tank(10,20,3,40,5,"Tank");
+          Blob* blob = new Blob(10,20,3,40,5,"Blob");
+          Range* range = new Range(10,20,3,40,5,"Range");
+          Assassin* assassin = new Assassin(10,20,3,40,5,"Assassin");
+          DarkKnight* darkKnight = new DarkKnight(10,20,3,40,5,"DarkKnight");
           t1->addToTeam(sorcerer);
-          t2->addToTeam(sorcerer);
+          t2->addToTeam(tank);
+          t1->addToTeam(blob);
+          t2->addToTeam(range);
+          t2->addToTeam(assassin);
+          t1->addToTeam(darkKnight);
           Tavern* tav= new Tavern(t1,1);
           Inventory* inv= new Inventory();
           std::map<std::string,int> shopinventory;
           Shop* shop= new Shop(inv,shopinventory,12);
-
-          Village* r = new Village(tav,shop,3,inv,t1); //Decomenter pour Obtenir l'affichage de l'etat village
-          //Room* r = new Room(t1,t2); //Decomenter pour Obtenir l'affichage de l'etat Room
+          std::vector<std::string> dList;
+          dList.push_back("EngineTest");
+          //Village* r = new Village(tav,shop,3,inv,t1); //Decomenter pour Obtenir l'affichage de l'etat village
+          //Dungeon* r = new Dungeon(dList);
+          Room* r = new Room(t2,t1,0,1); //Decomenter pour Obtenir l'affichage de l'etat Room
           e->add(r,elementClassNameToString(typeid(r).name()));
           ElementTabLayer* E =new ElementTabLayer(e);
           E->getElementTabTextures();
           renderWindow(E);
           };
+      } else if (!strcmp(argv[1],"engine") ) {
+          affichagebeauTest("engine");
+          Observer* o = new Observer();
+          State* s = new State();
+          s->registerObserver(o);
+          Engine* e = new Engine(s);
+
+
       } else {
-        cout << "Veuillez tapez hello s'il vous plait." << endl;
+        cout << "Veuillez tapez une des commandes suivantes s'il vous plait." << endl;
+        cout << "hello : test de l'environement de travail" << endl;
+        cout << "state : test des états du jeu" << endl;
+        cout << "render : test de l'affichage d'un état" << endl;
+        cout << "engine : test du moteur du jeu" << endl;
       }
     }
     return 0;

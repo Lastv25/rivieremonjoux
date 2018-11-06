@@ -5,10 +5,10 @@ using namespace std;
 using namespace state;
 
 //Constructor
-ElementTab::ElementTab (){
+ElementTab::ElementTab (): Observable(){
 }
 
-ElementTab::ElementTab (size_t height, size_t width){
+ElementTab::ElementTab (size_t height, size_t width): Observable(){
   this->listElements = std::vector<Element*> (height*width);
   this->listClassNames = std::vector<std::string> (height*width);
 }
@@ -28,4 +28,7 @@ std::string ElementTab::getElementType (int i){
 
 uint ElementTab::getSize(){
    return this->listElements.size();
+ }
+Element* ElementTab::Operator (int i, int j){
+
  }

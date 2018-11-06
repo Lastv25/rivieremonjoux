@@ -9,9 +9,15 @@ namespace state {
 };
 namespace render {
   class Layer;
+};
+namespace state {
+  class Observer;
+  class Dungeon;
 }
 
 #include "Layer.h"
+#include "state/Observer.h"
+#include "state/Dungeon.h"
 #include "state/ElementTab.h"
 
 namespace render {
@@ -23,6 +29,7 @@ namespace render {
   public:
     state::ElementTab* elementTab;
     std::string title;
+    std::string text;
     // Operations
   public:
     ElementTabLayer (state::ElementTab* elementTab);
@@ -33,6 +40,9 @@ namespace render {
     void getElementTabTextures ();
     void setTitle (std::string title);
     std::string getTitle ();
+    void setText (std::string text);
+    std::string getText ();
+    void stateChanged (state::Event* e);
     // Setters and Getters
   };
 

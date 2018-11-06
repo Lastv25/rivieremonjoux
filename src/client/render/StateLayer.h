@@ -2,16 +2,21 @@
 #ifndef RENDER__STATELAYER__H
 #define RENDER__STATELAYER__H
 
+#include <string>
 
 namespace state {
   class State;
 };
 namespace render {
   class Layer;
+};
+namespace state {
+  class Observer;
 }
 
 #include "state/State.h"
 #include "Layer.h"
+#include "state/Observer.h"
 
 namespace render {
 
@@ -21,11 +26,15 @@ namespace render {
     // Attributes
   public:
     state::State state;
+    std::string activeCharacterName;
     // Operations
   public:
     StateLayer (state::State& state);
     ~StateLayer ();
     void initSurface ();
+    std::string getActiveCharacter ();
+    void setActive (std::string active);
+    void stateChanged (state::Event* e);
     // Setters and Getters
   };
 

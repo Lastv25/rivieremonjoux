@@ -6,6 +6,8 @@ using namespace std;
 namespace state {
 
 //Constructor
+Village::Village ():StaticElements(true){
+}
 Village::Village (Tavern* tavern, Shop* shop, int money, Inventory* inventory, Team* team):StaticElements(true){
   this->tavern=tavern;
   this->shop=shop;

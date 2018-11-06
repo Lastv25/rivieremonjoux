@@ -11,10 +11,10 @@ State::~State(){
 
 }
 
-ElementTab* State::getGrid (ElementTab* grid){
+ElementTab* State::getGrid (){
   return this->grid;
 }
 
-ElementTab* State::getChar(ElementTab* chars){
+ElementTab* State::getChar(){
   return this->chars;
 }

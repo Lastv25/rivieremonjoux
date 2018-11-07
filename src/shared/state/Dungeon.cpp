@@ -24,16 +24,10 @@ void Dungeon::setMapNames(const std::vector<std::string>& mapNames){
   this->mapNames=mapNames;
 }
 const std::map<std::string,Team*>& Dungeon::getRoomList() const{
-  this->RoomList;
+  return this->RoomList;
 }
 void Dungeon::setRoomList(const std::map<std::string,Team*>& RoomList){
   this->RoomList=RoomList;
-}
-const std::string& Dungeon::getCurrentRoom() const{
-  this->currentRoom;
-}
-void Dungeon::setCurrentRoom(const std::string& currentRoom){
-  this->currentRoom=currentRoom;
 }
 
 Team* Dungeon::getHeroTeam (){

@@ -37,4 +37,5 @@
 #include "state/StateEventId.h"
 #include "state/StateEvent.h"
 #include "state/TabEvent.h"
+#include "state/Skills.h"
 #endif

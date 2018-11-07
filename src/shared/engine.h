@@ -12,4 +12,5 @@
 #include "engine/ChooseDungeonCommand.h"
 #include "engine/ChangeActiveCommand.h"
 #include "engine/CalculateActiveCommand.h"
+#include "engine/BackCommand.h"
 #endif

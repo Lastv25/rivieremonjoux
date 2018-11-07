@@ -377,6 +377,30 @@ int main(int argc,char* argv[])
           affichagebeauVect(s->getGrid()->getElementsTypes());
           cout << "Char" << endl;
           affichagebeauVect(s->getChar()->getElementsTypes());
+          cout << "Command: Set The turns for the monsters" << endl;
+          e->addCommand(0,new CalculateActiveCommand());
+          e->update();
+          cout << "Grid" << endl;
+          affichagebeauVect(s->getGrid()->getElementsTypes());
+          cout << "Char" << endl;
+          affichagebeauVect(s->getChar()->getElementsTypes());
+          cout << "Order" << endl;
+          for (uint i=0;i<s->getOrder().size();i++){
+            std::vector<std::pair<bool,std::string>> intermediary =s->getOrder();
+            cout << std::get<0>(intermediary[i]);
+            cout << ":";
+            cout << std::get<1>(intermediary[i]);
+            cout << ", ";
+          }
+          cout << endl;
+          // cout << "Command: Create the first Room of the dungeon" << endl;
+          // e->addCommand(0,new CreateRoomCommand());
+          // e->update();
+          // cout << "Grid" << endl;
+          // affichagebeauVect(s->getGrid()->getElementsTypes());
+          // cout << "Char" << endl;
+          // affichagebeauVect(s->getChar()->getElementsTypes());
+
 
       } else {
         cout << "Veuillez tapez une des commandes suivantes s'il vous plait." << endl;

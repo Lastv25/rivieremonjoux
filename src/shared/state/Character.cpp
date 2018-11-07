@@ -90,6 +90,12 @@ void Character::clearState (int oldState){
   }
   this->State =oldStateList;
 }
+const std::vector<std::string>& Character::getSkillList() const{
+  return this->skillList;
+}
+void Character::setSkillList(const std::vector<std::string>& skillList){
+  this->skillList=skillList;
+}
 void Character::changeState (int newState){
   std::vector<int> oldStateList = this->State;
   bool teststate = false;

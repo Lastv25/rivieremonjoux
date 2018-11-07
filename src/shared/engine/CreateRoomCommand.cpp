@@ -19,7 +19,7 @@
 //   if (d->getRoomList().size() == 0){
 //     cout << "The Dungeon is Cleared" << endl;
 //   } else {
-//     state->getGrid()->replaceElement(new state::Room(d->getHeroTeam(),d->getRoomList()[0],std::get<0>(state->getActiveChara()),std::get<1>(state->getActiveChara())),"Room",0);
+//     state->getGrid()->replaceElement(new state::Room(d->getHeroTeam(),d->getRoomList(),std::get<0>(state->getActiveChara()),std::get<1>(state->getActiveChara())),"Room",0);
 //     state->getChar()->add(state->getGrid()->get(0,0),"Dungeon");
 //   }
 //

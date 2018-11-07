@@ -22,6 +22,10 @@ size_t ElementTab::add (Element* e,std::string elementType){
 Element* ElementTab::get (int i, int j){
   return this->listElements[i];
 }
+std::vector<Element*> ElementTab::getFullList (){
+  return this->listElements;
+}
+
 std::string ElementTab::getElementType (int i){
   return this->listClassNames[i];
 }
@@ -36,6 +40,12 @@ uint ElementTab::getSize(){
 void ElementTab::replaceElement (Element* e,std::string type,int i){
   this->listElements.at(i)=e;
   this->listClassNames.at(i)=type;
+}
+
+void ElementTab::EraseLast(){
+
+  this->listElements.pop_back();
+  this->listClassNames.pop_back();
 }
 
 Element* ElementTab::Operator (int i, int j){

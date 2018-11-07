@@ -26,7 +26,7 @@ void ChooseDungeonCommand::execute (state::State* states){
   std::ifstream fileread(dungeonName);
   std::map<std::string,state::Team*> rooms;
 
-  
+
   for (std::string line; getline(fileread,line);){
 
 
@@ -56,13 +56,13 @@ void ChooseDungeonCommand::execute (state::State* states){
         MonsterTeam->addToTeam(d);
       }
 
-    rooms[out[0]]=MonsterTeam;
+      rooms[out[0]]=MonsterTeam;
+
+    }
   }
 
-    Dungeon* dungeon = (Dungeon*) states->getGrid()->get(0,0);
-    dungeon->setRoomList(rooms);
-    states->getGrid()->replaceElement(dungeon,"Dungeon",0);
-
-  }
+  Dungeon* dungeon = (Dungeon*) states->getGrid()->get(0,0);
+  dungeon->setRoomList(rooms);
+  states->getGrid()->replaceElement(dungeon,"Dungeon",0);
 
 }

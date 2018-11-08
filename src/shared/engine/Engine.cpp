@@ -19,8 +19,13 @@ state::State* Engine::getState (){
 }
 void Engine::addPassiveCommands (){
 }
-void Engine::addCommand (int priority, Command* cmd){
-  this->currentCommands[priority]=cmd;
+void Engine::addCommand (int i ){
+  if (i == 0){
+    this->currentCommands[0]= new CreateDungeonCommand();
+  } else if (i == 3){
+    this->currentCommands[0]= new CreateVillageCommand();
+  }
+
 }
 void Engine::update (){
   uint nbOfPossibleCommands = 7;

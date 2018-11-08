@@ -27,6 +27,18 @@ void Layer::printText (){
 std::vector<Surface*> Layer::getSurfaceList (){
   return this->surface;
 }
+const std::vector<Surface*>& Layer::getButtonsSurface() const{
+  return this->buttonsSurface;
+}
+void Layer::setButtonsSurface(const std::vector<Surface*>& buttonsSurface){
+  this->buttonsSurface=buttonsSurface;
+}
+Surface* Layer::getButtonSurface (int i){
+  return this->buttonsSurface[i];
+}
+void Layer::setButtonSurface (Surface* surface){
+  this->buttonsSurface.push_back(surface);
+}
 const std::vector<std::vector<float>>& Layer::getCoords() const{
   return this->coords;
 }

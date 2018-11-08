@@ -332,10 +332,10 @@ int main(int argc,char* argv[])
           State* s = new State();
           Engine* e = new Engine(s);
           Scene* scene = new Scene(s);
+          Button* button = new Button();
           s->registerObserver(o);
 
           sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1440,1160), "Darkest Dungeon Like");
-
 
           cout << "Affichage des Elements de States" << endl;
           cout << "Grid" << endl;
@@ -343,14 +343,43 @@ int main(int argc,char* argv[])
           cout << "Char" << endl;
           affichagebeauVect(s->getChar()->getElementsTypes());
           cout << "Command: Creation of the Village" << endl;
-          e->addCommand(0,new CreateVillageCommand());
+          e->addCommand(3);
           e->update();
           cout << "Grid" << endl;
           affichagebeauVect(s->getGrid()->getElementsTypes());
           cout << "Char" << endl;
           affichagebeauVect(s->getChar()->getElementsTypes());
-          scene->stateChanged(s);
-          scene->draw(window);
+          while(1){
+            scene->stateChanged(s);
+            scene->draw(window);
+            button->setCommand(scene->getButtonPressed());
+            for (uint i=0; i<button->getCommands().size() ; i++){
+              e->addCommand(button->getCommands()[i]);
+            }
+            button->setCommand("None");
+            e->update();
+          }
+          // cout << "Affichage des Elements de States" << endl;
+          // cout << "Grid" << endl;
+          // affichagebeauVect(s->getGrid()->getElementsTypes());
+          // cout << "Char" << endl;
+          // affichagebeauVect(s->getChar()->getElementsTypes());
+          // cout << "Command: Creation of the Village" << endl;
+          // e->addCommand(3);
+          // e->update();
+          // cout << "Grid" << endl;
+          // affichagebeauVect(s->getGrid()->getElementsTypes());
+          // cout << "Char" << endl;
+          // affichagebeauVect(s->getChar()->getElementsTypes());
+          // scene->stateChanged(s);
+          // scene->draw(window);
+          // button->setCommand(scene->getButtonPressed());
+          // for (uint i=0; i<button->getCommands().size() ; i++){
+          //   e->addCommand(button->getCommands()[i]);
+          // }
+          // e->update();
+          // scene->stateChanged(s);
+          // scene->draw(window);
           // cout << "Command: Creation of the Dungeon Without a Team" << endl;
           // e->addCommand(0,new CreateDungeonCommand());
           // e->update();

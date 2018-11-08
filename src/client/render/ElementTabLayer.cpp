@@ -36,6 +36,35 @@ void ElementTabLayer::setText (std::string text){
 std::string ElementTabLayer::getText (){
   return this->text;
 }
+std::vector<std::pair<std::string,std::vector<float>>>  ElementTabLayer::getButtons (){
+  return this->buttons;
+}
+void  ElementTabLayer::setButtons (std::vector<std::pair<std::string,std::vector<float>>> newButtons){
+  this->buttons=newButtons ;
+}
+void  ElementTabLayer::addButton (std::pair<std::string,std::vector<float>> newButton){
+  this->buttons.push_back(newButton) ;
+}
+std::pair<std::string,std::vector<float>>  ElementTabLayer::getButton (int i){
+  return this->buttons.at(i);
+}
+std::string ElementTabLayer::getButtonFont (){
+  return this->buttonsFont;
+}
+std::string ElementTabLayer::getButtonSprite (){
+  return this->buttonsSprite;
+}
+std::vector<float> ElementTabLayer::getButtonPosScale (int i){
+  return this->buttonsPosScale[i];
+}
+void ElementTabLayer::addButtonScale (float x, float y, float sx, float sy){
+  std::vector<float> intermediary;
+  intermediary.push_back(x);
+  intermediary.push_back(y);
+  intermediary.push_back(sx);
+  intermediary.push_back(sy);
+  this->buttonsPosScale.push_back(intermediary);
+}
 
 void ElementTabLayer::getElementTabTextures (){
   for (uint index=0; index<this->elementTab->getSize(); index++ ){
@@ -110,6 +139,15 @@ void ElementTabLayer::getElementTabTextures (){
       s->setSprite();
       setSurface(s);
       setTitle(dvillage->getDisplayText());
+
+      Surface* buttonsSurface= new Surface(100,100,100,100);
+      buttonsSurface->loadTexture(this->buttonsSprite);
+      buttonsSurface->setSprite();
+      setButtonSurface(buttonsSurface);
+      std::vector<float> bcoords = {50.f,1000.f};
+      addButton(std::pair<std::string,std::vector<float>>("Dungeon",bcoords));
+      addButtonScale(50.f,1100.f,0.5f,0.5f);
+
     } else if (this->elementTab->getElementType(index).find("Dungeon") != std::string::npos){
       //cout << "Dungeon found" << endl;
       DungeonDisplay* ddungeon = new DungeonDisplay(this->elementTab->get(index,0));

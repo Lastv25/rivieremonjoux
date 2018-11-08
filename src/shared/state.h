@@ -34,8 +34,5 @@
 #include "state/State.h"
 #include "state/Dungeon.h"
 #include "state/Room.h"
-#include "state/StateEventId.h"
-#include "state/StateEvent.h"
-#include "state/TabEvent.h"
 #include "state/Skills.h"
 #endif

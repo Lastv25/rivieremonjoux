@@ -20,6 +20,7 @@ void BackCommand::execute (state::State* state){
   } else {
     state->getGrid()->replaceElement(state->getChar()->getFullList().back(),state->getChar()->getElementsTypes().back(),0);
     state->getChar()->EraseLast();
+    state->Operator();
   }
 
 }

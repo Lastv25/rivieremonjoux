@@ -25,7 +25,7 @@ void CreateDungeonCommand::execute (state::State* state){
   } else {
     state->getChar()->add(state->getGrid()->get(0,0),"Village");
     state->getGrid()->replaceElement(new state::Dungeon(maps,v->getTeam()),"Dungeon",0);
-
+    state->Operator();
   }
 
 }

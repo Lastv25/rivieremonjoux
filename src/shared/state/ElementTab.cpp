@@ -43,11 +43,10 @@ void ElementTab::replaceElement (Element* e,std::string type,int i){
 }
 
 void ElementTab::EraseLast(){
-
   this->listElements.pop_back();
   this->listClassNames.pop_back();
 }
 
-Element* ElementTab::Operator (int i, int j){
-
+void ElementTab::Operator (){
+  notifyObserver(new Event(2));
  }

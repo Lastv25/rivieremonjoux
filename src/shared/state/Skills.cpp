@@ -1,6 +1,7 @@
 #include "Skills.h"
 #include <vector>
 #include <iostream>
+#include <random>
 using namespace state ;
 using namespace std;
 
@@ -42,6 +43,21 @@ void Skills::setSkillList (std::vector<std::string> newSkillList){
 void Skills::addSkill (std::string skillName){
   this->skillList.push_back(skillName);
 }
+bool Skills::isCrit(){
+  return rand()/(RAND_MAX +1.0)< this->userCharacter->getCrit()/100;
+}
 void Skills::Attack (Character* user, Character* receiver){
+  int attValue = user->getATT();
+  int defValue = receiver->getDEF();
+
+  if (isCrit()){
+    cout << "Critical Hit: " ;
+    cout << attValue*2-defValue << endl;
+    receiver->setLife(attValue*2-defValue);
+  } else {
+    cout << "Damages: " ;
+    cout << attValue-defValue << endl;
+    receiver->setLife(attValue-defValue);
+  } 
 
 }

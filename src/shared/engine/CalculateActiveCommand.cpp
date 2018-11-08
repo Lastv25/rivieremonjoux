@@ -59,6 +59,7 @@ void CalculateActiveCommand::execute (state::State* states){
     isMonster.erase(isMonster.begin()+intermediary_pos);
   }
   states->setOrder(order);
+  states->Operator();
 
 
 }

@@ -39,10 +39,11 @@ std::string ElementTabLayer::getText (){
 
 void ElementTabLayer::getElementTabTextures (){
   for (uint index=0; index<this->elementTab->getSize(); index++ ){
+    cout <<this->elementTab->getElementType(index) << endl;
     if (this->elementTab->getElementType(index).find("Room") != std::string::npos){
       float testTeamMonster = 0;
       float testTeamMonster2 = 0;
-      cout << "Room found" << endl;
+      //cout << "Room found" << endl;
       RoomDisplay* droom = new RoomDisplay(this->elementTab->get(index,0));
       droom->getCharacter();
       for (uint i=0; i<droom->getRoomImages().size(); i++ ){
@@ -102,7 +103,7 @@ void ElementTabLayer::getElementTabTextures (){
       txtcoords.push_back(800.f);
       setTextcoords(txtcoords);
     } else if (this->elementTab->getElementType(index).find("Village") != std::string::npos){
-      cout << "Village found" << endl;
+      //cout << "Village found" << endl;
       VillageDisplay* dvillage = new VillageDisplay();
       Surface* s= new Surface(100,100,100,100);
       s->loadTexture(dvillage->getVillageImages()[0]);
@@ -110,7 +111,7 @@ void ElementTabLayer::getElementTabTextures (){
       setSurface(s);
       setTitle(dvillage->getDisplayText());
     } else if (this->elementTab->getElementType(index).find("Dungeon") != std::string::npos){
-      cout << "Dungeon found" << endl;
+      //cout << "Dungeon found" << endl;
       DungeonDisplay* ddungeon = new DungeonDisplay(this->elementTab->get(index,0));
       setTitle(ddungeon->getDisplayText());
       setText(ddungeon->getDungeonList());
@@ -119,11 +120,11 @@ void ElementTabLayer::getElementTabTextures (){
       txtcoords.push_back(400.f);
       setTextcoords(txtcoords);
     } else if (this->elementTab->getElementType(index).find("Tavern") != std::string::npos){
-      cout << "Tavern found" << endl;
+      //cout << "Tavern found" << endl;
     } else if (this->elementTab->getElementType(index).find("Shop") != std::string::npos){
-      cout << "Shop found" << endl;
+      //cout << "Shop found" << endl;
     } else {
-      cout << "Invelid element Tab" << endl;
+      //cout << "Invelid element Tab" << endl;
     }
   }
 }

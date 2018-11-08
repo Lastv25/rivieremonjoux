@@ -34,3 +34,6 @@ std::vector<std::pair<bool,std::string>> State::getOrder (){
 void State::addToOrder (std::pair<bool,std::string> newPair){
   this->activeOrder.push_back(newPair);
 }
+void State::Operator (){
+  notifyObserver(new Event(2));
+}

@@ -43,3 +43,11 @@ void Team::removeFromTeam (Character* character){
   }
   this->ListPerso =oldTeam;
 }
+int Team::getPos (std::string charaName){
+  for (uint i=0; i< this->ListPerso.size();i++){
+    std::string name =this->ListPerso[i]->getName();
+    if (name.find(charaName)!= std::string::npos){
+      return i;
+    }
+  }
+}

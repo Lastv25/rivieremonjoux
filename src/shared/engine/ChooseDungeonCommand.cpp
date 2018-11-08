@@ -64,5 +64,6 @@ void ChooseDungeonCommand::execute (state::State* states){
   Dungeon* dungeon = (Dungeon*) states->getGrid()->get(0,0);
   dungeon->setRoomList(rooms);
   states->getGrid()->replaceElement(dungeon,"Dungeon",0);
+  states->Operator();
 
 }

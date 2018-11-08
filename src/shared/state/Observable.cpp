@@ -23,4 +23,11 @@ void Observable::unregisterObserver (Observer* o){
   }
 }
 void Observable::notifyObserver (Event* e){
+  this->observers[0]->stateChanged(e);
+}
+const std::vector<Observer*>& Observable::getObservers() const{
+  return this->observers;
+}
+void Observable::setObservers(const std::vector<Observer*>& observers){
+  this->observers=observers;
 }

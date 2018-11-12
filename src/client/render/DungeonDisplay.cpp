@@ -13,12 +13,7 @@ DungeonDisplay::DungeonDisplay (){
 }
 DungeonDisplay::DungeonDisplay (state::Element* e){
   state::Dungeon* d = (state::Dungeon*) e;
-  std::vector<std::string> maps =d->getMapNames();
-  std::string intermediary;
-  for (uint i=0;i<maps.size();i++){
-    intermediary=maps[i]+"\n";
-  }
-  this->dungeonList=intermediary;
+  this->dungeonList=d->getMapNames();
 }
 //Destructor
 DungeonDisplay::~DungeonDisplay (){
@@ -33,9 +28,9 @@ std::vector<std::string> DungeonDisplay::getDungeonImages (){
 std::string DungeonDisplay::getDisplayText (){
   return this->displayText;
 }
-std::string DungeonDisplay::getDungeonList (){
+std::vector<std::string> DungeonDisplay::getDungeonList (){
   return this->dungeonList;
 }
-void DungeonDisplay::setDungeonList (std::string newList){
+void DungeonDisplay::setDungeonList (std::vector<std::string> newList){
   this->dungeonList = newList;
 }

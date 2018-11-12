@@ -54,3 +54,20 @@ const std::vector<float>& Layer::getTextcoords() const{
 void Layer::setTextcoords(const std::vector<float>& textcoords){
   this->textcoords = textcoords;
 }
+bool Layer::getDrawText() const{
+  return this->drawText;
+}
+void Layer::setDrawText(bool drawText){
+  this->drawText = drawText;
+}
+bool Layer::getDrawSprite() const{
+  return this->drawSprite;
+}
+void Layer::setDrawSprite(bool drawSprite){
+  this->drawSprite = drawSprite;
+}
+void Layer::clearSurfaces(){
+  //this->buttonsSurfacePos.clear();
+  //this->buttonsSurface.clear();
+  this->surface.clear();
+}

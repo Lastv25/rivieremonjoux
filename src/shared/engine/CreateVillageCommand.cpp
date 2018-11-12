@@ -14,5 +14,4 @@ CommandTypeId CreateVillageCommand::getCommandTypeId (){
 }
 void CreateVillageCommand::execute (state::State* state){
   state->getGrid()->add(new state::Village(),"Village");
-  state->Operator();
 }

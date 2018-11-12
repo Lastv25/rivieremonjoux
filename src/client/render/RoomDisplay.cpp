@@ -26,7 +26,7 @@ std::string RoomDisplay::getDisplayText (){
 }
 
 std::string RoomDisplay::getCharacter (){
-  cout << "GetCharacter" << endl;
+
   std::vector<state::Character*> Heros = HeroTeam->getTeam();
   std::vector<state::Character*> Monsters = MonsterTeam->getTeam();
   std::vector<std::string> intermediaryList;
@@ -41,6 +41,7 @@ std::string RoomDisplay::getCharacter (){
     this->listElementsinRoom.push_back(intermediaryList[i]);
     tmp += 1;
   }
+  //cout <<"Monster Team size: "<< Monsters.size() <<endl;
   for(uint i=0; i< Monsters.size();i++){
     //cout << "res/"+Monsters[i]->getName()+".png" << endl;
     intermediaryList.push_back("res/"+Monsters[i]->getName()+".png");

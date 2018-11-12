@@ -8,10 +8,10 @@
 #include "engine/CreateRoomCommand.h"
 #include "engine/UseSkillCommand.h"
 #include "engine/CreateVillageCommand.h"
-#include "engine/Button.h"
-#include "engine/Engine.h"
-#include "engine/ChooseDungeonCommand.h"
 #include "engine/ChangeActiveCommand.h"
 #include "engine/CalculateActiveCommand.h"
+#include "engine/ChooseDungeonCommand.h"
 #include "engine/BackCommand.h"
+#include "engine/Engine.h"
+#include "engine/Button.h"
 #endif

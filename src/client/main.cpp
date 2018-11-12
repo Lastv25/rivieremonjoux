@@ -331,34 +331,47 @@ int main(int argc,char* argv[])
           Observer* o = new Observer();
           State* s = new State();
           Engine* e = new Engine(s);
-          Scene* scene = new Scene(s);
-          Button* button = new Button();
+          Button* button = new Button(e);
+          Scene* scene = new Scene(s,button);
           s->registerObserver(o);
 
           sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1440,1160), "Darkest Dungeon Like");
 
-          cout << "Affichage des Elements de States" << endl;
-          cout << "Grid" << endl;
-          affichagebeauVect(s->getGrid()->getElementsTypes());
-          cout << "Char" << endl;
-          affichagebeauVect(s->getChar()->getElementsTypes());
           cout << "Command: Creation of the Village" << endl;
           e->addCommand(3);
           e->update();
-          cout << "Grid" << endl;
-          affichagebeauVect(s->getGrid()->getElementsTypes());
-          cout << "Char" << endl;
-          affichagebeauVect(s->getChar()->getElementsTypes());
-          while(1){
-            scene->stateChanged(s);
-            scene->draw(window);
-            button->setCommand(scene->getButtonPressed());
-            for (uint i=0; i<button->getCommands().size() ; i++){
-              e->addCommand(button->getCommands()[i]);
-            }
-            button->setCommand("None");
-            e->update();
-          }
+          cout << "Team composed of a Tank, a Range and an Assassin" << endl;
+          Team* team = new Team();
+          Village* v= (Village*) s->getGrid()->get(0,0);
+          Tank* tank = new Tank(10,20,3,40,5,"Tank");
+          Range* range = new Range(10,20,3,40,5,"Range");
+          Assassin* assassin = new Assassin(10,20,3,40,5,"Assassin");
+          team->addToTeam(tank);
+          team->addToTeam(range);
+          team->addToTeam(assassin);
+          v->setTeam(team);
+          s->getGrid()->replaceElement(v,"Village",0);
+
+          scene->draw(window);
+
+          // while(1){
+          //
+          //   cout << 0 << endl;
+          //   if (scene->getButtonPressed().find("None")==std::string::npos){
+          //     cout << 1 << endl;
+          //     button->setCommand(scene->getButtonPressed());
+          //     cout << 2 << endl;
+          //     for (uint i=0; i<button->getCommands().size() ; i++){
+          //       cout << 3+2*i << endl;
+          //       e->addCommand(button->getCommands()[i]);
+          //       cout << 4+2*i << endl;
+          //     }
+          //     button->setCommand("None");
+          //     cout << 101 << endl;
+          //   }
+          //   e->update();
+          //   cout << 110 << endl;
+          // }
           // cout << "Affichage des Elements de States" << endl;
           // cout << "Grid" << endl;
           // affichagebeauVect(s->getGrid()->getElementsTypes());

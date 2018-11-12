@@ -46,8 +46,11 @@ void Team::removeFromTeam (Character* character){
 int Team::getPos (std::string charaName){
   for (uint i=0; i< this->ListPerso.size();i++){
     std::string name =this->ListPerso[i]->getName();
+    cout << this->ListPerso[i]->getName() << endl;
     if (name.find(charaName)!= std::string::npos){
       return i;
+    } else {
+      return 1010;
     }
   }
 }

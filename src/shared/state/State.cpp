@@ -37,3 +37,9 @@ void State::addToOrder (std::pair<bool,std::string> newPair){
 void State::Operator (){
   notifyObserver(new Event(2));
 }
+bool State::getDungeonExists (){
+  return this->dungeon_exists;
+}
+void State::setDungeonExists (bool exists){
+  this->dungeon_exists=exists;
+}

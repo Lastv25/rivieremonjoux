@@ -16,5 +16,6 @@ void Observer::stateChanged(Event* e){
     cout << "State Event" << endl;
   } else {
     cout << "Tab Event" << endl;
+    
   }
 }

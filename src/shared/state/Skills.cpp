@@ -49,15 +49,16 @@ bool Skills::isCrit(){
 void Skills::Attack (Character* user, Character* receiver){
   int attValue = user->getATT();
   int defValue = receiver->getDEF();
+  int currentLife = receiver->getLife();
 
   if (isCrit()){
-    cout << "Critical Hit: " ;
+    cout << "Critical Hit to " <<receiver->getName()<<": " ;
     cout << attValue*2-defValue << endl;
     receiver->setLife(attValue*2-defValue);
   } else {
-    cout << "Damages: " ;
+    cout << "Damages to " <<receiver->getName()<<": " ;
     cout << attValue-defValue << endl;
-    receiver->setLife(attValue-defValue);
-  } 
+    receiver->setLife(currentLife-(attValue-defValue));
+  }
 
 }

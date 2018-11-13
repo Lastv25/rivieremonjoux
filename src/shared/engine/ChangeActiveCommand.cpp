@@ -20,17 +20,24 @@ void ChangeActiveCommand::execute (state::State* state){
   std::vector<std::pair<bool,std::string>> Order = state->getOrder();
   bool skip =false;
 
+  // cout <<"Hero Team: ";
+  // for (uint i=0;i<room->getHeroTeam()->getTeam().size();i++){cout <<room->getHeroTeam()->getTeam()[i]->getName();}
+  // cout <<endl;
+  // cout <<"Monster Team: ";
+  // for (uint i=0;i<room->getMonsterTeam()->getTeam().size();i++){cout <<room->getMonsterTeam()->getTeam()[i]->getName();}
+  // cout <<endl;
 
   if (Order.size() ==0){
     cout << "Recalculate the order for the next turn" << endl;
   } else {
+    Order.push_back(Order[0]);
     Order.erase(Order.begin());
     if (!std::get<0>(Order[0])){
 
       state::Character* newActive;
       std::vector<state::Character*> intermediary=room->getHeroTeam()->getTeam();
       int pos = room->getHeroTeam()->getPos(std::get<1>(Order[0]));
-      cout << std::get<1>(Order[0])<<pos << endl;
+      // cout << "Change Active: "<<std::get<1>(Order[0])<<" Pos: "<< pos << endl;
       if(pos != 1010){
         state->setActiveChara(Order[0]);
         newActive = intermediary[pos];
@@ -60,7 +67,7 @@ void ChangeActiveCommand::execute (state::State* state){
 
    if (skip){
      Order.erase(Order.begin());
-     if (std::get<0>(Order[0])){
+     if (!std::get<0>(Order[0])){
 
        state::Character* newActive;
        std::vector<state::Character*> intermediary=room->getHeroTeam()->getTeam();

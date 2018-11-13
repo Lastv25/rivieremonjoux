@@ -70,4 +70,6 @@ void Layer::clearSurfaces(){
   //this->buttonsSurfacePos.clear();
   //this->buttonsSurface.clear();
   this->surface.clear();
+  this->coords.clear();
+  this->textcoords.clear();
 }

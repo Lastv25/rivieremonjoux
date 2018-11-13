@@ -44,13 +44,21 @@ void Team::removeFromTeam (Character* character){
   this->ListPerso =oldTeam;
 }
 int Team::getPos (std::string charaName){
+  bool found =false;
+  int intermediary;
+  //cout << "Size Team:" << this->ListPerso.size() << " Character to find: "<<charaName<< endl;
   for (uint i=0; i< this->ListPerso.size();i++){
     std::string name =this->ListPerso[i]->getName();
-    cout << this->ListPerso[i]->getName() << endl;
+    //cout <<"Perso in team: "<< this->ListPerso[i]->getName() <<" ";
     if (name.find(charaName)!= std::string::npos){
-      return i;
-    } else {
-      return 1010;
+      intermediary = i;
+      found=true;
     }
+  }
+  cout << endl;
+  if (found){
+    return intermediary;
+  } else {
+    return 1010;
   }
 }

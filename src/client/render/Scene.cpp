@@ -63,6 +63,7 @@ void Scene::draw (sf::RenderWindow* window){
 
           sprite = this->tabLayer->getSurface(i)->getSprite();
           sprite.setPosition(this->tabLayer->getCoords()[i][0],this->tabLayer->getCoords()[i][1]);
+          //cout <<"sx: "<<this->tabLayer->getCoords()[i][2]<< " sy: "<<this->tabLayer->getCoords()[i][3]<<endl;
           sprite.scale(this->tabLayer->getCoords()[i][2],this->tabLayer->getCoords()[i][3]);
           window->draw(sprite);
         }
@@ -81,9 +82,9 @@ void Scene::draw (sf::RenderWindow* window){
         text.setFont(font);
         text.setCharacterSize(35);
         text.move(this->tabLayer->getTextcoords()[0],this->tabLayer->getTextcoords()[1]);
-
+        window->draw(text);
+        //cout <<"x: "<<this->tabLayer->getTextcoords()[0]<< " y: "<<this->tabLayer->getTextcoords()[1]<<endl;
       }
-      window->draw(text);
     }
     //cout << 3;
 
@@ -123,9 +124,11 @@ void Scene::draw (sf::RenderWindow* window){
                  this->buttonPressed->setCommand(std::get<0>(this->tabLayer->getButton(i)));
                  this->buttonPressed->setAdditionalParam(std::get<0>(this->tabLayer->getButton(i)));
                  this->buttonPressed->sendToEngine();
-                 if (std::get<0>(this->tabLayer->getButton(i)).find("Attack")==std::string::npos){
+                 if (std::get<0>(this->tabLayer->getButton(i)).find("Attack")==std::string::npos or std::get<0>(this->tabLayer->getButton(i)).find("Next Turn")==std::string::npos){
                    this->stateChangedBool = true;
                    this->tabLayer->setSkillUsed(true);
+                   this->tabLayer->setAlreadyDisplayedOnce("None");
+
                  }
 
 

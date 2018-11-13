@@ -21,12 +21,14 @@ CommandTypeId CreateRoomCommand::getCommandTypeId (){
 void CreateRoomCommand::execute (state::State* state){
   if (state->getDungeonExists()){
     state::Dungeon* d = (state::Dungeon*) state->getGrid()->get(0,0);
+    std::pair<bool,std::string> active = state->getOrder()[0];
+
     if (d->getRoomList().size() == 0){
       cout << "The Dungeon is Cleared" << endl;
     } else {
       std::map<std::string,state::Team*> roomlist =d->getRoomList();
-      bool intermediary_isMonster = std::get<0>(state->getActiveChara());
-      std::string intermediary_activeName = std::get<1>(state->getActiveChara());
+      bool intermediary_isMonster = std::get<0>(active);
+      std::string intermediary_activeName = std::get<1>(active);
       int pos;
 
       if (!intermediary_isMonster){

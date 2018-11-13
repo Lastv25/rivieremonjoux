@@ -73,20 +73,24 @@ bool ElementTabLayer::getSkillUsed (){
 void ElementTabLayer::setSkillUsed (bool isUsed){
   this->skillUsed=isUsed;
 }
-
+void ElementTabLayer::setAlreadyDisplayedOnce (std::string newDisplay){
+  this->alreadyDisplayedOnce=newDisplay;
+}
 void ElementTabLayer::getElementTabTextures (){
 
   for (uint index=0; index<this->elementTab->getSize(); index++ ){
 
     //cout << "Already Displayed: "<<this->alreadyDisplayedOnce << endl;
     if (this->elementTab->getElementType(index).find("Room") != std::string::npos){
-      if (this->alreadyDisplayedOnce.find("Room") == std::string::npos || this->skillUsed) {
+      if (this->alreadyDisplayedOnce.find("Room") == std::string::npos ) {
         float testTeamMonster = 0;
         float testTeamMonster2 = 0;
         cout << "Room found" << endl;
+
         RoomDisplay* droom = new RoomDisplay(this->elementTab->get(index,0));
         droom->getCharacter();
         for (uint i=0; i<droom->getRoomImages().size(); i++ ){
+          //cout << droom->getRoomImages()[i] <<endl;
           if (droom->getRoomImages()[i].find("background") != std::string::npos){
             Surface* s= new Surface(100,100,100,100);
             s->loadTexture(droom->getRoomImages()[i]);
@@ -123,6 +127,7 @@ void ElementTabLayer::getElementTabTextures (){
               }
             } else {
               if(droom->getRoomImages()[i].find(droom->getActiveName()) != std::string::npos){
+                //cout <<testTeamMonster<<endl;
                 float cords[]={1000.f+testTeamMonster*150,400,-1,1};
                 addCoords(std::vector<float>(cords,cords+sizeof(cords)/sizeof(float)));
                 testTeamMonster2 +=1;
@@ -143,6 +148,7 @@ void ElementTabLayer::getElementTabTextures (){
         txtcoords.push_back(50.f);
         txtcoords.push_back(800.f);
         setTextcoords(txtcoords);
+        
         setDrawText(true);
         setDrawSprite(true);
 
@@ -157,7 +163,7 @@ void ElementTabLayer::getElementTabTextures (){
         setButtonSurface(buttonsSurface);
         std::vector<float> bcoords = {1200.f,50.f};
         addButton(std::pair<std::string,std::vector<float>>("Back",bcoords));
-        addButtonScale(50.f,1100.f,0.5f,0.5f);
+        addButtonScale(50.f,1100.f,1.5f,1.5f);
 
         Surface* buttonsSurface2= new Surface(100,100,100,100);
         buttonsSurface2->loadTexture(this->buttonsSprite);

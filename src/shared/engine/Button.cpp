@@ -38,7 +38,7 @@ std::vector<int> Button::getCommands (){
   } else if(this->button.find("Attack")!=std::string::npos){
     this->commands.push_back(4);
   }else if(this->button.find("Next Turn")!=std::string::npos){
-    //this->commands.push_back(6);
+    this->commands.push_back(6);
   }else {
     this->commands.push_back(1);
     this->commands.push_back(7);

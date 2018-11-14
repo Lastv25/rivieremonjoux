@@ -11,11 +11,12 @@ using namespace sf;
 Scene::Scene (){
 }
 
-Scene::Scene (state::State* state,engine::Button* button){
+Scene::Scene (state::State* state,engine::Button* button,ai::RandomAI* rai){
 
   this->state = state;
   this->tabLayer = new ElementTabLayer(state->getGrid());
   this->buttonPressed = button;
+  this->rai = rai;
 
 }
 //Destructor
@@ -112,7 +113,7 @@ void Scene::draw (sf::RenderWindow* window){
          if(event.type == sf::Event::Closed){
              window->close();
          } else if (event.type == sf::Event::KeyPressed){
-          ai::RandomAI* rai = new ai::RandomAI();
+
           // engine::Command* c1 = new Command();
           // c1->setCommandTypeId(UseSkill);
           // engine::Command* c2 = new Command();
@@ -120,11 +121,15 @@ void Scene::draw (sf::RenderWindow* window){
           std::string c1 = "Attack";
           std::string c2 = "Next Turn";
           std::vector<std::string> l={c1,c2} ;
+
           //l.push_back("UseSkill");
-          std::string actionia = rai->run(l);
-          this->buttonPressed->setCommand(actionia);
-          this->buttonPressed->setAdditionalParam(actionia);
+          std::vector<std::string> actionia = this->rai->run(l);
+          this->buttonPressed->setCommand(actionia[0]);
+          this->buttonPressed->setAdditionalParam(actionia[1]);
           this->buttonPressed->sendToEngine();
+          this->stateChangedBool = true;
+          this->tabLayer->setAlreadyDisplayedOnce("None");
+
         } else if (event.type == sf::Event::MouseButtonPressed){
            if(event.mouseButton.button == sf::Mouse::Left){
              if (this->clickSkill){

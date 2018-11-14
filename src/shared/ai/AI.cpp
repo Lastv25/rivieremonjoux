@@ -6,7 +6,7 @@
 
 using namespace std;
 using namespace ai;
-using namespace state;
+
 
 AI::AI(){
 

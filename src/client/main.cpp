@@ -12,6 +12,7 @@ using namespace std;
 using namespace state;
 using namespace render;
 using namespace engine;
+using namespace ai;
 using namespace sf;
 
 void renderWindow(ElementTabLayer* layer) {
@@ -331,8 +332,9 @@ int main(int argc,char* argv[])
           Observer* o = new Observer();
           State* s = new State();
           Engine* e = new Engine(s);
+          RandomAI* rai = new RandomAI(e,s);
           Button* button = new Button(e);
-          Scene* scene = new Scene(s,button);
+          Scene* scene = new Scene(s,button,rai);
           s->registerObserver(o);
 
           sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1440,1160), "Darkest Dungeon Like");
@@ -363,7 +365,8 @@ int main(int argc,char* argv[])
             State* s = new State();
             Engine* e = new Engine(s);
             Button* button = new Button(e);
-            Scene* scene = new Scene(s,button);
+            RandomAI* rai = new RandomAI(e,s);
+            Scene* scene = new Scene(s,button,rai);
             s->registerObserver(o);
             sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1440,1160), "Darkest Dungeon Like");
             e->addCommand(3);
@@ -392,7 +395,7 @@ int main(int argc,char* argv[])
         cout << "state : test des états du jeu" << endl;
         cout << "render : test de l'affichage d'un état" << endl;
         cout << "engine : test du moteur du jeu" << endl;
-        cout << "engine : test du moteur du jeu" << endl;
+        cout << "random_ai : test de l'ia aléatoire" << endl;
       }
     }
     return 0;

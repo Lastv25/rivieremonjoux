@@ -6,23 +6,35 @@
 #include <string>
 #include <vector>
 
+namespace engine {
+  class Engine;
+};
+namespace state {
+  class State;
+};
 namespace ai {
   class AI;
+};
+namespace state {
+  class Room;
 }
 
 #include "AI.h"
+#include "state/Room.h"
 
 namespace ai {
 
   /// class RandomAI - 
   class RandomAI : public ai::AI {
+    // Associations
     // Attributes
   private:
     std::mt19937 randgen;
     // Operations
   public:
-    std::string run (std::vector<std::string>& list);
+    std::vector<std::string> run (std::vector<std::string>& list);
     RandomAI ();
+    RandomAI (engine::Engine* engine, state::State* state);
     ~RandomAI ();
     // Setters and Getters
   };

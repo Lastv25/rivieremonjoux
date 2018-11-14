@@ -29,6 +29,7 @@ CommandTypeId UseSkillCommand::getCommandTypeId (){
 void UseSkillCommand::execute (state::State* state){
   state::Room* room = (state::Room*) state->getGrid()->get(0,0);
   state::Character* attacker = room ->getActive();
+
   if (!this->specifiedReciever){
     std::vector<state::Character*> intermediary= room->getMonsterTeam()->getTeam();
     this->receiver=intermediary[0];
@@ -42,6 +43,7 @@ void UseSkillCommand::execute (state::State* state){
     }
 
   }
+
   std::vector<std::string> skillList = attacker->getSkillList();
   for (uint i=0;i< skillList.size();i++){
 
@@ -49,6 +51,7 @@ void UseSkillCommand::execute (state::State* state){
     if (skillList[i].find(this->skillName) != std::string::npos && skillList[i].find("attack") != std::string::npos){
 
       state::Skills* s = new state::Skills(attacker,this->receiver);
+      
       s->Attack(attacker,this->receiver);
       cout <<this->receiver->getName() <<" life: "<< this->receiver->getLife()<<endl;
       if (this->receiver->getLife() == 0){
@@ -63,7 +66,6 @@ void UseSkillCommand::execute (state::State* state){
           newTeam->removeFromTeam(this->receiver);
           room->setHeroTeam(newTeam);
         }
-
       }
     }
   }

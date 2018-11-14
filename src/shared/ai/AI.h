@@ -7,23 +7,31 @@
 
 namespace engine {
   class Engine;
+};
+namespace state {
+  class State;
 }
 
-#include "engine/Engine.h"
+#include "state/State.h"
 
 namespace ai {
 
   /// class AI - 
   class AI {
     // Attributes
-  public:
-    engine::Engine engine;
+  protected:
+    engine::Engine* engine;
+    state::State* state;
     // Operations
   public:
     std::string run (std::vector<std::string>& list);
     AI ();
     ~AI ();
     // Setters and Getters
+    const engine::Engine*& getEngine() const;
+    void setEngine(const engine::Engine*& engine);
+    const state::State*& getState() const;
+    void setState(const state::State*& state);
   };
 
 };

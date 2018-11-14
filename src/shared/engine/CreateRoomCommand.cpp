@@ -44,7 +44,7 @@ void CreateRoomCommand::execute (state::State* state){
       }
       state->getChar()->add(state->getGrid()->get(0,0),"Dungeon");
       state->getGrid()->replaceElement(new state::Room(d->getHeroTeam(),roomlist[this->roomName],intermediary_isMonster,pos),"Room",0);
-      cout <<"Here"<<endl;
+      
     }
   }
 }

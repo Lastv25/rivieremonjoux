@@ -99,12 +99,12 @@ void ElementTabLayer::getElementTabTextures (){
             float cords[]={0,0,1,1};
             addCoords(std::vector<float>(cords,cords+sizeof(cords)/sizeof(float)));
           } else if (droom->getRoomImages()[i].find("map") != std::string::npos){
-            Surface* s= new Surface(100,100,100,100);
-            s->loadTexture(droom->getRoomImages()[i]);
-            s->setSprite();
-            setSurface(s);
-            float cords[]={550,750,1,1};
-            addCoords(std::vector<float>(cords,cords+sizeof(cords)/sizeof(float)));
+            // Surface* s= new Surface(100,100,100,100);
+            // s->loadTexture(droom->getRoomImages()[i]);
+            // s->setSprite();
+            // setSurface(s);
+            // float cords[]={550,750,1,1};
+            // addCoords(std::vector<float>(cords,cords+sizeof(cords)/sizeof(float)));
           } else if (droom->getRoomImages()[i].find("box") != std::string::npos){
             // Surface* s= new Surface(100,100,100,100);
             // s->loadTexture(droom->getRoomImages()[i]);
@@ -148,7 +148,7 @@ void ElementTabLayer::getElementTabTextures (){
         txtcoords.push_back(50.f);
         txtcoords.push_back(800.f);
         setTextcoords(txtcoords);
-        
+
         setDrawText(true);
         setDrawSprite(true);
 
@@ -169,7 +169,7 @@ void ElementTabLayer::getElementTabTextures (){
         buttonsSurface2->loadTexture(this->buttonsSprite);
         buttonsSurface2->setSprite();
         setButtonSurface(buttonsSurface2);
-        std::vector<float> bcoords2 = {1200.f,1000.f};
+        std::vector<float> bcoords2 = {450.f,750.f};
         addButton(std::pair<std::string,std::vector<float>>("Attack",bcoords2));
         addButtonScale(50.f,1100.f,0.5f,0.5f);
 
@@ -180,6 +180,43 @@ void ElementTabLayer::getElementTabTextures (){
         std::vector<float> bcoords3 = {100.f,50.f};
         addButton(std::pair<std::string,std::vector<float>>("Next Turn",bcoords3));
         addButtonScale(50.f,1100.f,0.5f,0.5f);
+
+        if (droom->getIsEmpty()){
+          Surface* buttonsSurface= new Surface(100,100,100,100);
+          buttonsSurface->loadTexture(this->buttonsSprite);
+          buttonsSurface->setSprite();
+          setButtonSurface(buttonsSurface);
+          std::vector<float> bcoords = {700.f,400.f};
+          addButton(std::pair<std::string,std::vector<float>>("Next Room",bcoords));
+          addButtonScale(50.f,1100.f,0.5f,0.5f);
+        }
+        //cout << "Skill Used: "<<getSkillUsed()<<endl;
+        if (getSkillUsed()){
+          //cout << "Active is: "<<droom->getActive()->isMonster()<<endl;;
+          if (droom->getActive()->isMonster()){
+            for (uint i=0;i< droom->getMonsterTeam()->getTeam().size();i++){
+              //cout << droom->getMonsterTeam()->getTeam()[i]->getName() <<endl;
+              Surface* buttonsSurface= new Surface(100,100,100,100);
+              buttonsSurface->loadTexture(this->buttonsSpriteSkills);
+              buttonsSurface->setSprite();
+              setButtonSurface(buttonsSurface);
+              std::vector<float> bcoords = {800.f,750.f+i*100};
+              addButton(std::pair<std::string,std::vector<float>>(droom->getMonsterTeam()->getTeam()[i]->getName(),bcoords));
+              addButtonScale(50.f,1100.f,0.5f,0.5f);
+            }
+          } else{
+            for (uint i=0;i< droom->getHeroTeam()->getTeam().size();i++){
+              //cout << droom->getMonsterTeam()->getTeam()[i]->getName() <<endl;
+              Surface* buttonsSurface= new Surface(100,100,100,100);
+              buttonsSurface->loadTexture(this->buttonsSpriteSkills);
+              buttonsSurface->setSprite();
+              setButtonSurface(buttonsSurface);
+              std::vector<float> bcoords = {800.f,750.f+i*100};
+              addButton(std::pair<std::string,std::vector<float>>(droom->getHeroTeam()->getTeam()[i]->getName(),bcoords));
+              addButtonScale(50.f,1100.f,0.5f,0.5f);
+            }
+          }
+        }
 
         this->alreadyDisplayedOnce = "Room";
         setSkillUsed(false);

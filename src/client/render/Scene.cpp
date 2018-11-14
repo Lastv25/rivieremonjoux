@@ -111,25 +111,69 @@ void Scene::draw (sf::RenderWindow* window){
      {
          if(event.type == sf::Event::Closed){
              window->close();
-         } else if (event.type == sf::Event::MouseButtonPressed){
+         } else if (event.type == sf::Event::KeyPressed){
+          ai::RandomAI* rai = new ai::RandomAI();
+          // engine::Command* c1 = new Command();
+          // c1->setCommandTypeId(UseSkill);
+          // engine::Command* c2 = new Command();
+          // c2->setCommandTypeId(ChangeActive);
+          std::string c1 = "Attack";
+          std::string c2 = "Next Turn";
+          std::vector<std::string> l={c1,c2} ;
+          //l.push_back("UseSkill");
+          std::string actionia = rai->run(l);
+          this->buttonPressed->setCommand(actionia);
+          this->buttonPressed->setAdditionalParam(actionia);
+          this->buttonPressed->sendToEngine();
+        } else if (event.type == sf::Event::MouseButtonPressed){
            if(event.mouseButton.button == sf::Mouse::Left){
-             for (uint i=0;i<this->tabLayer->getButtonsSurface().size();i++){
-               //cout << this->tabLayer->getButtonsSurface().size() << endl;
-               float x =std::get<1>(this->tabLayer->getButton(i))[0];
-               float y =std::get<1>(this->tabLayer->getButton(i))[1];
-               if (x < event.mouseButton.x && event.mouseButton.x < x+150 && y < event.mouseButton.y && event.mouseButton.y< y+50){
-                 // cout << "mouse x: " <<event.mouseButton.x ;
-                 // cout << "  mouse y: " <<event.mouseButton.y ;
-                 // cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
-                 this->buttonPressed->setCommand(std::get<0>(this->tabLayer->getButton(i)));
-                 this->buttonPressed->setAdditionalParam(std::get<0>(this->tabLayer->getButton(i)));
-                 this->buttonPressed->sendToEngine();
-                 if (std::get<0>(this->tabLayer->getButton(i)).find("Attack")==std::string::npos or std::get<0>(this->tabLayer->getButton(i)).find("Next Turn")==std::string::npos){
+             if (this->clickSkill){
+               for (uint i=0;i<this->tabLayer->getButtonsSurface().size();i++){
+                 float x =std::get<1>(this->tabLayer->getButton(i))[0];
+                 float y =std::get<1>(this->tabLayer->getButton(i))[1];
+                 if (x < event.mouseButton.x && event.mouseButton.x < x+150 && y < event.mouseButton.y && event.mouseButton.y< y+50){
+                   cout << "mouse x: " <<event.mouseButton.x ;
+                   cout << "  mouse y: " <<event.mouseButton.y ;
+                   cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
+                   this->buttonPressed->setCommand("Attack");
+                   this->buttonPressed->setAdditionalParam(std::get<0>(this->tabLayer->getButton(i)));
                    this->stateChangedBool = true;
-                   this->tabLayer->setSkillUsed(true);
+                   this->tabLayer->setSkillUsed(false);
                    this->tabLayer->setAlreadyDisplayedOnce("None");
-
+                   this->buttonPressed->sendToEngine();
+                   this->clickSkill= false;
                  }
+               }
+             } else {
+               for (uint i=0;i<this->tabLayer->getButtonsSurface().size();i++){
+                 //cout << this->tabLayer->getButtonsSurface().size() << endl;
+                 float x =std::get<1>(this->tabLayer->getButton(i))[0];
+                 float y =std::get<1>(this->tabLayer->getButton(i))[1];
+                 if (x < event.mouseButton.x && event.mouseButton.x < x+150 && y < event.mouseButton.y && event.mouseButton.y< y+50){
+                   // cout << "mouse x: " <<event.mouseButton.x ;
+                   // cout << "  mouse y: " <<event.mouseButton.y ;
+                   // cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
+
+                   if (std::get<0>(this->tabLayer->getButton(i)).find("Attack")!=std::string::npos  ){
+                   //   this->stateChangedBool = true;
+                     this->tabLayer->setSkillUsed(true);
+                     this->tabLayer->setAlreadyDisplayedOnce("None");
+                     this->clickSkill= true;
+
+                 } else {
+                   this->buttonPressed->setCommand(std::get<0>(this->tabLayer->getButton(i)));
+                   this->buttonPressed->setAdditionalParam(std::get<0>(this->tabLayer->getButton(i)));
+                   this->buttonPressed->sendToEngine();
+                   this->stateChangedBool = true;
+                   if (std::get<0>(this->tabLayer->getButton(i)).find("Next Turn")!=std::string::npos){
+                      this->tabLayer->setAlreadyDisplayedOnce("None");
+                   } else if (std::get<0>(this->tabLayer->getButton(i)).find("Next Room")==std::string::npos ){
+                     this->stateChangedBool = true;
+                     this->tabLayer->setAlreadyDisplayedOnce("None");
+                   }
+                 }
+             }
+
 
 
 

@@ -36,3 +36,9 @@ Team* Dungeon::getHeroTeam (){
 void Dungeon::setHeroTeam (Team* newTeam){
   this->heroTeam=heroTeam;
 }
+void Dungeon::setCurrentRoom (std::string roomName){
+  this->currentRoom=roomName;
+}
+std::string Dungeon::getCurrentRoom (){
+  return this->currentRoom;
+}

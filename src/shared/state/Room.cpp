@@ -13,6 +13,7 @@ Room::Room (Team* heroTeam, Team* monsterTeam, bool activeType, int activepos):D
   } else {
     this->activeCharacter = heroTeam->getTeam()[activepos];
   }
+  this->isEmpty=false;
 }
 //Destructor
 Room::~Room (){
@@ -36,6 +37,12 @@ void Room::setActive (Character* character){
 }
 Character* Room::getActive (){
   return this->activeCharacter;
+}
+bool Room::setIsEmpty (bool empty){
+  this->isEmpty=empty;
+}
+bool Room::getIsEmpty (){
+  return this->isEmpty;
 }
 //Operations
 

@@ -16,6 +16,7 @@ RoomDisplay::RoomDisplay (state::Element* e){
   this->HeroTeam = room->getHeroTeam();
   this->MonsterTeam = room->getMonsterTeam();
   this->activeCharacter = room -> getActive();
+  this->isEmpty = room->getIsEmpty();
 }
 //Destructor
 RoomDisplay::~RoomDisplay (){
@@ -23,6 +24,9 @@ RoomDisplay::~RoomDisplay (){
 
 std::string RoomDisplay::getDisplayText (){
   return this->displayText;
+}
+bool RoomDisplay::getIsEmpty (){
+  return this->isEmpty;
 }
 
 std::string RoomDisplay::getCharacter (){
@@ -80,4 +84,13 @@ std::vector<std::string> RoomDisplay::getRoomImages (){
 
 std::string RoomDisplay::getActiveName(){
   return this->activeCharacter->getName();
+}
+state::Character* RoomDisplay::getActive (){
+  return this->activeCharacter;
+}
+state::Team* RoomDisplay::getHeroTeam (){
+  return this->HeroTeam;
+}
+state::Team* RoomDisplay::getMonsterTeam (){
+  return this->MonsterTeam;
 }

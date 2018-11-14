@@ -13,10 +13,10 @@ UseSkillCommand::UseSkillCommand (std::string skillName){
   this->skillName = skillName;
   this->specifiedReciever = false;
 }
-UseSkillCommand::UseSkillCommand (std::string skillName,state::Character* receiver){
+UseSkillCommand::UseSkillCommand (std::string skillName,std::string receiver){
   this->commandTypeId = UseSkill;
   this->skillName = skillName;
-  this->receiver = receiver;
+  this->receiverName = receiver;
   this->specifiedReciever = true;
 }
 //Destructor
@@ -32,6 +32,15 @@ void UseSkillCommand::execute (state::State* state){
   if (!this->specifiedReciever){
     std::vector<state::Character*> intermediary= room->getMonsterTeam()->getTeam();
     this->receiver=intermediary[0];
+  } else {
+    std::vector<state::Character*> intermediary= room->getMonsterTeam()->getTeam();
+    std::vector<state::Character*> intermediary2= room->getHeroTeam()->getTeam();
+    if (room->getMonsterTeam()->getPos(this->receiverName)!=1010){
+      this->receiver=intermediary[room->getMonsterTeam()->getPos(this->receiverName)];
+    } else{
+      this->receiver=intermediary2[room->getHeroTeam()->getPos(this->receiverName)];
+    }
+
   }
   std::vector<std::string> skillList = attacker->getSkillList();
   for (uint i=0;i< skillList.size();i++){

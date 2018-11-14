@@ -44,10 +44,10 @@ void ChooseDungeonCommand::execute (state::State* states){
 
       for (uint i=0; i<out.size();i++){
         if(out[i].find("Blob")!=std::string::npos){
-          state::Blob* b = new state::Blob(2,1,1,1,5,"Blob");
+          state::Blob* b = new state::Blob(20,1,2,1,5,"Blob");
           MonsterTeam->addToTeam(b);
         } else if(out[i].find("Sorcerer")!=std::string::npos){
-          state::Sorcerer* s = new state::Sorcerer(5,2,2,10,30,"Sorcerer");
+          state::Sorcerer* s = new state::Sorcerer(10,2,3,15,10,"Sorcerer");
           MonsterTeam->addToTeam(s);
         } else if(out[i].find("DarkKnight")!=std::string::npos){
           state::DarkKnight* d = new state::DarkKnight(5,2,2,10,30,"DarkKnight");
@@ -61,6 +61,7 @@ void ChooseDungeonCommand::execute (state::State* states){
 
     Dungeon* dungeon = (Dungeon*) states->getGrid()->get(0,0);
     dungeon->setRoomList(rooms);
+    dungeon->setCurrentRoom("0");
     states->getGrid()->replaceElement(dungeon,"Dungeon",0);
     states->setDungeonExists(true);
 

@@ -8,6 +8,7 @@
 #include "engine/CreateRoomCommand.h"
 #include "engine/UseSkillCommand.h"
 #include "engine/CreateVillageCommand.h"
+#include "engine/ChangeRoomCommand.h"
 #include "engine/ChangeActiveCommand.h"
 #include "engine/CalculateActiveCommand.h"
 #include "engine/ChooseDungeonCommand.h"

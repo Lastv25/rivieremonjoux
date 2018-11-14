@@ -36,9 +36,16 @@ void Engine::addCommand (int i ){
   } else if (i == 2){
     this->currentCommands.push_back(new CreateRoomCommand());
   } else if (i == 4){
-    this->currentCommands.push_back(new UseSkillCommand("attack"));
+    if (this->additionalParameters.find("None")!=std::string::npos){
+      this->currentCommands.push_back(new UseSkillCommand("attack"));
+    } else {
+      this->currentCommands.push_back(new UseSkillCommand("attack",this->additionalParameters));
+    }
+
   } else if (i == 6){
     this->currentCommands.push_back(new ChangeActiveCommand());
+  } else if (i == 9){
+    this->currentCommands.push_back(new ChangeRoomCommand());
   }
 
 }

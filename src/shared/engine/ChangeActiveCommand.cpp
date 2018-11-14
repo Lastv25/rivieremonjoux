@@ -19,78 +19,74 @@ void ChangeActiveCommand::execute (state::State* state){
   state::Room* room = (state::Room*) state->getGrid()->get(0,0);
   std::vector<std::pair<bool,std::string>> Order = state->getOrder();
   bool skip =false;
-
-  // cout <<"Hero Team: ";
-  // for (uint i=0;i<room->getHeroTeam()->getTeam().size();i++){cout <<room->getHeroTeam()->getTeam()[i]->getName();}
-  // cout <<endl;
-  // cout <<"Monster Team: ";
-  // for (uint i=0;i<room->getMonsterTeam()->getTeam().size();i++){cout <<room->getMonsterTeam()->getTeam()[i]->getName();}
-  // cout <<endl;
-
-  if (Order.size() ==0){
-    cout << "Recalculate the order for the next turn" << endl;
-  } else {
-    Order.push_back(Order[0]);
-    Order.erase(Order.begin());
-    if (!std::get<0>(Order[0])){
-
-      state::Character* newActive;
-      std::vector<state::Character*> intermediary=room->getHeroTeam()->getTeam();
-      int pos = room->getHeroTeam()->getPos(std::get<1>(Order[0]));
-      // cout << "Change Active: "<<std::get<1>(Order[0])<<" Pos: "<< pos << endl;
-      if(pos != 1010){
-        state->setActiveChara(Order[0]);
-        newActive = intermediary[pos];
-        room->setActive(newActive);
-        state->getGrid()->replaceElement(room,"Room",0);
-        state->setOrder(Order);
+  if (room->getMonsterTeam()->getTeam().size() == 0){
+    cout << "The room is empty" << endl;
+    room->setIsEmpty(true);
+  } else{
+      if (Order.size() ==0){
+        cout << "Recalculate the order for the next turn" << endl;
       } else {
-        skip =true;
+        Order.push_back(Order[0]);
+        Order.erase(Order.begin());
+        if (!std::get<0>(Order[0])){
+
+          state::Character* newActive;
+          std::vector<state::Character*> intermediary=room->getHeroTeam()->getTeam();
+          int pos = room->getHeroTeam()->getPos(std::get<1>(Order[0]));
+          // cout << "Change Active: "<<std::get<1>(Order[0])<<" Pos: "<< pos << endl;
+          if(pos != 1010){
+            state->setActiveChara(Order[0]);
+            newActive = intermediary[pos];
+            room->setActive(newActive);
+            state->getGrid()->replaceElement(room,"Room",0);
+            state->setOrder(Order);
+          } else {
+            skip =true;
+          }
+
+        } else {
+          state::Character* newActive;
+          std::vector<state::Character*> intermediary=room->getMonsterTeam()->getTeam();
+          int pos = room->getMonsterTeam()->getPos(std::get<1>(Order[0]));
+
+          if(pos != 1010){
+            state->setActiveChara(Order[0]);
+            newActive = intermediary[pos];
+            room->setActive(newActive);
+            state->getGrid()->replaceElement(room,"Room",0);
+            state->setOrder(Order);
+          } else {
+            skip =true;
+          }
+        }
       }
 
-    } else {
-      state::Character* newActive;
-      std::vector<state::Character*> intermediary=room->getMonsterTeam()->getTeam();
-      int pos = room->getMonsterTeam()->getPos(std::get<1>(Order[0]));
+       if (skip){
+         Order.erase(Order.begin());
+         if (!std::get<0>(Order[0])){
 
-      if(pos != 1010){
-        state->setActiveChara(Order[0]);
-        newActive = intermediary[pos];
-        room->setActive(newActive);
-        state->getGrid()->replaceElement(room,"Room",0);
-        state->setOrder(Order);
-      } else {
-        skip =true;
-      }
-    }
+           state::Character* newActive;
+           std::vector<state::Character*> intermediary=room->getHeroTeam()->getTeam();
+           int pos = room->getHeroTeam()->getPos(std::get<1>(Order[0]));
+
+           state->setActiveChara(Order[0]);
+           newActive = intermediary[pos];
+           room->setActive(newActive);
+           state->getGrid()->replaceElement(room,"Room",0);
+           state->setOrder(Order);
+
+
+         } else {
+           state::Character* newActive;
+           std::vector<state::Character*> intermediary=room->getMonsterTeam()->getTeam();
+           int pos = room->getMonsterTeam()->getPos(std::get<1>(Order[0]));
+
+           state->setActiveChara(Order[0]);
+           newActive = intermediary[pos];
+           room->setActive(newActive);
+           state->getGrid()->replaceElement(room,"Room",0);
+           state->setOrder(Order);
+         }
+       }
   }
-
-   if (skip){
-     Order.erase(Order.begin());
-     if (!std::get<0>(Order[0])){
-
-       state::Character* newActive;
-       std::vector<state::Character*> intermediary=room->getHeroTeam()->getTeam();
-       int pos = room->getHeroTeam()->getPos(std::get<1>(Order[0]));
-
-       state->setActiveChara(Order[0]);
-       newActive = intermediary[pos];
-       room->setActive(newActive);
-       state->getGrid()->replaceElement(room,"Room",0);
-       state->setOrder(Order);
-
-
-     } else {
-       state::Character* newActive;
-       std::vector<state::Character*> intermediary=room->getMonsterTeam()->getTeam();
-       int pos = room->getMonsterTeam()->getPos(std::get<1>(Order[0]));
-
-       state->setActiveChara(Order[0]);
-       newActive = intermediary[pos];
-       room->setActive(newActive);
-       state->getGrid()->replaceElement(room,"Room",0);
-       state->setOrder(Order);
-     }
-   }
-
 }

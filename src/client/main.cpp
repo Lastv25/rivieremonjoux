@@ -313,7 +313,7 @@ int main(int argc,char* argv[])
           t2->addToTeam(range);
           t2->addToTeam(assassin);
           t1->addToTeam(darkKnight);
-          Tavern* tav= new Tavern(t1,1);
+          Tavern* tav= new Tavern(t2,1);
           Inventory* inv= new Inventory();
           std::map<std::string,int> shopinventory;
           Shop* shop= new Shop(inv,shopinventory,12);
@@ -321,8 +321,9 @@ int main(int argc,char* argv[])
           dList.push_back("EngineTest");
           //Village* r = new Village(tav,shop,3,inv,t1); //Decomenter pour Obtenir l'affichage de l'etat village
           //Dungeon* r = new Dungeon(dList);
-          Room* r = new Room(t2,t1,0,1); //Decomenter pour Obtenir l'affichage de l'etat Room
-          e->add(r,elementClassNameToString(typeid(r).name()));
+          // Room* r = new Room(t2,t1,0,1); //Decomenter pour Obtenir l'affichage de l'etat Room
+          //Tavern* r = new Tavern(); //Decomenter pour Obtenir l'affichage de l'etat Room
+          e->add(tav,elementClassNameToString(typeid(tav).name()));
           ElementTabLayer* E =new ElementTabLayer(e);
           E->getElementTabTextures();
           renderWindow(E);

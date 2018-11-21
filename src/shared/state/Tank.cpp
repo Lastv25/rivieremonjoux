@@ -4,6 +4,8 @@ using namespace std;
 
 //Constructor
 Tank::Tank(int life, int att, int spd, int crit, int def,std::string name) : Hero(life,att, spd, crit, def,name){
+  this->skillList.push_back("HeavyAttack");
+  this->skillpoints = 15;
 }
 //Destructor
 Tank::~Tank(){

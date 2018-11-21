@@ -4,6 +4,8 @@ using namespace std;
 
 //Constructor
 Dragon::Dragon(int life, int att, int spd, int crit, int def,std::string name) : Monsters(life,att, spd, crit, def,name){
+  this->skillList.push_back("HeavyAttack");
+  this->skillpoints = 30;
 }
 //Destructor
 Dragon::~Dragon(){

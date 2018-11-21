@@ -4,6 +4,8 @@ using namespace std;
 
 //Constructor
 Assassin::Assassin(int life, int att, int spd, int crit, int def,std::string name) : Hero(life,att, spd, crit, def,name){
+  this->skillList.push_back("Poison");
+  this->skillpoints = 30;
 }
 //Destructor
 Assassin::~Assassin(){

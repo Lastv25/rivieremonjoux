@@ -152,3 +152,15 @@ bool Character::isMonster (){
 bool Character::isBoss (){
   return isboss;
 }
+int Character::getSkillpoints() const{
+  return this->skillpoints;
+}
+void Character::setSkillpoints(int skillpoints){
+  this->skillpoints=skillpoints;
+}
+int Character::getTurnEffect() const{
+  return this->turnEffect;
+}
+void Character::setTurnEffect(int turnEffect){
+  this->turnEffect=turnEffect;
+}

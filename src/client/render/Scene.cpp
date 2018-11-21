@@ -96,6 +96,7 @@ void Scene::draw (sf::RenderWindow* window){
         float y =std::get<1>(this->tabLayer->getButton(i))[1];
         sprite.setPosition(x,y);
         sprite.scale(this->tabLayer->getButtonPosScale(i)[2],this->tabLayer->getButtonPosScale(i)[3]);
+        //cout << "sx: " <<this->tabLayer->getButtonPosScale(i)[2]<<" sy: "<<this->tabLayer->getButtonPosScale(i)[3]<<endl;
         window->draw(sprite);
 
         sf::Font bfont;
@@ -137,10 +138,10 @@ void Scene::draw (sf::RenderWindow* window){
                  float x =std::get<1>(this->tabLayer->getButton(i))[0];
                  float y =std::get<1>(this->tabLayer->getButton(i))[1];
                  if (x < event.mouseButton.x && event.mouseButton.x < x+150 && y < event.mouseButton.y && event.mouseButton.y< y+50){
-                   cout << "mouse x: " <<event.mouseButton.x ;
-                   cout << "  mouse y: " <<event.mouseButton.y ;
-                   cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
-                   this->buttonPressed->setCommand("Attack");
+                   // cout << "mouse x: " <<event.mouseButton.x ;
+                   // cout << "  mouse y: " <<event.mouseButton.y ;
+                   // cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
+                   this->buttonPressed->setCommand(this->buttonPressed->getSkillName());
                    this->buttonPressed->setAdditionalParam(std::get<0>(this->tabLayer->getButton(i)));
                    this->stateChangedBool = true;
                    this->tabLayer->setSkillUsed(false);
@@ -159,8 +160,9 @@ void Scene::draw (sf::RenderWindow* window){
                    // cout << "  mouse y: " <<event.mouseButton.y ;
                    // cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
 
-                   if (std::get<0>(this->tabLayer->getButton(i)).find("Attack")!=std::string::npos  ){
+                   if (std::get<0>(this->tabLayer->getButton(i)).find("Attack")!=std::string::npos || std::get<0>(this->tabLayer->getButton(i)).find("Poison")!=std::string::npos  ){
                    //   this->stateChangedBool = true;
+                     this->buttonPressed->setSkillName(std::get<0>(this->tabLayer->getButton(i)));
                      this->tabLayer->setSkillUsed(true);
                      this->tabLayer->setAlreadyDisplayedOnce("None");
                      this->clickSkill= true;
@@ -170,9 +172,10 @@ void Scene::draw (sf::RenderWindow* window){
                    this->buttonPressed->setAdditionalParam(std::get<0>(this->tabLayer->getButton(i)));
                    this->buttonPressed->sendToEngine();
                    this->stateChangedBool = true;
+
                    if (std::get<0>(this->tabLayer->getButton(i)).find("Next Turn")!=std::string::npos){
                       this->tabLayer->setAlreadyDisplayedOnce("None");
-                   } else if (std::get<0>(this->tabLayer->getButton(i)).find("Next Room")==std::string::npos ){
+                   } else if (std::get<0>(this->tabLayer->getButton(i)).find("Next Room")!=std::string::npos ){
                      this->stateChangedBool = true;
                      this->tabLayer->setAlreadyDisplayedOnce("None");
                    }

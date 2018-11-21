@@ -44,10 +44,10 @@ void CalculateActiveCommand::execute (state::State* states){
       names.push_back(monsterTeam->getTeam().at(i)->getName());
       isMonster.push_back(1);
     }
-    for (uint i=0;i<names.size();i++){
-      cout << names[i]<< ":"<<spd[i]<<" ";
-    }
-    cout << endl;
+    // for (uint i=0;i<names.size();i++){
+    //   cout << names[i]<< ":"<<spd[i]<<" ";
+    // }
+    // cout << endl;
 
     uint intermediary_pos = 0;
     int intermediary_spd = spd[intermediary_pos];
@@ -59,7 +59,7 @@ void CalculateActiveCommand::execute (state::State* states){
           intermediary_pos = i;
         }
       }
-      cout  <<endl;
+      
       order.push_back(std::pair<bool,std::string>(isMonster[intermediary_pos],names[intermediary_pos]));
       names.erase(names.begin()+intermediary_pos);
       pos.erase(pos.begin()+intermediary_pos);

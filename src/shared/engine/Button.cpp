@@ -22,6 +22,13 @@ void Button::setAdditionalParam (std::string newParam){
   this->additionalParameters=newParam;
   this->engine->setAdditionalParameters(newParam);
 }
+void Button::setSkillName (std::string skillName){
+  this->skillName=skillName;
+  this->engine->setAdditionalParameters2(skillName);
+}
+std::string Button::getSkillName (){
+  return this->skillName;
+}
 //Operations
 void Button::setCommand(std::string button){
   if (button.find("None")==std::string::npos){
@@ -33,13 +40,29 @@ std::vector<int> Button::getCommands (){
     this->commands.push_back(0);
   } else if(this->button.find("Village")!=std::string::npos){
     this->commands.push_back(3);
+  } else if(this->button.find("Tavern")!=std::string::npos){
+    this->commands.push_back(10);
   } else if(this->button.find("Back")!=std::string::npos){
     this->commands.push_back(8);
   } else if(this->button.find("Attack")!=std::string::npos){
     this->commands.push_back(4);
     this->commands.push_back(6);
+    this->commands.push_back(11);
+  } else if(this->button.find("HeavyAttack")!=std::string::npos){
+    this->commands.push_back(4);
+    this->commands.push_back(6);
+    this->commands.push_back(11);
+  } else if(this->button.find("Poison")!=std::string::npos){
+    this->commands.push_back(4);
+    this->commands.push_back(6);
+    this->commands.push_back(11);
+  } else if(this->button.find("Heal")!=std::string::npos){
+    this->commands.push_back(4);
+    this->commands.push_back(6);
+    this->commands.push_back(11);
   }else if(this->button.find("Next Turn")!=std::string::npos){
     this->commands.push_back(6);
+    this->commands.push_back(11);
   }else if(this->button.find("Next Room")!=std::string::npos){
     this->commands.push_back(8);
     this->commands.push_back(9);

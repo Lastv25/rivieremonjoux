@@ -29,10 +29,10 @@
 #include "state/Antidote.h"
 #include "state/Inventory.h"
 #include "state/Village.h"
-#include "state/Tavern.h"
 #include "state/Shop.h"
 #include "state/State.h"
 #include "state/Dungeon.h"
 #include "state/Room.h"
+#include "state/Tavern.h"
 #include "state/Skills.h"
 #endif

@@ -1,0 +1,26 @@
+#include "CreateTavernCommand.h"
+#include <iostream>
+
+using namespace std;
+using namespace engine;
+
+CreateTavernCommand::CreateTavernCommand ():Command(){
+  this->commandTypeId = CreateTavern;
+}
+CreateTavernCommand::~CreateTavernCommand (){
+}
+CommandTypeId CreateTavernCommand::getCommandTypeId (){
+  return this->commandTypeId;
+}
+void CreateTavernCommand::execute (state::State* state){
+  state::Village* v =(state::Village*) state->getGrid()->get(0,0);
+
+  if(v->getTeam()->getTeam().size() == 0){
+    state->getChar()->add(state->getGrid()->get(0,0),"Village");
+    state->getGrid()->replaceElement(new state::Tavern(),"Tavern",0);
+
+  } else {
+    state->getChar()->add(state->getGrid()->get(0,0),"Village");
+    state->getGrid()->replaceElement(new state::Tavern(v->getTeam(),3),"Tavern",0);
+  }
+}

@@ -4,6 +4,8 @@ using namespace std;
 
 //Constructor
 Mage::Mage(int life, int att, int spd, int crit, int def,std::string name) : Hero(life,att, spd, crit, def,name){
+  this->skillList.push_back("Heal");
+  this->skillpoints = 15;
 }
 //Destructor
 Mage::~Mage(){

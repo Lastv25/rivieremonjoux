@@ -4,6 +4,10 @@
 using namespace std;
 using namespace state;
 
+Tavern::Tavern ():StaticElements(true){
+  this->maxteam =3;
+}
+
 Tavern::Tavern (Team* team, uint maxTeam):StaticElements(true){
   this->team = team;
   this->maxteam =maxTeam;
@@ -20,10 +24,15 @@ void Tavern::RemovefromTeamTavern (Character* Character, Team* team){
   team->removeFromTeam(Character);
 }
 
-void Tavern::isTeamFull (){
+Team* Tavern::getTeam (){
+  return this->team;
+}
+
+bool Tavern::isTeamFull (){
   if(this->team->getTeam().size() == this->maxteam){
     cout << "The team is full" <<endl;
-  }
+    return true;
+  } else{ return false;}
 }
 void Tavern::getStat (Character* character){
   cout << "Att: "<<character->getATT() << endl;

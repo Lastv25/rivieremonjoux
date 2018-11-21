@@ -29,7 +29,7 @@ bool RoomDisplay::getIsEmpty (){
   return this->isEmpty;
 }
 
-std::string RoomDisplay::getCharacter (){
+void RoomDisplay::getCharacter (){
 
   std::vector<state::Character*> Heros = HeroTeam->getTeam();
   std::vector<state::Character*> Monsters = MonsterTeam->getTeam();
@@ -75,6 +75,10 @@ std::string RoomDisplay::getCharacterStats (){
   this->characterStats.append(std::to_string(c->getSPD()));
   this->characterStats.append("\nCrit =         ");
   this->characterStats.append(std::to_string(c->getCrit()));
+  this->characterStats.append("\nSkillPoints =  ");
+  this->characterStats.append(std::to_string(c->getSkillpoints()));
+  this->characterStats.append("\nState =        ");
+  for (uint i=0;i<c->getState().size();i++){this->characterStats.append(std::to_string(c->getState()[i]));}
   return this->characterStats;
 }
 

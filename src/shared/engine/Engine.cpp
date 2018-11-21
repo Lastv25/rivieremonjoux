@@ -17,6 +17,9 @@ Engine::~Engine (){
 void Engine::setAdditionalParameters (std::string newParam){
   this->additionalParameters=newParam;
 }
+void Engine::setAdditionalParameters2 (std::string newParam){
+  this->additionalParameters2=newParam;
+}
 state::State* Engine::getState (){
   return this->currentState;
 }
@@ -37,20 +40,25 @@ void Engine::addCommand (int i ){
     this->currentCommands.push_back(new CreateRoomCommand());
   } else if (i == 4){
     if (this->additionalParameters.find("None")!=std::string::npos){
-      this->currentCommands.push_back(new UseSkillCommand("attack"));
+      this->currentCommands.push_back(new UseSkillCommand(this->additionalParameters2));
     } else {
-      this->currentCommands.push_back(new UseSkillCommand("attack",this->additionalParameters));
+      this->currentCommands.push_back(new UseSkillCommand(this->additionalParameters2,this->additionalParameters));
     }
 
   } else if (i == 6){
     this->currentCommands.push_back(new ChangeActiveCommand());
   } else if (i == 9){
     this->currentCommands.push_back(new ChangeRoomCommand());
+  } else if (i == 10){
+    this->currentCommands.push_back(new CreateTavernCommand());
+  } else if (i == 11){
+    this->currentCommands.push_back(new CheckCharaStateCommand());
   }
+
 
 }
 void Engine::update (){
-  //cout << "Test update" << endl;
+  cout << "Update" << endl;
 
   bool changed = false;
   if (this->currentCommands.size()!=0){
@@ -61,8 +69,8 @@ void Engine::update (){
     this->currentCommands.clear();
   }
   if (changed){
-    this->currentState->Operator();
-    //cout << "Engine ElementTab: "<< this->currentState->getGrid()->getSize() <<endl;
-    //this->currentScene->stateChanged(this->currentState);
+    // this->currentState->Operator();
+    // cout << "Engine ElementTab: "<< this->currentState->getGrid()->getSize() <<endl;
+    // this->currentScene->stateChanged(this->currentState);
   }
 }

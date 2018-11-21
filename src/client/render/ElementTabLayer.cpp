@@ -82,6 +82,7 @@ void ElementTabLayer::getElementTabTextures (){
 
     //cout << "Already Displayed: "<<this->alreadyDisplayedOnce << endl;
     if (this->elementTab->getElementType(index).find("Room") != std::string::npos){
+
       if (this->alreadyDisplayedOnce.find("Room") == std::string::npos ) {
         float testTeamMonster = 0;
         float testTeamMonster2 = 0;
@@ -143,7 +144,7 @@ void ElementTabLayer::getElementTabTextures (){
         }
         setTitle(droom->getDisplayText());
         setText(droom->getCharacterStats());
-        //cout << droom->getCharacterStats() << endl;
+        cout << droom->getCharacterStats() << endl;
         std::vector<float> txtcoords;
         txtcoords.push_back(50.f);
         txtcoords.push_back(800.f);
@@ -163,15 +164,20 @@ void ElementTabLayer::getElementTabTextures (){
         setButtonSurface(buttonsSurface);
         std::vector<float> bcoords = {1200.f,50.f};
         addButton(std::pair<std::string,std::vector<float>>("Back",bcoords));
-        addButtonScale(50.f,1100.f,1.5f,1.5f);
-
-        Surface* buttonsSurface2= new Surface(100,100,100,100);
-        buttonsSurface2->loadTexture(this->buttonsSprite);
-        buttonsSurface2->setSprite();
-        setButtonSurface(buttonsSurface2);
-        std::vector<float> bcoords2 = {450.f,750.f};
-        addButton(std::pair<std::string,std::vector<float>>("Attack",bcoords2));
         addButtonScale(50.f,1100.f,0.5f,0.5f);
+
+        if (droom->getActive()->getSkillList().size()!=1){
+          for (uint i=0; i<droom->getActive()->getSkillList().size();i++){
+            Surface* buttonsSurface2= new Surface(100,100,100,100);
+            buttonsSurface2->loadTexture(this->buttonsSprite);
+            buttonsSurface2->setSprite();
+            setButtonSurface(buttonsSurface2);
+            std::vector<float> bcoords2 = {450.f,750.f+i*100};
+            addButton(std::pair<std::string,std::vector<float>>(droom->getActive()->getSkillList()[i],bcoords2));
+            addButtonScale(50.f,1100.f,0.5f,0.5f);
+          }
+        }
+
 
         Surface* buttonsSurface3= new Surface(100,100,100,100);
         buttonsSurface3->loadTexture(this->buttonsSprite);
@@ -235,7 +241,7 @@ void ElementTabLayer::getElementTabTextures (){
         setDrawText(false);
         setDrawSprite(true);
 
-        if (getButtonsSurface().size()>1){
+        if (getButtonsSurface().size()>=1){
           this->buttonsSurface.clear();
           this->buttons.clear();
         }
@@ -247,6 +253,14 @@ void ElementTabLayer::getElementTabTextures (){
         setButtonSurface(buttonsSurface);
         std::vector<float> bcoords = {50.f,1000.f};
         addButton(std::pair<std::string,std::vector<float>>("Dungeon",bcoords));
+        addButtonScale(50.f,1100.f,0.5f,0.5f);
+
+        Surface* buttonsSurface1= new Surface(100,100,100,100);
+        buttonsSurface1->loadTexture(this->buttonsSprite);
+        buttonsSurface1->setSprite();
+        setButtonSurface(buttonsSurface1);
+        std::vector<float> bcoords1 = {1000.f,1000.f};
+        addButton(std::pair<std::string,std::vector<float>>("Tavern",bcoords1));
         addButtonScale(50.f,1100.f,0.5f,0.5f);
         this->alreadyDisplayedOnce = "Village";
 
@@ -307,7 +321,67 @@ void ElementTabLayer::getElementTabTextures (){
         this->alreadyDisplayedOnce = "Dungeon";
       }
     } else if (this->elementTab->getElementType(index).find("Tavern") != std::string::npos){
-      //cout << "Tavern found" << endl;
+      if (this->alreadyDisplayedOnce.find("Tavern") == std::string::npos) {
+        cout << "Tavern found" << endl;
+        TavernDisplay* dtavern = new TavernDisplay(this->elementTab->get(index,0));
+
+        setTitle(dtavern->getDisplayText());
+        setText(dtavern->getText());
+
+        std::vector<float> txtcoords;
+        txtcoords.push_back(50.f);
+        txtcoords.push_back(800.f);
+        setTextcoords(txtcoords);
+
+        setDrawText(true);
+        setDrawSprite(true);
+
+        int decalage =0 ;
+        for (uint i=0; i<dtavern->getTavernImages().size(); i++ ){
+          if (dtavern->getTavernImages()[i].find("box") != std::string::npos){
+            // Surface* s= new Surface(100,100,100,100);
+            // s->loadTexture(dtavern->getTavernImages()[i]);
+            // s->setSprite();
+            // setSurface(s);
+            // float cords[]={0,0,1,1};
+            // addCoords(std::vector<float>(cords,cords+sizeof(cords)/sizeof(float)));
+          } else {
+            Surface* s= new Surface(100,100,100,100);
+            s->loadTexture(dtavern->getTavernImages()[i]);
+            s->setSprite();
+            setSurface(s);
+            float cords[]={200.f+300*decalage,250,1,1};
+            addCoords(std::vector<float>(cords,cords+sizeof(cords)/sizeof(float)));
+            decalage =decalage+1;
+          }
+        }
+        decalage =0 ;
+        for (uint i=0; i<dtavern->getTeam().size(); i++ ){
+          Surface* s= new Surface(100,100,100,100);
+          s->loadTexture(dtavern->getTeam()[i]);
+          s->setSprite();
+          setSurface(s);
+          float cords[]={300.f+200*decalage,800,0.5,0.5};
+          addCoords(std::vector<float>(cords,cords+sizeof(cords)/sizeof(float)));
+          decalage =decalage+1;
+        }
+
+        if (getButtonsSurface().size()>1){
+          this->buttonsSurface.clear();
+          this->buttons.clear();
+        }
+
+        Surface* buttonsSurface= new Surface(100,100,100,100);
+        buttonsSurface->loadTexture(this->buttonsSprite);
+        buttonsSurface->setSprite();
+        setButtonSurface(buttonsSurface);
+        std::vector<float> bcoords = {1050.f,1000.f};
+        addButton(std::pair<std::string,std::vector<float>>("Back",bcoords));
+        addButtonScale(50.f,1100.f,0.5f,0.5f);
+
+        this->alreadyDisplayedOnce = "Tavern";
+      }
+
     } else if (this->elementTab->getElementType(index).find("Shop") != std::string::npos){
       //cout << "Shop found" << endl;
     } else {

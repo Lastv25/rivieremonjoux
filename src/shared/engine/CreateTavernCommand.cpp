@@ -13,8 +13,9 @@ CommandTypeId CreateTavernCommand::getCommandTypeId (){
   return this->commandTypeId;
 }
 void CreateTavernCommand::execute (state::State* state){
-  state::Village* v =(state::Village*) state->getGrid()->get(0,0);
 
+  state::Village* v =(state::Village*) state->getGrid()->get(0,0);
+  cout << v->getTeam()->getTeam().size() <<endl;
   if(v->getTeam()->getTeam().size() == 0){
     state->getChar()->add(state->getGrid()->get(0,0),"Village");
     state->getGrid()->replaceElement(new state::Tavern(),"Tavern",0);

@@ -25,6 +25,7 @@ void Team::setTeam (std::vector<Character*> team){
 bool Team::isHeroTeam(){
   bool testHero = true;
   for (uint i =0; i< this->ListPerso.size();i++){
+    cout << this->ListPerso[i]->getName()<<endl;
     if (this->ListPerso[i]->isMonster()){
       testHero=false;
     }
@@ -32,8 +33,17 @@ bool Team::isHeroTeam(){
   return testHero;
 }
 void Team::addToTeam (Character* character){
-  this->ListPerso.push_back(character);
+  uint tmp =0;
+  for (uint i=0;i<this->ListPerso.size();i++){
+    if (character->getName().find(this->ListPerso[i]->getName())!=std::string::npos){
+      cout << "You already have this character in your team" <<endl;
+    } else {tmp+=1;}
+  }
+  if (tmp ==this->ListPerso.size()){
+    this->ListPerso.push_back(character);
+  }
 }
+
 void Team::removeFromTeam (Character* character){
   std::vector<Character*> oldTeam = this->ListPerso;
   for (uint index=0; index<oldTeam.size(); index++ ){

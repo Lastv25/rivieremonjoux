@@ -24,7 +24,7 @@ namespace ai {
     state::State* state;
     // Operations
   public:
-    std::string run (std::vector<std::string>& list);
+    void run (std::vector<std::string>& list);
     AI ();
     ~AI ();
     // Setters and Getters

@@ -16,12 +16,20 @@ Tavern::Tavern (Team* team, uint maxTeam):StaticElements(true){
 Tavern::~Tavern(){
 }
 
-void Tavern::AddtoTeamTavern (Character* Character, Team* team){
-  team->addToTeam(Character);
+void Tavern::AddtoTeamTavern (std::string characterName){
+  if(characterName.find("Tank")!=std::string::npos){
+    this->team->addToTeam(new Tank(10,20,3,40,5,"Tank"));
+  } else if(characterName.find("Mage")!=std::string::npos){
+    this->team->addToTeam(new Mage(10,20,3,40,5,"Mage"));
+  } else if(characterName.find("Assassin")!=std::string::npos){
+    this->team->addToTeam(new Assassin(10,20,3,40,5,"Assassin"));
+  } else if(characterName.find("Range")!=std::string::npos){
+    this->team->addToTeam(new Range(10,20,3,40,5,"Range"));
+  }
 }
 
-void Tavern::RemovefromTeamTavern (Character* Character, Team* team){
-  team->removeFromTeam(Character);
+void Tavern::RemovefromTeamTavern (std::string charaPos){
+  this->team->removeFromTeam(this->team->getTeam()[std::stoi(charaPos)]);
 }
 
 Team* Tavern::getTeam (){

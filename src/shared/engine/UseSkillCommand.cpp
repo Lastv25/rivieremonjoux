@@ -31,6 +31,7 @@ void UseSkillCommand::execute (state::State* state){
   state::Character* attacker = room ->getActive();
   cout << "Skill Used: "<<this->skillName<<endl;
 
+
   if (!this->specifiedReciever){
     std::vector<state::Character*> intermediary= room->getMonsterTeam()->getTeam();
     this->receiver=intermediary[0];
@@ -46,10 +47,10 @@ void UseSkillCommand::execute (state::State* state){
   }
 
 
-
     state::Skills* s = new state::Skills(attacker,this->receiver);
 
     s->UseSkill(this->skillName,attacker,this->receiver);
+
     cout <<this->receiver->getName() <<" life: "<< this->receiver->getLife()<<endl;
     if (this->receiver->getLife() == 0){
       cout << this->receiver->getName();

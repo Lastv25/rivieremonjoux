@@ -17,5 +17,5 @@ AI::~AI(){
 }
 
 //std::string AI::run(state::Team* team, state::Character* actChara, std::vector<std::string>& list){
-std::string AI::run(std::vector<std::string>& list){
+void AI::run(std::vector<std::string>& list){
 }

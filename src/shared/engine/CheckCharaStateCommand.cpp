@@ -6,13 +6,14 @@ using namespace engine;
 
 //Constructor
 CheckCharaStateCommand::CheckCharaStateCommand (){
-
+  this->commandTypeId = CheckCharaState;
 }
 //Destructor
 CheckCharaStateCommand::~CheckCharaStateCommand (){
 }
 //Operations
 CommandTypeId CheckCharaStateCommand::getCommandTypeId (){
+  return this->commandTypeId;
 }
 void CheckCharaStateCommand::execute (state::State* state){
   state::Room* room = (state::Room*) state->getGrid()->get(0,0);

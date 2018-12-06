@@ -19,6 +19,12 @@ Scene::Scene (state::State* state,engine::Button* button,ai::RandomAI* rai){
   this->rai = rai;
 
 }
+Scene::Scene (state::State* state,engine::Button* button,ai::HeuristicAI* hai){
+  this->state = state;
+  this->tabLayer = new ElementTabLayer(state->getGrid());
+  this->buttonPressed = button;
+  this->hai = hai;
+}
 //Destructor
 Scene::~Scene (){
 }
@@ -32,7 +38,23 @@ engine::Button* Scene::getButtonPressed (){
   return this->buttonPressed;
 }
 void Scene::updateScene(){
-
+}
+void Scene::TavernPersCoords (float x, float y){
+  if (200.f<x && x<350.f && 500.f<y && y<550.f){
+    this->buttonPressed->setAdditionalParam("Tank");
+  } else if (500.f<x && x<650.f && 500.f<y && y<550.f){
+    this->buttonPressed->setAdditionalParam("Mage");
+  } else if (800.f<x && x<950.f && 500.f<y && y<550.f){
+    this->buttonPressed->setAdditionalParam("Assassin");
+  } else if (1100.f<x && x<1250.f && 500.f<y && y<550.f){
+    this->buttonPressed->setAdditionalParam("Range");
+  } else if (300.f<x && x<450.f && 900.f<y && y<950.f){
+    this->buttonPressed->setAdditionalParam("1");
+  } else if (600.f<x && x<750.f && 900.f<y && y<950.f){
+    this->buttonPressed->setAdditionalParam("2");
+  } else if (900.f<x && x<1050.f && 900.f<y && y<950.f){
+    this->buttonPressed->setAdditionalParam("3");
+  }
 }
 void Scene::draw (sf::RenderWindow* window){
   sf::Sprite sprite;
@@ -81,7 +103,7 @@ void Scene::draw (sf::RenderWindow* window){
       if (this->tabLayer->getText().find("None") == std::string::npos){
         text.setString(this->tabLayer->getText());
         text.setFont(font);
-        text.setCharacterSize(35);
+        text.setCharacterSize(25);
         text.move(this->tabLayer->getTextcoords()[0],this->tabLayer->getTextcoords()[1]);
         window->draw(text);
         //cout <<"x: "<<this->tabLayer->getTextcoords()[0]<< " y: "<<this->tabLayer->getTextcoords()[1]<<endl;
@@ -120,11 +142,13 @@ void Scene::draw (sf::RenderWindow* window){
           // engine::Command* c2 = new Command();
           // c2->setCommandTypeId(ChangeActive);
           std::string c1 = "Attack";
+          std::string c3 = "Poison";
           std::string c2 = "Next Turn";
-          std::vector<std::string> l={c1,c2} ;
+          std::vector<std::string> l={c1,c2,c3} ;
 
           //l.push_back("UseSkill");
-          std::vector<std::string> actionia = this->rai->run(l);
+
+          std::vector<std::string> actionia = this->hai->run(l);
           this->buttonPressed->setCommand(actionia[0]);
           this->buttonPressed->setAdditionalParam(actionia[1]);
           this->buttonPressed->sendToEngine();
@@ -137,7 +161,7 @@ void Scene::draw (sf::RenderWindow* window){
                for (uint i=0;i<this->tabLayer->getButtonsSurface().size();i++){
                  float x =std::get<1>(this->tabLayer->getButton(i))[0];
                  float y =std::get<1>(this->tabLayer->getButton(i))[1];
-                 if (x < event.mouseButton.x && event.mouseButton.x < x+150 && y < event.mouseButton.y && event.mouseButton.y< y+50){
+                 if (x < event.mouseButton.x && event.mouseButton.x < x+200 && y < event.mouseButton.y && event.mouseButton.y< y+50){
                    // cout << "mouse x: " <<event.mouseButton.x ;
                    // cout << "  mouse y: " <<event.mouseButton.y ;
                    // cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
@@ -155,12 +179,18 @@ void Scene::draw (sf::RenderWindow* window){
                  //cout << this->tabLayer->getButtonsSurface().size() << endl;
                  float x =std::get<1>(this->tabLayer->getButton(i))[0];
                  float y =std::get<1>(this->tabLayer->getButton(i))[1];
-                 if (x < event.mouseButton.x && event.mouseButton.x < x+150 && y < event.mouseButton.y && event.mouseButton.y< y+50){
+                 if (x < event.mouseButton.x && event.mouseButton.x < x+200 && y < event.mouseButton.y && event.mouseButton.y< y+50){
                    // cout << "mouse x: " <<event.mouseButton.x ;
                    // cout << "  mouse y: " <<event.mouseButton.y ;
                    // cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
-
-                   if (std::get<0>(this->tabLayer->getButton(i)).find("Attack")!=std::string::npos || std::get<0>(this->tabLayer->getButton(i)).find("Poison")!=std::string::npos  ){
+                   if (std::get<0>(this->tabLayer->getButton(i)).find("Add")!=std::string::npos || std::get<0>(this->tabLayer->getButton(i)).find("Remove")!=std::string::npos  ){
+                     this->buttonPressed->setCommand(std::get<0>(this->tabLayer->getButton(i)));
+                     TavernPersCoords(event.mouseButton.x,event.mouseButton.y);
+                     this->buttonPressed->sendToEngine();
+                     this->tabLayer->setAlreadyDisplayedOnce("None");
+                     this->clickSkill= true;
+                   }
+                   else if (std::get<0>(this->tabLayer->getButton(i)).find("Attack")!=std::string::npos || std::get<0>(this->tabLayer->getButton(i)).find("Poison")!=std::string::npos  ){
                    //   this->stateChangedBool = true;
                      this->buttonPressed->setSkillName(std::get<0>(this->tabLayer->getButton(i)));
                      this->tabLayer->setSkillUsed(true);
@@ -181,11 +211,6 @@ void Scene::draw (sf::RenderWindow* window){
                    }
                  }
              }
-
-
-
-
-
                  //this->buttonPressed = std::get<0>(this->tabLayer->getButton(i));
 
               }

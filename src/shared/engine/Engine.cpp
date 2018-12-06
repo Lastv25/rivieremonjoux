@@ -1,7 +1,11 @@
 #include "Engine.h"
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 using namespace std;
+using namespace std::chrono;
+using namespace std::this_thread;
 using namespace engine;
 
 //Constructor
@@ -53,17 +57,22 @@ void Engine::addCommand (int i ){
     this->currentCommands.push_back(new CreateTavernCommand());
   } else if (i == 11){
     this->currentCommands.push_back(new CheckCharaStateCommand());
+  } else if (i == 12){
+    this->currentCommands.push_back(new AddToTeam(this->additionalParameters));
+  } else if (i == 13){
+    this->currentCommands.push_back(new RemoveFromTeam(this->additionalParameters));
   }
 
 
 }
 void Engine::update (){
   cout << "Update" << endl;
-
   bool changed = false;
   if (this->currentCommands.size()!=0){
     for (uint i=0; i<this->currentCommands.size();i++){
+        sleep_for(nanoseconds(10));
         this->currentCommands[i]->execute(this->currentState);
+
     }
     changed = true;
     this->currentCommands.clear();

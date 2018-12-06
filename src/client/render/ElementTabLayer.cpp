@@ -326,11 +326,14 @@ void ElementTabLayer::getElementTabTextures (){
         TavernDisplay* dtavern = new TavernDisplay(this->elementTab->get(index,0));
 
         setTitle(dtavern->getDisplayText());
-        setText(dtavern->getText());
+        // setText(dtavern->getText());
+        setText(dtavern->TavernCharaText());
 
         std::vector<float> txtcoords;
-        txtcoords.push_back(50.f);
-        txtcoords.push_back(800.f);
+        // txtcoords.push_back(50.f);
+        // txtcoords.push_back(800.f);
+        txtcoords.push_back(100.f);
+        txtcoords.push_back(600.f);
         setTextcoords(txtcoords);
 
         setDrawText(true);
@@ -361,7 +364,7 @@ void ElementTabLayer::getElementTabTextures (){
           s->loadTexture(dtavern->getTeam()[i]);
           s->setSprite();
           setSurface(s);
-          float cords[]={300.f+200*decalage,800,0.5,0.5};
+          float cords[]={300.f+300*decalage,800,0.5,0.5};
           addCoords(std::vector<float>(cords,cords+sizeof(cords)/sizeof(float)));
           decalage =decalage+1;
         }
@@ -371,6 +374,8 @@ void ElementTabLayer::getElementTabTextures (){
           this->buttons.clear();
         }
 
+        //for (uint i=0; i<dtavern->getTeamNames().size(); i++ ){cout <<dtavern->getTeamNames()[i]<<endl;}
+
         Surface* buttonsSurface= new Surface(100,100,100,100);
         buttonsSurface->loadTexture(this->buttonsSprite);
         buttonsSurface->setSprite();
@@ -378,6 +383,25 @@ void ElementTabLayer::getElementTabTextures (){
         std::vector<float> bcoords = {1050.f,1000.f};
         addButton(std::pair<std::string,std::vector<float>>("Back",bcoords));
         addButtonScale(50.f,1100.f,0.5f,0.5f);
+
+        for (uint i=0;i<4;i++){
+          Surface* buttonsSurface= new Surface(100,100,100,100);
+          buttonsSurface->loadTexture(this->buttonsSprite);
+          buttonsSurface->setSprite();
+          setButtonSurface(buttonsSurface);
+          std::vector<float> bcoords = {200.f+300*i,500};
+          addButton(std::pair<std::string,std::vector<float>>("Add",bcoords));
+          addButtonScale(50.f,1100.f,0.5f,0.5f);
+        }
+        for (uint i=0;i<dtavern->getTeam().size();i++){
+          Surface* buttonsSurface= new Surface(100,100,100,100);
+          buttonsSurface->loadTexture(this->buttonsSprite);
+          buttonsSurface->setSprite();
+          setButtonSurface(buttonsSurface);
+          std::vector<float> bcoords = {300.f+300*i,900};
+          addButton(std::pair<std::string,std::vector<float>>("Remove",bcoords));
+          addButtonScale(50.f,1100.f,0.5f,0.5f);
+        }
 
         this->alreadyDisplayedOnce = "Tavern";
       }

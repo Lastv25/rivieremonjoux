@@ -68,6 +68,10 @@ std::vector<int> Button::getCommands (){
     this->commands.push_back(9);
     this->commands.push_back(7);
     this->commands.push_back(2);
+  }else if(this->button.find("Add")!=std::string::npos){
+    this->commands.push_back(12);
+  }else if(this->button.find("Remove")!=std::string::npos){
+    this->commands.push_back(13);
   }else {
     this->commands.push_back(1);
     this->commands.push_back(7);
@@ -77,7 +81,9 @@ std::vector<int> Button::getCommands (){
 }
 
 void Button::sendToEngine (){
-  getCommands();
+  if (this->commands.size()==0){
+    getCommands();
+  }
   //cout << "Nbr of commands: "<<this->commands.size()  << endl;
   for (uint i=0; i<this->commands.size() ; i++){
         this->engine->addCommand(this->commands[i]);

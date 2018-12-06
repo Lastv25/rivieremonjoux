@@ -39,3 +39,16 @@ std::vector<std::string> TavernDisplay::getTavernImages (){
 std::vector<std::string> TavernDisplay::getTeam (){
   return this->team;
 }
+std::vector<std::string> TavernDisplay::getTeamNames (){
+  return this->team_names;
+}
+std::string TavernDisplay::TavernCharaText (){
+  std::string output;
+  output.append("Name =                Tank                                                                Mage                                                              Assassin                                                                  Range\n");
+  output.append("Life =                  10                                                                           10                                                                             10                                                                    10\n");
+  output.append("Att  =                  20                                                                           20                                                                             20                                                                    20\n");
+  output.append("Spd  =                   3                                                                            3                                                                              3                                                                     3\n");
+  output.append("Crit =                  40                                                                           40                                                                             40                                                                    40\n");
+  output.append("Def  =                   5                                                                            5                                                                              5                                                                     5\n");
+  return output;
+}

@@ -8,6 +8,8 @@
 #include "engine/CreateRoomCommand.h"
 #include "engine/UseSkillCommand.h"
 #include "engine/CreateVillageCommand.h"
+#include "engine/RemoveFromTeam.h"
+#include "engine/AddToTeam.h"
 #include "engine/CheckCharaStateCommand.h"
 #include "engine/CreateTavernCommand.h"
 #include "engine/ChangeRoomCommand.h"

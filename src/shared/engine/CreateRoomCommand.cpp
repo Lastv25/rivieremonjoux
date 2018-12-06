@@ -18,14 +18,13 @@ CommandTypeId CreateRoomCommand::getCommandTypeId (){
   return this->commandTypeId;
 }
 void CreateRoomCommand::execute (state::State* state){
-
+  //cout << "Room Creation" <<endl;
   if (state->getDungeonExists()){
 
     state::Dungeon* d = (state::Dungeon*) state->getGrid()->get(0,0);
     //cout << "Room to create: "<<d->getCurrentRoom() <<endl;
     std::pair<bool,std::string> active = state->getOrder()[0];
-      this->roomName=d->getCurrentRoom();
-
+    this->roomName=d->getCurrentRoom();
     if (d->getRoomList().size() == 0){
       cout << "The Dungeon is Cleared" << endl;
     } else {
@@ -36,7 +35,6 @@ void CreateRoomCommand::execute (state::State* state){
       // for (uint i =0;i<roomlist[this->roomName]->getTeam().size();i++){
       //   cout << roomlist[this->roomName]->getTeam()[i]->getName() <<endl;
       // }
-
       if (!intermediary_isMonster){
         pos = d->getHeroTeam()->getPos(intermediary_activeName);
       } else {
@@ -44,7 +42,6 @@ void CreateRoomCommand::execute (state::State* state){
       }
       state->getChar()->add(state->getGrid()->get(0,0),"Dungeon");
       state->getGrid()->replaceElement(new state::Room(d->getHeroTeam(),roomlist[this->roomName],intermediary_isMonster,pos),"Room",0);
-      
     }
   }
 }

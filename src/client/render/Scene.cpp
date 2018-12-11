@@ -1,11 +1,14 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Scene.h"
-
+#include <chrono>
+#include <thread>
 
 using namespace std;
 using namespace render;
 using namespace sf;
+using namespace std::chrono;
+using namespace std::this_thread;
 
 //Constructor
 Scene::Scene (){
@@ -60,10 +63,10 @@ void Scene::draw (sf::RenderWindow* window){
   sf::Sprite sprite;
   sf::Font font;
   sf::Text text;
+  bool ai_first=false;
 
   while (window->isOpen())
  {
-
    if (this->stateChangedBool){
      this->tabLayer->clearSurfaces();
      this->stateChangedBool = false;
@@ -131,29 +134,41 @@ void Scene::draw (sf::RenderWindow* window){
      //cout << 4;
      // handle events
      sf::Event event;
+     bool ai =false;
+
+     if (ai_first){
+       sleep_for(std::chrono::seconds(3));
+       ai=true;
+     }
+
      while (window->pollEvent(event))
      {
          if(event.type == sf::Event::Closed){
              window->close();
-         } else if (event.type == sf::Event::KeyPressed){
+         } else if (event.type == sf::Event::KeyPressed || ai){
 
-          // engine::Command* c1 = new Command();
-          // c1->setCommandTypeId(UseSkill);
-          // engine::Command* c2 = new Command();
-          // c2->setCommandTypeId(ChangeActive);
+
           std::string c1 = "Attack";
           std::string c3 = "Poison";
           std::string c2 = "Next Turn";
-          std::vector<std::string> l={c1,c2,c3} ;
+          std::string c4 = "Heavy Attack";
+          std::vector<std::string> l={c1,c2,c3,c4} ;
 
           //l.push_back("UseSkill");
 
           std::vector<std::string> actionia = this->hai->run(l);
+
+          if (actionia[0].find("Next Room")==std::string::npos ){
+            this->buttonPressed->setSkillName(actionia[0]);
+          }
           this->buttonPressed->setCommand(actionia[0]);
           this->buttonPressed->setAdditionalParam(actionia[1]);
           this->buttonPressed->sendToEngine();
           this->stateChangedBool = true;
           this->tabLayer->setAlreadyDisplayedOnce("None");
+
+          ai_first = true;
+          ai = false;
 
         } else if (event.type == sf::Event::MouseButtonPressed){
            if(event.mouseButton.button == sf::Mouse::Left){
@@ -217,6 +232,7 @@ void Scene::draw (sf::RenderWindow* window){
            }
          }
         }
+
      }
 
      //cout << 5 << endl;

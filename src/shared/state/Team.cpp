@@ -34,10 +34,12 @@ bool Team::isHeroTeam(){
 }
 void Team::addToTeam (Character* character){
   uint tmp =0;
-  for (uint i=0;i<this->ListPerso.size();i++){
-    if (character->getName().find(this->ListPerso[i]->getName())!=std::string::npos){
-      cout << "You already have this character in your team" <<endl;
-    } else {tmp+=1;}
+  if (this->ListPerso.size()!=0){
+    for (uint i=0;i<this->ListPerso.size();i++){
+      if (character->getName().find(this->ListPerso[i]->getName())!=std::string::npos){
+        cout << "You already have this character in your team" <<endl;
+      } else {tmp+=1;}
+    }
   }
   if (tmp ==this->ListPerso.size()){
     this->ListPerso.push_back(character);

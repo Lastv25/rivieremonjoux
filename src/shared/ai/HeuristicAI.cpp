@@ -1,9 +1,11 @@
 #include "HeuristicAI.h"
 #include <iostream>
 #include <stdlib.h>
+#include <chrono>
+#include <thread>
 
-
-
+using namespace std::chrono;
+using namespace std::this_thread;
 using namespace std;
 using namespace ai;
 
@@ -20,6 +22,13 @@ HeuristicAI::~HeuristicAI(){
 std::vector<std::string> HeuristicAI::run(std::vector<std::string>& list){
   std::vector<std::string> result;
   state::Room* room=(state::Room*) this->state->getGrid()->get(0,0);
+
+  //Si la salle est vide on passe a la salle d'après
+  if (room->getIsEmpty()){
+    result.push_back("Next Room");
+    result.push_back("None");
+    return result;
+  }
 
 
   Strategy* strategy = new Strategy(room->getTeamFullChara(),this->state);

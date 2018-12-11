@@ -8,6 +8,7 @@ using namespace state;
 Room::Room (Team* heroTeam, Team* monsterTeam, bool activeType, int activepos):Dungeon(){
   this->heroTeam=heroTeam;
   this->monsterTeam=monsterTeam;
+  this->deadCaracters=new Team();
 
   if (activeType){ // activeType ==1 when Monsters
     this->activeCharacter = monsterTeam->getTeam()[activepos];
@@ -60,9 +61,20 @@ Team* Room::getTeamFullChara (){
 void Room::setTeamFullChara (Team* newTeam){
   this->teamFullChara=newTeam;
 }
-
+Team* Room::getDeadChara (){
+  return this->deadCaracters;
+}
+void Room::setDeadChara (Team* newTeam){
+  this->deadCaracters=newTeam;
+}
 //Operations
-
+Character* Room::getDeadChara (std::string charaName){
+  return this->deadCaracters->getTeam()[this->deadCaracters->getPos(charaName)];
+}
+void Room::AddToDead (Character* chara){
+  this->deadCaracters->addToTeam(chara);
+  //cout << "Dead pers size: "<<this->deadCaracters->getTeam().size() <<endl;
+}
 bool Room::isBossRoom (){
   bool testBoss = true;
   for (uint i =0; i< this->monsterTeam->getTeam().size();i++){

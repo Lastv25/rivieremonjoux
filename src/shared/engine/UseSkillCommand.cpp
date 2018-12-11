@@ -55,6 +55,7 @@ void UseSkillCommand::execute (state::State* state){
     if (this->receiver->getLife() == 0){
       cout << this->receiver->getName();
       cout << " died" << endl;
+      room->AddToDead(this->receiver);
       if (!this->receiver->isMonster()){
         state::Team* newTeam =room->getMonsterTeam();
         newTeam->removeFromTeam(this->receiver);

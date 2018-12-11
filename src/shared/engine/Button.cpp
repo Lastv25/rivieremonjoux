@@ -89,6 +89,7 @@ void Button::sendToEngine (){
         this->engine->addCommand(this->commands[i]);
   }
   this->commands.clear();
+  this->engine->Chrono();
   this->engine->update();
   setCommand("None");
 }

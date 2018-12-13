@@ -25,3 +25,5 @@ void CreateTavernCommand::execute (state::State* state){
     state->getGrid()->replaceElement(new state::Tavern(v->getTeam(),3),"Tavern",0);
   }
 }
+void CreateTavernCommand::executeInv (state::State* state){
+}

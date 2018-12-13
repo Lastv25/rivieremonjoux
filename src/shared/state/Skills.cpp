@@ -10,10 +10,11 @@ using namespace std;
 Skills::Skills(){
 }
 
-Skills::Skills (Character* chara1, Character* chara2){
+Skills::Skills (Character* chara1, Character* chara2,bool inv){
     this->userCharacter = chara1;
     this->receiverCharacter = chara2;
     this->skillList = chara1->getSkillList();
+    this->inv=inv;
 }
 
 // Destructeur
@@ -62,26 +63,17 @@ void Skills::Attack (Character* user, Character* receiver){
   int defValue = receiver->getDEF();
   int currentLife = receiver->getLife();
 
-  if (isCrit()){
-    cout << "Critical Hit to " <<receiver->getName()<<": " ;
-    cout << attValue*2-defValue << endl;
-    receiver->setLife(attValue*2-defValue);
+  if (this->inv){
+    if (isCrit()){
+      cout << "Critical Hit to " <<receiver->getName()<<": " ;
+      cout << attValue*2-defValue << endl;
+      receiver->setLife(currentLife+abs(attValue*2-defValue));
+    } else {
+      cout << "Damages to " <<receiver->getName()<<": " ;
+      cout << attValue-defValue << endl;
+      receiver->setLife(currentLife+abs(attValue-defValue));
+    }
   } else {
-    cout << "Damages to " <<receiver->getName()<<": " ;
-    cout << attValue-defValue << endl;
-    receiver->setLife(currentLife-(attValue-defValue));
-  }
-
-}
-
-void Skills::HeavyAttack (Character* user, Character* receiver){
-  int attValue = 1.5*user->getATT();
-  int skillp = user->getSkillpoints();
-  int defValue = receiver->getDEF();
-  int currentLife = receiver->getLife();
-
-  if (skillp-3 >= 0){
-    user->setSkillpoints(skillp-3);
     if (isCrit()){
       cout << "Critical Hit to " <<receiver->getName()<<": " ;
       cout << attValue*2-defValue << endl;
@@ -91,8 +83,45 @@ void Skills::HeavyAttack (Character* user, Character* receiver){
       cout << attValue-defValue << endl;
       receiver->setLife(currentLife-(attValue-defValue));
     }
-  } else{
-    cout << "You do not have enouth skillpoints left" <<endl;
+  }
+}
+
+void Skills::HeavyAttack (Character* user, Character* receiver){
+  int attValue = 1.5*user->getATT();
+  int skillp = user->getSkillpoints();
+  int defValue = receiver->getDEF();
+  int currentLife = receiver->getLife();
+
+  if (this->inv){
+    if (skillp+3 >= 0){
+      user->setSkillpoints(skillp+3);
+      if (isCrit()){
+        cout << "Critical Hit to " <<receiver->getName()<<": " ;
+        cout << attValue*2-defValue << endl;
+        receiver->setLife(currentLife+abs(attValue*2-defValue));
+      } else {
+        cout << "Damages to " <<receiver->getName()<<": " ;
+        cout << attValue-defValue << endl;
+        receiver->setLife(currentLife+abs(attValue-defValue));
+      }
+    } else{
+      cout << "You do not have enouth skillpoints left" <<endl;
+    }
+  } else {
+    if (skillp+3 >= 0){
+      user->setSkillpoints(skillp+3);
+      if (isCrit()){
+        cout << "Critical Hit to " <<receiver->getName()<<": " ;
+        cout << attValue*2-defValue << endl;
+        receiver->setLife(attValue*2-defValue);
+      } else {
+        cout << "Damages to " <<receiver->getName()<<": " ;
+        cout << attValue-defValue << endl;
+        receiver->setLife(currentLife-(attValue-defValue));
+      }
+    } else{
+      cout << "You do not have enouth skillpoints left" <<endl;
+    }
   }
 }
 
@@ -102,22 +131,42 @@ void Skills::Poison (Character* user, Character* receiver){
   int defValue = receiver->getDEF();
   int currentLife = receiver->getLife();
 
-  if (skillp-5 >= 0){
-    user->setSkillpoints(skillp-5);
-    receiver->setTurnEffect(3);
-    if (isCrit()){
-      cout << "Critical Hit to " <<receiver->getName()<<": " ;
-      cout << attValue*2-defValue << endl;
-      receiver->setLife(attValue*2-defValue);
-      receiver->changeState(1);
-    } else {
-      cout << "Damages to " <<receiver->getName()<<": " ;
-      cout << attValue-defValue << endl;
-      receiver->setLife(currentLife-(attValue-defValue));
-      receiver->changeState(1);
+  if (this->inv){
+    if (skillp+5 >= 0){
+      user->setSkillpoints(skillp+5);
+      receiver->setTurnEffect(0);
+      if (isCrit()){
+        cout << "Critical Hit to " <<receiver->getName()<<": " ;
+        cout << attValue*2-defValue << endl;
+        receiver->setLife(currentLife+abs(attValue*2-defValue));
+        receiver->changeState(1);
+      } else {
+        cout << "Damages to " <<receiver->getName()<<": " ;
+        cout << attValue-defValue << endl;
+        receiver->setLife(currentLife+abs(attValue-defValue));
+        receiver->changeState(1);
+      }
+    } else{
+      cout << "You do not have enouth skillpoints left" <<endl;
     }
-  } else{
-    cout << "You do not have enouth skillpoints left" <<endl;
+  } else {
+    if (skillp-5 >= 0){
+      user->setSkillpoints(skillp-5);
+      receiver->setTurnEffect(0);
+      if (isCrit()){
+        cout << "Critical Hit to " <<receiver->getName()<<": " ;
+        cout << attValue*2-defValue << endl;
+        receiver->setLife(currentLife-(attValue*2-defValue));
+        receiver->changeState(1);
+      } else {
+        cout << "Damages to " <<receiver->getName()<<": " ;
+        cout << attValue-defValue << endl;
+        receiver->setLife(currentLife-(attValue-defValue));
+        receiver->changeState(1);
+      }
+    } else{
+      cout << "You do not have enouth skillpoints left" <<endl;
+    }
   }
 }
 void Skills::Heal (Character* user, Character* receiver){

@@ -421,7 +421,7 @@ int main(int argc,char* argv[])
             e->update();
             scene->draw(window);
 
-      } if (!strcmp(argv[1],"rollback") ) {
+      } else if (!strcmp(argv[1],"rollback") ) {
             affichagebeauTest("rollback");
             Observer* o = new Observer();
             State* s = new State();
@@ -429,6 +429,36 @@ int main(int argc,char* argv[])
             e->setRollback(true);
             Button* button = new Button(e);
             HeuristicAI* hai = new HeuristicAI(s);
+            Scene* scene = new Scene(s,button,hai);
+            s->registerObserver(o);
+            sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1440,1160), "Darkest Dungeon Like");
+            e->addCommand(3);
+            e->update();
+            Team* team = new Team();
+            Village* v= (Village*) s->getGrid()->get(0,0);
+            Tank* tank = new Tank(10,20,3,40,5,"Tank");
+            Range* range = new Range(10,20,3,40,5,"Range");
+            Assassin* assassin = new Assassin(10,20,3,40,5,"Assassin");
+            team->addToTeam(tank);
+            team->addToTeam(range);
+            team->addToTeam(assassin);
+            v->setTeam(team);
+            s->getGrid()->replaceElement(v,"Village",0);
+            e->addCommand(1);
+            e->update();
+            e->setAdditionalParameters("EngineTest");
+            e->addCommand(7);
+            e->addCommand(2);
+            e->update();
+            scene->draw(window);
+
+      } else if (!strcmp(argv[1],"deep_ai") ) {
+            affichagebeauTest("rollback");
+            Observer* o = new Observer();
+            State* s = new State();
+            Engine* e = new Engine(s);
+            Button* button = new Button(e);
+            DeepAI* hai = new DeepAI(s);
             Scene* scene = new Scene(s,button,hai);
             s->registerObserver(o);
             sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1440,1160), "Darkest Dungeon Like");

@@ -45,3 +45,6 @@ void CreateRoomCommand::execute (state::State* state){
     }
   }
 }
+void CreateRoomCommand::executeInv (state::State* state){
+  
+}

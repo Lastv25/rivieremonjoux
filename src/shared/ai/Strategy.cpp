@@ -8,7 +8,6 @@ using namespace ai;
 using namespace state;
 
 Strategy::Strategy(state::Team* team,state::State* state){
-
   int n=team->getTeam().size();
   bool ishero = team->isHeroTeam();
   std::vector<std::pair<bool,std::string>> order = state->getOrder();
@@ -19,10 +18,12 @@ Strategy::Strategy(state::Team* team,state::State* state){
   int ilife=-1;
   int iheal=-1;
   int lifeadv =0;
+  int lifeMin = 0;
   int ifstadv=-1;
+  int nrbAdv=0;
+  setActChara(order[0].second);
   //On check le premier personnage à jouer dans l'équipe adverse
-
-  for (uint i=0;i<order.size();i++){
+  for (int i=0;i<order.size();i++){
     if (order[i].first!=ishero){
       for(int j=0;j<n;j++){
         if (order[i].second==(team->getTeam()[j]->getName())){
@@ -42,6 +43,9 @@ Strategy::Strategy(state::Team* team,state::State* state){
       minLife = (team->getTeam()[i])->getLife();
       ilife = i;
     }
+    if (team->getTeam()[i]->isMonster()==ishero){
+      nbrAdv++;
+    }
     //Détermination du minimum de vie dans l'équipe du joueur
     if ((team->getTeam()[i]->getLife()<(0.5*team->getTeam()[i]->getLifeMAX())) && ((team->getTeam()[i])->getLife()<minTeam)
     && (team->getTeam()[i]->isMonster()!=ishero)) {
@@ -56,6 +60,7 @@ Strategy::Strategy(state::Team* team,state::State* state){
   setCibleLife(team->getTeam()[ilife]);
   setLifeAdv(lifeadv);
   setFirst(team->getTeam()[ifstadv]);
+  setNbrAdv(nbrAdv);
   //Si personne ne doit être soigné, on revoit un personnage NULL
   if (iheal !=-1){
     setLifeMin(team->getTeam()[iheal]);
@@ -76,6 +81,14 @@ void Strategy::setTeam (state::Team* team){
 
 state::Team* Strategy::getTeam(){
   return this->team;
+}
+
+int Strategy::getNbrAdv(){
+  return this->nbrAdv;
+}
+
+void Strategy::setNbrAdv (int nbrAdv){
+  this->nbrAdv= nbrAdv;
 }
 
 
@@ -117,4 +130,12 @@ void Strategy::setLifeMin (state::Character* lifeMin){
 
 state::Character* Strategy::getLifeMin(){
   return this->lifeMin;
+}
+
+void Strategy::setActChara (std::string actChara){
+  this->actChara=actChara;
+}
+
+std::string Strategy::getActChara(){
+  return this->actChara;
 }

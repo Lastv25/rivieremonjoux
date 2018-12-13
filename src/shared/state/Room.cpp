@@ -46,6 +46,16 @@ void Room::setIsEmpty (bool empty){
 bool Room::getIsEmpty (){
   return this->isEmpty;
 }
+void Room::ResurectChara (std::string charaName){
+  int i=this->deadCaracters->getPos(charaName);
+  if (i!=1010){
+    this->monsterTeam->addToTeam(this->deadCaracters->getTeam()[i]);
+    this->deadCaracters->removeFromTeam(this->deadCaracters->getTeam()[i]);
+  } else {
+    cout << "This Monster is not dead"<<endl;
+  }
+
+}
 Team* Room::getTeamFullChara (){
   std::vector<Character*> fTeam=heroTeam->getTeam();
   for (uint i=0;i<monsterTeam->getTeam().size();i++){

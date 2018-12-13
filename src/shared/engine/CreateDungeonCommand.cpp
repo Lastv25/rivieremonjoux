@@ -28,3 +28,5 @@ void CreateDungeonCommand::execute (state::State* state){
   }
 
 }
+void CreateDungeonCommand::executeInv (state::State* state){
+}

@@ -59,7 +59,7 @@ void CalculateActiveCommand::execute (state::State* states){
           intermediary_pos = i;
         }
       }
-      
+
       order.push_back(std::pair<bool,std::string>(isMonster[intermediary_pos],names[intermediary_pos]));
       names.erase(names.begin()+intermediary_pos);
       pos.erase(pos.begin()+intermediary_pos);
@@ -77,4 +77,7 @@ void CalculateActiveCommand::execute (state::State* states){
     }
     cout << endl;
   }
+}
+void CalculateActiveCommand::executeInv (state::State* state){
+  execute(state);
 }

@@ -25,3 +25,5 @@ void RemoveFromTeam::execute (state::State* state){
 
 
 }
+void RemoveFromTeam::executeInv (state::State* state){
+}

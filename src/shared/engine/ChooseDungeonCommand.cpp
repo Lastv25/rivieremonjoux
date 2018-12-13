@@ -70,3 +70,5 @@ void ChooseDungeonCommand::execute (state::State* states){
     states->setDungeonExists(false);
   }
 }
+void ChooseDungeonCommand::executeInv (state::State* state){
+}

@@ -2,6 +2,7 @@
 #ifndef AI__STRATEGY__H
 #define AI__STRATEGY__H
 
+#include <string>
 
 namespace state {
   class Character;
@@ -26,6 +27,8 @@ namespace ai {
     int lifeAdv;
     state::Character* lifeMin;
     state::Team* team;
+    int nbrAdv;
+    std::string actChara;
     // Operations
   public:
     Strategy (state::Team* team, state::State* state);
@@ -42,6 +45,10 @@ namespace ai {
     void setFirst (state::Character* firstAdv);
     state::Character* getLifeMin ();
     void setLifeMin (state::Character* lifeMin);
+    int getNbrAdv ();
+    void setNbrAdv (int nbrAdv);
+    std::string getActChara ();
+    void setActChara (std::string actChara);
     // Setters and Getters
   };
 

@@ -27,3 +27,5 @@ void AddToTeam::execute (state::State* state){
     t->AddtoTeamTavern(this->param);
   }
 }
+void AddToTeam::executeInv (state::State* state){
+}

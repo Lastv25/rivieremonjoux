@@ -13,6 +13,8 @@ CommandTypeId Command::getCommandTypeId (){
 }
 void Command::execute (state::State* state){
 }
+void Command::executeInv (state::State* state){
+}
 
 void Command::setCommandTypeId(CommandTypeId commandTypeId){
   this->commandTypeId = commandTypeId;

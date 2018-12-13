@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <iostream>
 #include "ElementTab.h"
 #include "State.h"
 using namespace state ;
@@ -34,6 +36,15 @@ std::vector<std::pair<bool,std::string>> State::getOrder (){
 void State::addToOrder (std::pair<bool,std::string> newPair){
   this->activeOrder.push_back(newPair);
 }
+void State::ReverseOrder (){
+  if (!this->orderReversed){
+    std::vector<std::pair<bool,std::string>> Order =this->activeOrder;
+    std::reverse(Order.begin()+1,Order.end());
+    setOrder(Order);
+    this->orderReversed=true;
+  }
+}
+
 void State::Operator (){
   notifyObserver(new Event(2));
 }

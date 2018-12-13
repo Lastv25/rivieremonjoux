@@ -23,3 +23,5 @@ void BackCommand::execute (state::State* state){
   }
 
 }
+void BackCommand::executeInv (state::State* state){
+}

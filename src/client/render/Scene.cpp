@@ -15,7 +15,7 @@ Scene::Scene (){
 }
 
 Scene::Scene (state::State* state,engine::Button* button,ai::RandomAI* rai){
-
+  this->raiType=true;
   this->state = state;
   this->tabLayer = new ElementTabLayer(state->getGrid());
   this->buttonPressed = button;
@@ -23,10 +23,18 @@ Scene::Scene (state::State* state,engine::Button* button,ai::RandomAI* rai){
 
 }
 Scene::Scene (state::State* state,engine::Button* button,ai::HeuristicAI* hai){
+  this->haiType=true;
   this->state = state;
   this->tabLayer = new ElementTabLayer(state->getGrid());
   this->buttonPressed = button;
   this->hai = hai;
+}
+Scene::Scene (state::State* state,engine::Button* button,ai::DeepAI* dai){
+  this->daiType=true;
+  this->state = state;
+  this->tabLayer = new ElementTabLayer(state->getGrid());
+  this->buttonPressed = button;
+  this->dai = dai;
 }
 //Destructor
 Scene::~Scene (){
@@ -155,8 +163,15 @@ void Scene::draw (sf::RenderWindow* window){
           std::vector<std::string> l={c1,c2,c3,c4} ;
 
           //l.push_back("UseSkill");
+          std::vector<std::string> actionia;
+          if (this->raiType){
+            std::vector<std::string> actionia = this->rai->run(l);
+          } else if (this->haiType){
+            std::vector<std::string> actionia = this->hai->run(l);
+          } else if (this->daiType){
+            std::vector<std::string> actionia = this->dai->run(l);
+          }
 
-          std::vector<std::string> actionia = this->hai->run(l);
 
           if (actionia[0].find("Next Room")==std::string::npos ){
             this->buttonPressed->setSkillName(actionia[0]);

@@ -42,8 +42,10 @@ void Engine::AddCommandTOList (int newCommand,std::string addParam1,std::string 
   std::tuple<int,std::string,std::string> command {newCommand,addParam1,addParam2};
   this->commandList.push_back(command);
 }
-void Engine::RemoveLastFromCommandList (){
-  return this->commandList.pop_back();
+std::tuple<int,std::string,std::string> Engine::RemoveLastFromCommandList (){
+  std::tuple<int,std::string,std::string> output = this->commandList.back();
+  this->commandList.pop_back();
+  return output;
 }
 void Engine::Chrono(){
   if (this->startChrono){
@@ -54,7 +56,9 @@ void Engine::Chrono(){
   }
 }
 void Engine::addCommand (int i ){
-  AddCommandTOList(i,this->additionalParameters,this->additionalParameters2);
+  if (!this->invCommands){
+      AddCommandTOList(i,this->additionalParameters,this->additionalParameters2);
+  }
   if (i == 0){
     this->currentCommands.push_back( new CreateDungeonCommand());
   } else if (i == 3){
@@ -106,7 +110,79 @@ void Engine::update (){
       this->currentCommands.clear();
     }
   } else {
-    cout << "Rollback command"<<endl;
+    cout << "Rollback command "<<this->commandList.size() <<endl;
+    //cout <<1;
+    std::tuple<int,std::string,std::string> command = RemoveLastFromCommandList();
+
+    if (std::get<0>(command)==1){
+      cout << "end of the rollback"<<endl;
+    } else if (std::get<0>(command)==11){
+      int i =0;
+      while (i<3){
+        this->currentCommands.clear();
+        cout <<"command to execute: "<<std::get<0>(command)<<endl;
+        sleep_for(nanoseconds(100));
+        //cout <<2;
+        addCommand(std::get<0>(command));
+        // cout <<3;
+        this->additionalParameters=std::get<1>(command);
+        // cout <<4;
+        this->additionalParameters2=std::get<2>(command);
+        // cout<<5;
+        this->currentCommands[0]->executeInv(this->currentState);
+
+
+        command = RemoveLastFromCommandList();
+        i+=1;
+        // cout<<6<<endl;
+
+
+      }
+    } else if (std::get<0>(command)==2){
+
+      std::vector<std::tuple<int,std::string,std::string>> intermediaryCommandList;
+      int i=0;
+      while (i<4){
+        command = RemoveLastFromCommandList();
+        intermediaryCommandList.push_back(command);
+        i+=1;
+      }
+      for (uint i=0; i<intermediaryCommandList.size();i++){
+        this->currentCommands.clear();
+        cout <<"command to execute: "<<std::get<0>(intermediaryCommandList[i])<<endl;
+        sleep_for(nanoseconds(100));
+        this->additionalParameters=std::get<1>(intermediaryCommandList[i]);
+        // cout <<4;
+        this->additionalParameters2=std::get<2>(intermediaryCommandList[i]);
+        // cout <<2;
+        addCommand(std::get<0>(intermediaryCommandList[i]));
+        this->currentCommands[i]->execute(this->currentState);
+
+      }
+      // cout <<3;
+
+      // cout<<5;
+
+        this->currentCommands[0]->executeInv(this->currentState);
+        command = RemoveLastFromCommandList();
+
+    } else {
+      this->currentCommands.clear();
+      cout <<"command to execute: "<<std::get<0>(command)<<endl;
+      sleep_for(nanoseconds(100));
+      //cout <<2;
+      addCommand(std::get<0>(command));
+      // cout <<3;
+      this->additionalParameters=std::get<1>(command);
+      // cout <<4;
+      this->additionalParameters2=std::get<2>(command);
+      // cout<<5;
+      this->currentCommands[0]->executeInv(this->currentState);
+
+
+      command = RemoveLastFromCommandList();
+    }
+
   }
   if (changed){
     // this->currentState->Operator();

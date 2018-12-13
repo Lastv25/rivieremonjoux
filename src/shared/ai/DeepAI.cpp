@@ -79,7 +79,9 @@ std::vector<std::string> DeepAI::run(std::vector<std::string>& list){
   state::Room* room=(state::Room*) this->state->getGrid()->get(0,0);
   Strategy* strategy = new Strategy(room->getTeamFullChara(),this->state);
   std::vector<std::string> result;
-  std::string actChara = state->getActiveChara().second;
+  //std::string actChara = state->getActiveChara().second;
+  std::vector<std::pair<bool,std::string>> order = state->getOrder();
+  std::string actChara = order[0].second;
   Team* team = strategy->getTeam();
   std::vector<Noeud*> arbre ={};
   Strategy* strat = new Strategy(team,this->state);
@@ -89,11 +91,39 @@ std::vector<std::string> DeepAI::run(std::vector<std::string>& list){
   Noeud* tete = new Noeud(data);
   arbre.push_back(tete);
   Noeud* courant = tete;
-  // while(courant->getEtage()!=-1){ // condition d'arret a trouver
-  //   while(courant->getEtage() <etageMax && courant->getChildren().size() == this->tasks.size()){
-  //     for (uint i=0;i<)
-  //   }
-  // }
+  int etageMax=1;
+  std::vector<std::pair<std::string,std::string>> tasks = {};
+  std::vector<std::string> names = {};
+  std::vector<std::string> attacks = {};
+  while(courant->etage != -1){
+    Strategy* strat = new Strategy(team,this->state);
+    names.clear();
+    attacks.clear();
+    actChara=order[courant->etage].second;
+    // for (int i=0;i<team->getTeam().size();i++){
+    //   if (team->getTeam()[i]->isMonster()==ishero){
+    //     names.push_back(team->getTeam()[i]->getName());
+    //   }
+    // }
+    //faire un getter de la skill list dans state pour récupérer proprement les skills du active Character
+    //for (int i=0; i<actChara->getSkillList().size-);i++){
+    //attacks.push_back(actChara->getSkillList()[i]);
+    //}
+    // while (courant->etage <= etageMax && courant->children.size()< ){
+    //A ECRIRE
+    // for(int j=0;j<names.size();j++){
+    //   for(int k=0;k<attacks.size();k++){
+    //     if(!courant->children[j+k]){
+    //       //EDIT DATA et TASKS
+    //       // arbre.push_back(Noeud* new Noeud(...))
+    //     }
+    //   }
+    // }
+    // courant=courant->parent;
+    //
+    // }
+  }
+
   //Si l'équipe adverse a encore de la vie, on attaque...
   // while (strategy->getLifeAdv()>0){
   //   result.push_back("Attack");}

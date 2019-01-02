@@ -2,12 +2,14 @@
 #include <SFML/Graphics.hpp>
 #include "ElementTabLayer.h"
 #include <typeinfo>
-
+#include "../../shared/state/Dungeon.h"
 
 using namespace std;
 using namespace render;
 using namespace sf;
-
+namespace state{
+  class Dungeon;
+}
 
 
 
@@ -76,14 +78,19 @@ void ElementTabLayer::setSkillUsed (bool isUsed){
 void ElementTabLayer::setAlreadyDisplayedOnce (std::string newDisplay){
   this->alreadyDisplayedOnce=newDisplay;
 }
-void ElementTabLayer::getElementTabTextures (){
+std::string ElementTabLayer::getAlreadyDisplayedOnce (){
+  return this->alreadyDisplayedOnce;
+}
+std::string ElementTabLayer::getElementTabTextures (){
+  std::string output;
 
   for (uint index=0; index<this->elementTab->getSize(); index++ ){
 
     //cout << "Already Displayed: "<<this->alreadyDisplayedOnce << endl;
     if (this->elementTab->getElementType(index).find("Room") != std::string::npos){
-
+      output = "Room";
       if (this->alreadyDisplayedOnce.find("Room") == std::string::npos ) {
+
         float testTeamMonster = 0;
         float testTeamMonster2 = 0;
         cout << "Room found" << endl;
@@ -144,7 +151,7 @@ void ElementTabLayer::getElementTabTextures (){
         }
         setTitle(droom->getDisplayText());
         setText(droom->getCharacterStats());
-        cout << droom->getCharacterStats() << endl;
+        //cout << droom->getCharacterStats() << endl;
         std::vector<float> txtcoords;
         txtcoords.push_back(50.f);
         txtcoords.push_back(800.f);
@@ -229,8 +236,10 @@ void ElementTabLayer::getElementTabTextures (){
       }
 
     } else if (this->elementTab->getElementType(index).find("Village") != std::string::npos){
+      output = "Village";
       if (this->alreadyDisplayedOnce.find("Village") == std::string::npos) {
         cout << "Village found" << endl;
+
 
         VillageDisplay* dvillage = new VillageDisplay();
         Surface* s= new Surface(100,100,100,100);
@@ -267,6 +276,7 @@ void ElementTabLayer::getElementTabTextures (){
       }
 
     } else if (this->elementTab->getElementType(index).find("Dungeon") != std::string::npos){
+      output = "Dungeon";
       if (this->alreadyDisplayedOnce.find("Dungeon") == std::string::npos) {
 
 
@@ -321,8 +331,11 @@ void ElementTabLayer::getElementTabTextures (){
         this->alreadyDisplayedOnce = "Dungeon";
       }
     } else if (this->elementTab->getElementType(index).find("Tavern") != std::string::npos){
+      output = "Tavern";
       if (this->alreadyDisplayedOnce.find("Tavern") == std::string::npos) {
         cout << "Tavern found" << endl;
+
+
         TavernDisplay* dtavern = new TavernDisplay(this->elementTab->get(index,0));
 
         setTitle(dtavern->getDisplayText());
@@ -412,4 +425,5 @@ void ElementTabLayer::getElementTabTextures (){
       //cout << "Invelid element Tab" << endl;
     }
   }
+  return output;
 }

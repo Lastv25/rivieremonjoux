@@ -3,7 +3,13 @@
 
 using namespace std;
 using namespace engine;
-
+#include "../state/Tavern.h"
+#include "../state/Village.h"
+namespace state {
+  class Village;
+  class Tavern;
+}
+using namespace state;
 CreateTavernCommand::CreateTavernCommand ():Command(){
   this->commandTypeId = CreateTavern;
 }

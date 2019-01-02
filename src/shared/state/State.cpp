@@ -5,7 +5,7 @@
 using namespace state ;
 using namespace std ;
 
-State::State() : Observable(){
+State::State() {
   this->chars = new ElementTab();
   this->grid = new ElementTab();
 }
@@ -45,12 +45,16 @@ void State::ReverseOrder (){
   }
 }
 
-void State::Operator (){
-  notifyObserver(new Event(2));
-}
+
 bool State::getDungeonExists (){
   return this->dungeon_exists;
 }
 void State::setDungeonExists (bool exists){
   this->dungeon_exists=exists;
+}
+void State::stateChanged (){
+  this->change=!this->change;
+}
+bool State::getChange (){
+  return this->change;
 }

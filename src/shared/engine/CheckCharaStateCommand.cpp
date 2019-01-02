@@ -1,9 +1,12 @@
 #include "CheckCharaStateCommand.h"
 #include <iostream>
-
+#include "../state/Room.h"
+namespace state {
+  class Room;
+}
 using namespace std;
 using namespace engine;
-
+using namespace state;
 //Constructor
 CheckCharaStateCommand::CheckCharaStateCommand (){
   this->commandTypeId = CheckCharaState;

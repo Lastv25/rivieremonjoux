@@ -2,6 +2,12 @@
 #include <iostream>
 #include <fstream>
 #include "string.h"
+#include "../state/Dungeon.h"
+#include "../state/Team.h"
+namespace state {
+  class Dungeon;
+  class Team;
+}
 
 using namespace std;
 using namespace engine;

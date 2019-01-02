@@ -1,6 +1,17 @@
 #include "UseSkillCommand.h"
 #include <iostream>
+#include "../state/Village.h"
+#include "../state/Skills.h"
+#include "../state/Character.h"
+#include "../state/Room.h"
 
+namespace state {
+  class Village;
+  class Skills;
+  class Character;
+  class Room;
+}
+using namespace state;
 using namespace std;
 using namespace engine;
 
@@ -31,7 +42,6 @@ void UseSkillCommand::execute (state::State* state){
   state::Character* attacker = room ->getActive();
   cout << "Skill Used: "<<this->skillName<<endl;
 
-
   if (!this->specifiedReciever){
     std::vector<state::Character*> intermediary= room->getMonsterTeam()->getTeam();
     this->receiver=intermediary[0];
@@ -43,14 +53,9 @@ void UseSkillCommand::execute (state::State* state){
     } else{
       this->receiver=intermediary2[room->getHeroTeam()->getPos(this->receiverName)];
     }
-
   }
-
-
     state::Skills* s = new state::Skills(attacker,this->receiver,false);
-
     s->UseSkill(this->skillName,attacker,this->receiver);
-
     cout <<this->receiver->getName() <<" life: "<< this->receiver->getLife()<<endl;
     if (this->receiver->getLife() == 0){
       cout << this->receiver->getName();

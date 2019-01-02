@@ -25,7 +25,7 @@ void Team::setTeam (std::vector<Character*> team){
 bool Team::isHeroTeam(){
   bool testHero = true;
   for (uint i =0; i< this->ListPerso.size();i++){
-    cout << this->ListPerso[i]->getName()<<endl;
+    //cout << this->ListPerso[i]->getName()<<endl;
     if (this->ListPerso[i]->isMonster()){
       testHero=false;
     }
@@ -67,7 +67,7 @@ int Team::getPos (std::string charaName){
       found=true;
     }
   }
-  cout << endl;
+  //cout << endl;
   if (found){
     return intermediary;
   } else {

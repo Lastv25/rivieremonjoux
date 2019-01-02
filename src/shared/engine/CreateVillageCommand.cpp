@@ -1,8 +1,12 @@
 #include "CreateVillageCommand.h"
 #include <iostream>
-
+#include "../state/Village.h"
+namespace state {
+  class Village;
+}
 using namespace std;
 using namespace engine;
+using namespace state;
 
 CreateVillageCommand::CreateVillageCommand ():Command(){
   this->commandTypeId = CreateVillage;

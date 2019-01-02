@@ -1,9 +1,19 @@
 #include "CreateDungeonCommand.h"
+
 #include <iostream>
 #include <fstream>
+#include "../state/Village.h"
+#include "../state/Team.h"
+#include "../state/Dungeon.h"
+namespace state {
+  class Village;
+  class Team;
+  class Dungeon;
+}
 
 using namespace std;
 using namespace engine;
+using namespace state;
 
 CreateDungeonCommand::CreateDungeonCommand ():Command(){
   this->commandTypeId = CreateDungeon;
@@ -26,7 +36,6 @@ void CreateDungeonCommand::execute (state::State* state){
     state->getChar()->add(state->getGrid()->get(0,0),"Village");
     state->getGrid()->replaceElement(new state::Dungeon(maps,v->getTeam()),"Dungeon",0);
   }
-
 }
 void CreateDungeonCommand::executeInv (state::State* state){
 }

@@ -2,7 +2,20 @@
 #include <iostream>
 #include <fstream>
 #include "string.h"
-
+#include "../state/Village.h"
+#include "../state/Team.h"
+#include "../state/Sorcerer.h"
+#include "../state/Blob.h"
+#include "../state/DarkKnight.h"
+#include "../state/Dungeon.h"
+namespace state {
+  class Village;
+  class Team;
+  class Sorcerer;
+  class Blob;
+  class DarkKnight;
+  class Dungeon;
+}
 using namespace std;
 using namespace engine;
 using namespace state;

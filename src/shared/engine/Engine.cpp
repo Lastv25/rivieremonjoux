@@ -2,6 +2,37 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <fstream>
+#include <string>
+#include "jsoncpp.cpp"
+#include "../engine/AddToTeam.h"
+#include "../engine/BackCommand.h"
+#include "../engine/CalculateActiveCommand.h"
+#include "../engine/ChangeActiveCommand.h"
+#include "../engine/ChangeRoomCommand.h"
+#include "../engine/CheckCharaStateCommand.h"
+#include "../engine/ChooseDungeonCommand.h"
+#include "../engine/CreateRoomCommand.h"
+#include "../engine/CreateTavernCommand.h"
+#include "../engine/CreateDungeonCommand.h"
+#include "../engine/CreateVillageCommand.h"
+#include "../engine/RemoveFromTeam.h"
+#include "../engine/UseSkillCommand.h"
+namespace engine {
+  class AddToTeam;
+  class BackCommand;
+  class CalculateActiveCommand;
+  class ChangeActiveCommand;
+  class ChangeRoomCommand;
+  class CheckCharaStateCommand;
+  class ChooseDungeonCommand;
+  class CreateRoomCommand;
+  class CreateTavernCommand;
+  class CreateDungeonCommand;
+  class CreateVillageCommand;
+  class RemoveFromTeam;
+  class UseSkillCommand;
+}
 
 using namespace std;
 using namespace std::chrono;
@@ -56,8 +87,14 @@ void Engine::Chrono(){
   }
 }
 void Engine::addCommand (int i ){
+  //cout <<"Command added: "<<i<<endl;
   if (!this->invCommands){
+    if (!this->replay){
       AddCommandTOList(i,this->additionalParameters,this->additionalParameters2);
+    }
+  }
+  if (getRecord()){
+    RecordToJson (i);
   }
   if (i == 0){
     this->currentCommands.push_back( new CreateDungeonCommand());
@@ -97,23 +134,68 @@ void Engine::addCommand (int i ){
 
 
 }
+bool Engine::getRecord (){
+  return this->record;
+}
+void Engine::setRecord (bool record){
+  this->record=record;
+}
+void Engine::RecordToJson (int id){
+  std::ofstream fout;
+  fout.open("res/savedGames/recordedCommands.json",std::ofstream::out |std::ofstream::app);
+  Json::Value event;
+  event["command"]["ID"]=id;
+  event["command"]["parameter1"]=this->additionalParameters;
+  event["command"]["parameter2"]=this->additionalParameters2;
+  //cout <<event<<endl;
+  fout<<event<<";"<<std::endl;
+  fout.close();
+}
+void Engine::JsonToEngine (){
+  std::ifstream fin;
+  fin.open("res/savedGames/recordedCommands.json",std::ifstream::binary);
+
+  //get vector of commands in a string format
+  std::string currentLine;
+  std::string obj;
+  std::vector<std::string> jsonCommands;
+  while(std::getline(fin,currentLine)){
+    if (currentLine.find(";")!=std::string::npos){
+      jsonCommands.push_back(obj);
+      obj.clear();
+    } else {
+      obj=obj+currentLine;
+    }
+  }
+  fin.close();
+  for (int i=0;i<4;i++){jsonCommands.erase(jsonCommands.begin());}
+
+
+  //Each commad is send to the engine with it's parameters
+  Json::Value root;
+  Json::Reader reader;
+  for (uint i=0;i<jsonCommands.size();i++){
+    //cout<<jsonCommands[i]<<endl;
+    reader.parse(jsonCommands[i],root,false);
+    AddCommandTOList(root["command"]["ID"].asInt(),root["command"]["parameter1"].asString(),root["command"]["parameter2"].asString());
+  }
+  this->replay = true;
+}
 void Engine::update (){
+
   bool changed = false;
   if (!this->invCommands){
-    if (this->currentCommands.size()!=0){
-      for (uint i=0; i<this->currentCommands.size();i++){
-          sleep_for(nanoseconds(100));
-          this->currentCommands[i]->execute(this->currentState);
-
+      if (this->currentCommands.size()!=0){
+        for (uint i=0; i<this->currentCommands.size();i++){
+              sleep_for(nanoseconds(100));
+              this->currentCommands[i]->execute(this->currentState);
+        }
       }
       changed = true;
       this->currentCommands.clear();
-    }
   } else {
     cout << "Rollback command "<<this->commandList.size() <<endl;
-    //cout <<1;
     std::tuple<int,std::string,std::string> command = RemoveLastFromCommandList();
-
     if (std::get<0>(command)==1){
       cout << "end of the rollback"<<endl;
     } else if (std::get<0>(command)==11){
@@ -122,24 +204,14 @@ void Engine::update (){
         this->currentCommands.clear();
         cout <<"command to execute: "<<std::get<0>(command)<<endl;
         sleep_for(nanoseconds(100));
-        //cout <<2;
         addCommand(std::get<0>(command));
-        // cout <<3;
         this->additionalParameters=std::get<1>(command);
-        // cout <<4;
         this->additionalParameters2=std::get<2>(command);
-        // cout<<5;
         this->currentCommands[0]->executeInv(this->currentState);
-
-
         command = RemoveLastFromCommandList();
         i+=1;
-        // cout<<6<<endl;
-
-
       }
     } else if (std::get<0>(command)==2){
-
       std::vector<std::tuple<int,std::string,std::string>> intermediaryCommandList;
       int i=0;
       while (i<4){
@@ -152,40 +224,25 @@ void Engine::update (){
         cout <<"command to execute: "<<std::get<0>(intermediaryCommandList[i])<<endl;
         sleep_for(nanoseconds(100));
         this->additionalParameters=std::get<1>(intermediaryCommandList[i]);
-        // cout <<4;
         this->additionalParameters2=std::get<2>(intermediaryCommandList[i]);
-        // cout <<2;
         addCommand(std::get<0>(intermediaryCommandList[i]));
         this->currentCommands[i]->execute(this->currentState);
-
       }
-      // cout <<3;
-
-      // cout<<5;
-
         this->currentCommands[0]->executeInv(this->currentState);
         command = RemoveLastFromCommandList();
-
     } else {
       this->currentCommands.clear();
       cout <<"command to execute: "<<std::get<0>(command)<<endl;
       sleep_for(nanoseconds(100));
-      //cout <<2;
       addCommand(std::get<0>(command));
-      // cout <<3;
       this->additionalParameters=std::get<1>(command);
-      // cout <<4;
       this->additionalParameters2=std::get<2>(command);
-      // cout<<5;
       this->currentCommands[0]->executeInv(this->currentState);
-
-
       command = RemoveLastFromCommandList();
     }
-
   }
   if (changed){
-    // this->currentState->Operator();
+    this->currentState->stateChanged();
     // cout << "Engine ElementTab: "<< this->currentState->getGrid()->getSize() <<endl;
     // this->currentScene->stateChanged(this->currentState);
   }

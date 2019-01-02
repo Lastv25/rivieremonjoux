@@ -5,10 +5,10 @@ using namespace std;
 using namespace state;
 
 //Constructor
-ElementTab::ElementTab (): Observable(){
+ElementTab::ElementTab (){
 }
 
-ElementTab::ElementTab (size_t height, size_t width): Observable(){
+ElementTab::ElementTab (size_t height, size_t width) {
   this->listElements = std::vector<Element*> (height*width);
   this->listClassNames = std::vector<std::string> (height*width);
 }
@@ -46,7 +46,3 @@ void ElementTab::EraseLast(){
   this->listElements.pop_back();
   this->listClassNames.pop_back();
 }
-
-void ElementTab::Operator (){
-  notifyObserver(new Event(2));
- }

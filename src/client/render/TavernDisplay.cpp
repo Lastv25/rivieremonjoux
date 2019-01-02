@@ -1,12 +1,14 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "TavernDisplay.h"
-
-
+#include "../../shared/state/Tavern.h"
+namespace state{
+  class Tavern;
+}
 using namespace std;
 using namespace render;
 using namespace sf;
-
+using namespace state;
 //Constructor
 TavernDisplay::TavernDisplay (){
   this->listElementsinTavern.insert(this->listElementsinTavern.end(),this->listElementsinTavern1.begin(),this->listElementsinTavern1.end());

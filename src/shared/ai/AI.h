@@ -22,9 +22,10 @@ namespace ai {
   protected:
     engine::Engine* engine;
     state::State* state;
+    std::string stateType;
     // Operations
   public:
-    std::string run (std::vector<std::string>& list);
+    std::vector<std::string> run (std::vector<std::string>& list);
     AI ();
     ~AI ();
     // Setters and Getters
@@ -32,6 +33,8 @@ namespace ai {
     void setEngine(const engine::Engine*& engine);
     const state::State*& getState() const;
     void setState(const state::State*& state);
+    const std::string& getStateType() const;
+    void setStateType(const std::string& stateType);
   };
 
 };

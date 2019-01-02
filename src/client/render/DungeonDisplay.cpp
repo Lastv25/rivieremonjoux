@@ -2,8 +2,12 @@
 #include <SFML/Graphics.hpp>
 #include "DungeonDisplay.h"
 #include <typeinfo>
+#include "../../shared/state/Dungeon.h"
+namespace state{
+  class Dungeon;
+}
 
-
+using namespace state;
 using namespace std;
 using namespace render;
 using namespace sf;

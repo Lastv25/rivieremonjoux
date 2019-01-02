@@ -18,12 +18,12 @@ Strategy::Strategy(state::Team* team,state::State* state){
   int ilife=-1;
   int iheal=-1;
   int lifeadv =0;
-  int lifeMin = 0;
+  //int lifeMin = 0;
   int ifstadv=-1;
-  int nrbAdv=0;
+  //int nrbAdv=0;
   setActChara(order[0].second);
   //On check le premier personnage à jouer dans l'équipe adverse
-  for (int i=0;i<order.size();i++){
+  for (uint i=0;i<order.size();i++){
     if (order[i].first!=ishero){
       for(int j=0;j<n;j++){
         if (order[i].second==(team->getTeam()[j]->getName())){

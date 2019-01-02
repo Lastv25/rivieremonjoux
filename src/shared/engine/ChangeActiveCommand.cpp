@@ -1,9 +1,14 @@
 #include "ChangeActiveCommand.h"
 #include <iostream>
-
+#include "../state/Character.h"
+#include "../state/Room.h"
+namespace state {
+  class Room;
+  class Character;
+}
 using namespace std;
 using namespace engine;
-
+using namespace state;
 //Constructor
 ChangeActiveCommand::ChangeActiveCommand (){
   this->commandTypeId = ChangeActive;

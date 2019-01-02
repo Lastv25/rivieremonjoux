@@ -21,6 +21,7 @@ HeuristicAI::~HeuristicAI(){
 
 std::vector<std::string> HeuristicAI::run(std::vector<std::string>& list){
   std::vector<std::string> result;
+
   state::Room* room=(state::Room*) this->state->getGrid()->get(0,0);
 
   //Si la salle est vide on passe a la salle d'après
@@ -53,6 +54,6 @@ std::vector<std::string> HeuristicAI::run(std::vector<std::string>& list){
     result.push_back(strategy->getLifeMin()->getName());
     //Sinon on heal le personnage le plus mal en point dans notre équipe
     result[0]="Heal";}
-
+    
   return result;
 }

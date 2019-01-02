@@ -1,5 +1,9 @@
 #include "ChangeRoomCommand.h"
 #include <iostream>
+#include "../state/Dungeon.h"
+namespace state {
+  class Dungeon;
+}
 
 using namespace std;
 using namespace engine;

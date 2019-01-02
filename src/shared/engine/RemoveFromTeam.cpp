@@ -1,9 +1,13 @@
 #include "RemoveFromTeam.h"
 #include <iostream>
+#include "../state/Tavern.h"
+namespace state {
+  class Tavern;
+}
 
 using namespace std;
 using namespace engine;
-
+using namespace state;
 //Constructor
 RemoveFromTeam::RemoveFromTeam (){
   this->commandTypeId = Remove;

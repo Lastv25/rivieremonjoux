@@ -1,9 +1,15 @@
 #include "CreateRoomCommand.h"
 #include <iostream>
 #include <fstream>
-
+#include "../state/Room.h"
+#include "../state/Team.h"
+namespace state {
+  class Room;
+  class Team;
+}
 using namespace std;
 using namespace engine;
+using namespace state;
 
 CreateRoomCommand::CreateRoomCommand ():Command(){
   this->commandTypeId = CreateRoom;
@@ -46,5 +52,5 @@ void CreateRoomCommand::execute (state::State* state){
   }
 }
 void CreateRoomCommand::executeInv (state::State* state){
-  
+
 }

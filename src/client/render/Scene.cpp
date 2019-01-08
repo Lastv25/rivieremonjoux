@@ -145,8 +145,9 @@ void Scene::updateScreen (sf::RenderWindow* window){
   std::string stateType;
 
 
-  // cout << "Change1: "<<this->state->getChange()<<" test true: "<<true<<endl;
+  //cout << "Change1: "<<this->state->getChange()<<" test true: "<<true<<endl;
   if (this->stateChangedBool || this->state->getChange()){
+  //if (this->stateChangedBool ){
     this->tabLayer->clearSurfaces();
     this->stateChangedBool = false;
     window->clear(sf::Color::Black);
@@ -154,7 +155,7 @@ void Scene::updateScreen (sf::RenderWindow* window){
     this->state->stateChanged();
     this->tabLayer->setAlreadyDisplayedOnce("None");
   }
-  // cout << "Change2: "<<this->state->getChange()<<" test true: "<<true<<endl;
+  //cout << "Change2: "<<this->state->getChange()<<" test true: "<<true<<endl;
 
   //cout << "state Title: " <<this->tabLayer->getTitle()<< ", taille surface list: " <<this->tabLayer->getSurfaceList().size()<< ", taille ButtonsSurface list: " <<this->tabLayer->getButtonsSurface().size()<<endl;
 
@@ -222,9 +223,9 @@ void Scene::draw (sf::RenderWindow* window){
 
   while (window->isOpen())
  {
-
+     //cout <<"HERE"<<endl;
      updateScreen (window);
-
+     //cout <<2<<endl;
 
      // handle events
      sf::Event event;
@@ -236,10 +237,12 @@ void Scene::draw (sf::RenderWindow* window){
        } else {
 
            eventHandler(event);
+
        }
 
      }
      window->display();
+
 
  }
 }

@@ -87,7 +87,7 @@ void Engine::Chrono(){
   }
 }
 void Engine::addCommand (int i ){
-  //cout <<"Command added: "<<i<<endl;
+  // cout <<"Command added: "<<i<<endl;
   if (!this->invCommands){
     if (!this->replay){
       AddCommandTOList(i,this->additionalParameters,this->additionalParameters2);
@@ -141,58 +141,173 @@ void Engine::setRecord (bool record){
   this->record=record;
 }
 void Engine::RecordToJson (int id){
-  std::ofstream fout;
-  fout.open("res/savedGames/recordedCommands.json",std::ofstream::out |std::ofstream::app);
-  Json::Value event;
-  event["command"]["ID"]=id;
-  event["command"]["parameter1"]=this->additionalParameters;
-  event["command"]["parameter2"]=this->additionalParameters2;
-  //cout <<event<<endl;
-  fout<<event<<";"<<std::endl;
-  fout.close();
-}
-void Engine::JsonToEngine (){
+  bool emptyFile;
+  std::string path = "res/savedGames/recordedCommands.json";
+  //test fichier Vide
   std::ifstream fin;
-  fin.open("res/savedGames/recordedCommands.json",std::ifstream::binary);
+  fin.open(path);
+  fin.seekg(0,fin.end);
+  int length = fin.tellg();
 
-  //get vector of commands in a string format
-  std::string currentLine;
-  std::string obj;
-  std::vector<std::string> jsonCommands;
-  while(std::getline(fin,currentLine)){
-    if (currentLine.find(";")!=std::string::npos){
-      jsonCommands.push_back(obj);
-      obj.clear();
-    } else {
-      obj=obj+currentLine;
-    }
+  if(length==0){
+    //cout <<"Empty"<<endl;
+    emptyFile=true;
+  } else {
+    //cout <<"Not Empty"<<endl;
+    emptyFile=false;
   }
   fin.close();
-  for (int i=0;i<4;i++){jsonCommands.erase(jsonCommands.begin());}
+  if (emptyFile){
+    fin.close();
+    std::ofstream fout;
+    //fout.open("res/savedGames/recordedCommands.json",std::ofstream::out |std::ofstream::app);
+    fout.open(path,std::ofstream::out );
+    Json::Value event;
+    event["command"]=Json::arrayValue;
+    Json::Value newCommand;
 
+    newCommand["ID"]=id;
+    newCommand["parameter1"]=this->additionalParameters;
+    newCommand["parameter2"]=this->additionalParameters2;
+    event["command"].append(newCommand);
+    fout <<event;
+    fout.close();
 
-  //Each commad is send to the engine with it's parameters
+  } else {
+    Json::Value root;
+    Json::Reader reader;
+    fin.open(path);
+
+    if (!reader.parse(fin,root,false)){cout <<reader.getFormattedErrorMessages()<<endl;}
+    fin.close();
+    //cout <<root["command"]<<endl;
+    Json::Value commands=root["command"];
+    Json::Value newCommand;
+
+    newCommand["ID"]=id;
+    newCommand["parameter1"]=this->additionalParameters;
+    newCommand["parameter2"]=this->additionalParameters2;
+    commands.append(newCommand);
+    root["command"].append(newCommand);
+
+    std::ofstream fout;
+    fout.open(path,std::ofstream::out );
+    fout <<root;
+    fout.close();
+  }
+}
+
+void Engine::JsonToEngine (){
   Json::Value root;
   Json::Reader reader;
-  for (uint i=0;i<jsonCommands.size();i++){
-    //cout<<jsonCommands[i]<<endl;
-    reader.parse(jsonCommands[i],root,false);
-    AddCommandTOList(root["command"]["ID"].asInt(),root["command"]["parameter1"].asString(),root["command"]["parameter2"].asString());
+  std::string path = "res/savedGames/recordedCommands.json";
+  std::ifstream fin;
+  fin.open(path);
+
+  if (!reader.parse(fin,root,false)){cout <<reader.getFormattedErrorMessages()<<endl;}
+  fin.close();
+  //cout <<root["command"]<<endl;
+  Json::Value commands=root["command"];
+  //Les quattres premiers èlements sont fait par l'initialisation du jeu
+  for (uint i=4;i<commands.size();i++){
+    //cout<<"ID: "<<commands[i]["ID"].asInt()<<",Param1: "<<commands[i]["parameter1"].asString()<<",Param2: "<<commands[i]["parameter2"].asString()<<endl;
+    AddCommandTOList(commands[i]["ID"].asInt(),commands[i]["parameter1"].asString(),commands[i]["parameter2"].asString());
   }
+  this->commandList.erase(this->commandList.begin(),this->commandList.begin()+4);
+  //cout <<commands.size()-this->commandList.size()<<endl;
   this->replay = true;
 }
 void Engine::update (){
-
   bool changed = false;
   if (!this->invCommands){
+    if(!this->replay){
       if (this->currentCommands.size()!=0){
         for (uint i=0; i<this->currentCommands.size();i++){
               sleep_for(nanoseconds(100));
               this->currentCommands[i]->execute(this->currentState);
+              //cout <<i<<endl;
         }
+        changed = true;
       }
-      changed = true;
       this->currentCommands.clear();
+    } else {
+      changed = true;
+      cout << "Number of Replay commands: "<<this->commandList.size() <<endl;
+      if (this->commandList.size() !=0){
+        std::tuple<int,std::string,std::string> command = this->commandList[0];
+        this->commandList.erase(this->commandList.begin()); //erase first element of commandList
+        //cout <<"command to execute (init): "<<std::get<0>(command)<<",Param1: "<<std::get<1>(command)<<",Param2: "<<std::get<2>(command)<<endl;
+        if (std::get<0>(command)==4){
+          std::vector<std::tuple<int,std::string,std::string>> intermediaryCommandList;
+          int i=0;
+          intermediaryCommandList.push_back(command);
+          while (i<2){
+            command = this->commandList[0];
+            this->commandList.erase(this->commandList.begin());
+            intermediaryCommandList.push_back(command);
+            i+=1;
+          }
+          for (uint i=0; i<intermediaryCommandList.size();i++){
+            cout <<"command to execute 4: "<<std::get<0>(intermediaryCommandList[i])<<",Param1: "<<std::get<1>(intermediaryCommandList[i])<<",Param2: "<<std::get<2>(intermediaryCommandList[i])<<endl;
+            sleep_for(nanoseconds(100));
+            this->additionalParameters=std::get<1>(intermediaryCommandList[i]);
+            this->additionalParameters2=std::get<2>(intermediaryCommandList[i]);
+            addCommand(std::get<0>(intermediaryCommandList[i]));
+            this->currentCommands[i]->execute(this->currentState);
+          }
+          this->currentCommands.clear();
+        } else if (std::get<0>(command)==8){
+          std::vector<std::tuple<int,std::string,std::string>> intermediaryCommandList;
+          int i=0;
+          intermediaryCommandList.push_back(command);
+          while (i<3){
+            command = this->commandList[0];
+            this->commandList.erase(this->commandList.begin());
+            intermediaryCommandList.push_back(command);
+            i+=1;
+          }
+          for (uint i=0; i<intermediaryCommandList.size();i++){
+            cout <<"command to execute 8: "<<std::get<0>(intermediaryCommandList[i])<<",Param1: "<<std::get<1>(intermediaryCommandList[i])<<",Param2: "<<std::get<2>(intermediaryCommandList[i])<<endl;
+            sleep_for(nanoseconds(100));
+            this->additionalParameters=std::get<1>(intermediaryCommandList[i]);
+            this->additionalParameters2=std::get<2>(intermediaryCommandList[i]);
+            addCommand(std::get<0>(intermediaryCommandList[i]));
+            this->currentCommands[i]->execute(this->currentState);
+          }
+          this->currentCommands.clear();
+        } else if (std::get<0>(command)==1){
+          std::vector<std::tuple<int,std::string,std::string>> intermediaryCommandList;
+          int i=0;
+          intermediaryCommandList.push_back(command);
+          while (i<2){
+            command = this->commandList[0];
+            this->commandList.erase(this->commandList.begin());
+            intermediaryCommandList.push_back(command);
+            i+=1;
+          }
+          for (uint i=0; i<intermediaryCommandList.size();i++){
+            cout <<"command to execute 1: "<<std::get<0>(intermediaryCommandList[i])<<",Param1: "<<std::get<1>(intermediaryCommandList[i])<<",Param2: "<<std::get<2>(intermediaryCommandList[i])<<endl;
+            sleep_for(nanoseconds(100));
+            this->additionalParameters=std::get<1>(intermediaryCommandList[i]);
+            this->additionalParameters2=std::get<2>(intermediaryCommandList[i]);
+            addCommand(std::get<0>(intermediaryCommandList[i]));
+            this->currentCommands[i]->execute(this->currentState);
+          }
+          this->currentCommands.clear();
+        } else {
+          this->currentCommands.clear();
+          cout <<"command to execute : "<<std::get<0>(command)<<",Param1: "<<std::get<1>(command)<<",Param2: "<<std::get<2>(command)<<endl;
+          sleep_for(nanoseconds(100));
+          addCommand(std::get<0>(command));
+          this->additionalParameters=std::get<1>(command);
+          this->additionalParameters2=std::get<2>(command);
+          this->currentCommands[0]->execute(this->currentState);
+          this->currentCommands.clear();
+        }
+      } else {
+        cout << "Replay Ended"<<endl;
+      }
+    }
   } else {
     cout << "Rollback command "<<this->commandList.size() <<endl;
     std::tuple<int,std::string,std::string> command = RemoveLastFromCommandList();
@@ -243,6 +358,7 @@ void Engine::update (){
   }
   if (changed){
     this->currentState->stateChanged();
+    //cout <<"Changed"<<endl;
     // cout << "Engine ElementTab: "<< this->currentState->getGrid()->getSize() <<endl;
     // this->currentScene->stateChanged(this->currentState);
   }

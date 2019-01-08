@@ -20,6 +20,7 @@ CommandTypeId ChangeRoomCommand::getCommandTypeId (){
   return this->commandTypeId;
 }
 void ChangeRoomCommand::execute (state::State* state){
+  cout <<"Here"<<endl;
   state::Dungeon* dungeon = (state::Dungeon*) state->getChar()->get(1,0);
   std::string newName = std::to_string(std::stoi(dungeon->getCurrentRoom())+1);
   //cout << "Change room name from "<<dungeon->getCurrentRoom() <<" to "<< newName<< endl;

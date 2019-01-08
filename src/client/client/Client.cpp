@@ -33,8 +33,9 @@ Client::~Client (){
 void Client::UpdateEngine() {
 
   while (1){
-    sleep_for(nanoseconds(100));
+    sleep_for(seconds(1));
     this->engine->update();
+    
   }
 }
 
@@ -82,7 +83,6 @@ void Client::CommandsAI_h() {
   std::string c2 = "Next Turn";
   std::string c4 = "Heavy Attack";
   std::vector<std::string> l={c1,c2,c3,c4} ;
-
 
   std::vector<std::string> actionia;
   while(1){

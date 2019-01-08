@@ -82,6 +82,7 @@ std::string ElementTabLayer::getAlreadyDisplayedOnce (){
   return this->alreadyDisplayedOnce;
 }
 std::string ElementTabLayer::getElementTabTextures (){
+  
   std::string output;
 
   for (uint index=0; index<this->elementTab->getSize(); index++ ){

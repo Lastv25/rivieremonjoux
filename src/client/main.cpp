@@ -104,6 +104,7 @@ bool checkEmptyRecords(){
   int length = fin.tellg();
   fin.close();
   if(length==0){
+    cout <<"here"<<endl;
     return true;
   }
   return false;

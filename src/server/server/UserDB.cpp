@@ -55,4 +55,5 @@ void UserDB::removeUser (int id) {
     if (ite == users.end())
         return;
     users.erase(ite);
+    idseq--;
 }

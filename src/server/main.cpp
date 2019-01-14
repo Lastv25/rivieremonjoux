@@ -138,9 +138,6 @@ int main(int argc, char *const *argv)
           servicesManager.registerService(std::move(p1));
 
           UserDB userDB;
-          User* user = new User("Paul");
-          std::unique_ptr<User> p2 (user);
-          userDB.addUser(std::move(p2));
           UserService* userService =new UserService(std::ref(userDB));
           std::unique_ptr<AbstractService> p3 (userService);
           servicesManager.registerService(std::move(p3));

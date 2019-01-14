@@ -2,6 +2,7 @@
 #ifndef __RENDER__H
 #define __RENDER__H
 
+#include "render/MenuDisplay.h"
 #include "render/DungeonDisplay.h"
 #include "render/ShopDisplay.h"
 #include "render/VillageDisplay.h"

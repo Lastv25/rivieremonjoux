@@ -21,7 +21,7 @@ namespace server {
   protected:
     int idseq;
     std::map<int,std::unique_ptr<User> > users;
-    int maxPlayers     = 2;
+    int maxPlayers     = 3;
     // Operations
   public:
     UserDB ();

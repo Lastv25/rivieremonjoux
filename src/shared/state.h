@@ -31,4 +31,5 @@
 #include "state/Skills.h"
 #include "state/ElementTab.h"
 #include "state/State.h"
+#include "state/Menu.h"
 #endif

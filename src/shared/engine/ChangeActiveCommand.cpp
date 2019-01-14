@@ -129,7 +129,6 @@ void ChangeActiveCommand::executeInv (state::State* state){
           } else {
             skip =true;
           }
-          cout << "New Active: "<<newActive->getName()<<endl;
         } else {
           state::Character* newActive;
           std::vector<state::Character*> intermediary=room->getMonsterTeam()->getTeam();
@@ -144,7 +143,6 @@ void ChangeActiveCommand::executeInv (state::State* state){
           } else {
             skip =true;
           }
-          cout << "New Active: "<<newActive->getName()<<endl;
         }
       }
 

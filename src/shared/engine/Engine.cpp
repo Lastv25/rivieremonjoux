@@ -4,7 +4,7 @@
 #include <thread>
 #include <fstream>
 #include <string>
-#include "jsoncpp.cpp"
+#include <json/json.h>
 #include "../engine/AddToTeam.h"
 #include "../engine/BackCommand.h"
 #include "../engine/CalculateActiveCommand.h"

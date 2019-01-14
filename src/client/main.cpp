@@ -1,9 +1,11 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
 #include <typeinfo>
 #include <thread>
 #include <chrono>
 #include <fstream>
+#include <json/json.h>
 #include "string.h"
 #include "state.h"
 #include "render.h"
@@ -108,8 +110,62 @@ bool checkEmptyRecords(){
     return true;
   }
   return false;
-
 }
+//Network put request
+int putNewPlayer(){
+  sf::Http http("http://localhost",8080);
+  //Post request to register new player
+  Json::Value player;
+  player["name"]="player";
+  sf::Http::Request req ("/user",sf::Http::Request::Post);
+  req.setBody(player.toStyledString());
+  sf::Http::Response response = http.sendRequest(req);
+
+  if (response.getStatus()==sf::Http::Response::Created){
+    //cout<< response.getBody()<<endl;
+    //Get This player Id
+    Json::Value root;
+    Json::Value players;
+    Json::Reader reader;
+    if (!reader.parse(response.getBody(),root,false)){cout <<reader.getFormattedErrorMessages()<<endl;}
+    int id=root["id"].asInt();
+    if (id==-1){
+      cout << "No more connections possible"<<endl;
+      return -1;
+    } else {
+      return id;
+    }
+  } else {
+    cout << "Post Request Failed: "<<response.getStatus()<<endl;
+    return -1;
+  }
+}
+//Network Get request
+void getPlayerList(){
+  sf::Http http("http://localhost",8080);
+  sf::Http::Response response;
+  sf::Http::Request req ("/user",sf::Http::Request::Get);
+  response = http.sendRequest(req);
+
+  if (response.getStatus()==sf::Http::Response::Ok){
+    cout<< response.getBody()<<endl;
+  } else {
+    cout << "Get Request Failed: "<<response.getStatus()<<endl;
+  }
+}
+//Network Delete request_completed
+void deletePlayer(int id){
+  sf::Http http("http://localhost",8080);
+  sf::Http::Response response;
+  sf::Http::Request req3;
+  req3.setMethod(sf::Http::Request::Delete);
+  req3.setHttpVersion(1,1);
+  req3.setUri("/user/"+std::to_string(id));
+  req3.setField("Content-Type","application/x-www-form-urlencoded");
+  req3.setBody("");
+  response = http.sendRequest(req3);
+}
+
 int main(int argc,char* argv[])
 {
 
@@ -607,6 +663,28 @@ int main(int argc,char* argv[])
               client->end();
             }
 
+      } else if (!strcmp(argv[1],"network") ) {
+            affichagebeauTest("network");
+
+            //Connection to Host
+            sf::Http http("http://localhost",8080);
+            sf::Http::Response response;
+
+            //Adding new Player
+            int id =putNewPlayer();
+
+            //Getting Players list
+            getPlayerList();
+
+            cout << "Pressez <entrée> pour effacer le joueur" << endl;
+            (void) getc(stdin);
+
+            //Deleting Player
+            deletePlayer(id);
+
+            //Getting Players list
+            getPlayerList();
+
       } else {
         cout << "Veuillez tapez une des commandes suivantes s'il vous plait." << endl;
         cout << "hello : test de l'environement de travail" << endl;
@@ -620,6 +698,7 @@ int main(int argc,char* argv[])
         cout << "thread : test du jeu lancé sur plusieurs threads" << endl;
         cout << "record : test du l'enregistrement d'une partie" << endl;
         cout << "play : test du replay d'une partie" << endl;
+        cout << "network : test de connection au serveur" << endl;
       }
     }
     return 0;

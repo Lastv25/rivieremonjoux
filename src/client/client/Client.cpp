@@ -35,7 +35,7 @@ void Client::UpdateEngine() {
   while (1){
     sleep_for(seconds(1));
     this->engine->update();
-    
+
   }
 }
 
@@ -93,6 +93,7 @@ void Client::CommandsAI_h() {
       std::vector<std::string> actionia = this->ai->run(l);
       std::string attackName = actionia[0];
       std::string target = actionia[1];
+      cout << attackName << target <<endl;
       if (!this->replay){
         this->engine->setAdditionalParameters(target);
         this->engine->setAdditionalParameters2(attackName);
@@ -105,6 +106,7 @@ void Client::CommandsAI_h() {
 
 void Client::run (){
   //run Engine and IA threads
+
   this->t1= std::thread ([this] {UpdateEngine();});
   this->t2=std::thread ([this] {CommandsAI_h();});
 

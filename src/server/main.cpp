@@ -142,6 +142,9 @@ int main(int argc, char *const *argv)
           std::unique_ptr<AbstractService> p3 (userService);
           servicesManager.registerService(std::move(p3));
 
+          CommandService* commandService =new CommandService();
+          std::unique_ptr<AbstractService> p4 (commandService);
+          servicesManager.registerService(std::move(p4));
           struct MHD_Daemon *d;
           // if (argc != 2) {
           //     printf("%s PORT\n", argv[0]);

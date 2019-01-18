@@ -19,4 +19,9 @@
 #include "engine/CheckCharaStateCommand.h"
 #include "engine/AddToTeam.h"
 #include "engine/RemoveFromTeam.h"
+#include "engine/CreateMenuCommand.h"
+#include "engine/RegisterPlayerCommand.h"
+#include "engine/CheckPlayersCommand.h"
+#include "engine/SendCommand.h"
+#include "engine/GetCommand.h"
 #endif

@@ -58,3 +58,10 @@ void State::stateChanged (){
 bool State::getChange (){
   return this->change;
 }
+
+int State::getPlayerConnected (){
+  return this->playersConnected;
+}
+void State::setPlayerConnected (int newCount){
+  this->playersConnected =newCount;
+}

@@ -82,7 +82,7 @@ std::string ElementTabLayer::getAlreadyDisplayedOnce (){
   return this->alreadyDisplayedOnce;
 }
 std::string ElementTabLayer::getElementTabTextures (){
-  
+
   std::string output;
 
   for (uint index=0; index<this->elementTab->getSize(); index++ ){
@@ -184,6 +184,14 @@ std::string ElementTabLayer::getElementTabTextures (){
             addButton(std::pair<std::string,std::vector<float>>(droom->getActive()->getSkillList()[i],bcoords2));
             addButtonScale(50.f,1100.f,0.5f,0.5f);
           }
+        } else {
+          Surface* buttonsSurface2= new Surface(100,100,100,100);
+          buttonsSurface2->loadTexture(this->buttonsSprite);
+          buttonsSurface2->setSprite();
+          setButtonSurface(buttonsSurface2);
+          std::vector<float> bcoords2 = {450.f,750.f};
+          addButton(std::pair<std::string,std::vector<float>>(droom->getActive()->getSkillList()[0],bcoords2));
+          addButtonScale(50.f,1100.f,0.5f,0.5f);
         }
 
 
@@ -206,10 +214,11 @@ std::string ElementTabLayer::getElementTabTextures (){
         }
         //cout << "Skill Used: "<<getSkillUsed()<<endl;
         if (getSkillUsed()){
-          //cout << "Active is: "<<droom->getActive()->isMonster()<<endl;;
+          
           if (droom->getActive()->isMonster()){
+
             for (uint i=0;i< droom->getMonsterTeam()->getTeam().size();i++){
-              //cout << droom->getMonsterTeam()->getTeam()[i]->getName() <<endl;
+              cout << droom->getMonsterTeam()->getTeam()[i]->getName() <<endl;
               Surface* buttonsSurface= new Surface(100,100,100,100);
               buttonsSurface->loadTexture(this->buttonsSpriteSkills);
               buttonsSurface->setSprite();
@@ -219,8 +228,9 @@ std::string ElementTabLayer::getElementTabTextures (){
               addButtonScale(50.f,1100.f,0.5f,0.5f);
             }
           } else{
+
             for (uint i=0;i< droom->getHeroTeam()->getTeam().size();i++){
-              //cout << droom->getMonsterTeam()->getTeam()[i]->getName() <<endl;
+              cout << droom->getMonsterTeam()->getTeam()[i]->getName() <<endl;
               Surface* buttonsSurface= new Surface(100,100,100,100);
               buttonsSurface->loadTexture(this->buttonsSpriteSkills);
               buttonsSurface->setSprite();
@@ -422,6 +432,43 @@ std::string ElementTabLayer::getElementTabTextures (){
 
     } else if (this->elementTab->getElementType(index).find("Shop") != std::string::npos){
       //cout << "Shop found" << endl;
+    } else if (this->elementTab->getElementType(index).find("Menu") != std::string::npos){
+      output = "Menu";
+      if (this->alreadyDisplayedOnce.find("Menu") == std::string::npos) {
+        cout << "Menu found" << endl;
+
+        MenuDisplay* dmenu = new MenuDisplay();
+        Surface* s= new Surface(100,100,100,100);
+        s->loadTexture(dmenu->getMenuImages()[0]);
+        s->setSprite();
+        setSurface(s);
+        setTitle(dmenu->getDisplayText());
+        setDrawText(false);
+        setDrawSprite(true);
+
+        if (getButtonsSurface().size()>=1){
+          this->buttonsSurface.clear();
+          this->buttons.clear();
+        }
+
+
+        Surface* buttonsSurface= new Surface(100,100,100,100);
+        buttonsSurface->loadTexture(this->buttonsSprite);
+        buttonsSurface->setSprite();
+        setButtonSurface(buttonsSurface);
+        std::vector<float> bcoords = {100.f,500.f};
+        addButton(std::pair<std::string,std::vector<float>>("1 Player",bcoords));
+        addButtonScale(100.f,1100.f,0.5f,0.5f);
+
+        Surface* buttonsSurface1= new Surface(100,100,100,100);
+        buttonsSurface1->loadTexture(this->buttonsSprite);
+        buttonsSurface1->setSprite();
+        setButtonSurface(buttonsSurface1);
+        std::vector<float> bcoords1 = {900.f,500.f};
+        addButton(std::pair<std::string,std::vector<float>>("2 Players",bcoords1));
+        addButtonScale(50.f,1100.f,0.5f,0.5f);
+        this->alreadyDisplayedOnce = "Menu";
+      }
     } else {
       //cout << "Invelid element Tab" << endl;
     }

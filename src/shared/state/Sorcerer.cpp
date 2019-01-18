@@ -4,7 +4,7 @@ using namespace std;
 
 //Constructor
 Sorcerer::Sorcerer(int life, int att, int spd, int crit, int def,std::string name) : Monsters(life,att, spd, crit, def,name){
-  this->skillList.push_back("Heal");
+  this->skillList.push_back("Poison");
   this->skillpoints = 10;
 }
 //Destructor

@@ -18,6 +18,9 @@
 #include "../engine/CreateVillageCommand.h"
 #include "../engine/RemoveFromTeam.h"
 #include "../engine/UseSkillCommand.h"
+#include "../engine/CreateMenuCommand.h"
+#include "../engine/RegisterPlayerCommand.h"
+#include "../engine/CheckPlayersCommand.h"
 namespace engine {
   class AddToTeam;
   class BackCommand;
@@ -99,7 +102,7 @@ void Engine::addCommand (int i ){
   if (i == 0){
     this->currentCommands.push_back( new CreateDungeonCommand());
   } else if (i == 3){
-    this->currentCommands.push_back(new CreateVillageCommand());
+    this->currentCommands.push_back(new CreateVillageCommand(true));
   } else if (i == 8){
     this->currentCommands.push_back( new BackCommand());
   } else if (i == 1){
@@ -130,6 +133,12 @@ void Engine::addCommand (int i ){
     this->currentCommands.push_back(new AddToTeam(this->additionalParameters));
   } else if (i == 13){
     this->currentCommands.push_back(new RemoveFromTeam(this->additionalParameters));
+  } else if (i == 14){
+    this->currentCommands.push_back(new CreateMenuCommand());
+  } else if (i == 15){
+    this->currentCommands.push_back(new RegisterPlayerCommand());
+  }  else if (i == 16){
+    this->currentCommands.push_back(new CheckPlayersCommand());
   }
 
 
@@ -228,6 +237,15 @@ void Engine::update (){
               //cout <<i<<endl;
         }
         changed = true;
+      } else {
+        if (this->currentState->getPlayerConnected()<2){
+          this->addCommand(16);
+          if (this->currentState->getPlayerConnected()<2){
+            this->addCommand(3);
+            this->addCommand(0);
+            cout <<"Here Engine"<<endl;
+          }
+        }
       }
       this->currentCommands.clear();
     } else {

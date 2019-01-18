@@ -75,23 +75,24 @@ void Scene::TavernPersCoords (float x, float y){
   }
 }
 void Scene::eventHandler (sf::Event event){
+  this->tabLayer->setSkillUsed(this->clickSkill_Handler);
   if (event.type == sf::Event::MouseButtonPressed){
     if(event.mouseButton.button == sf::Mouse::Left){
-      if (this->clickSkill){
+      if (this->clickSkill_Handler){
         for (uint i=0;i<this->tabLayer->getButtonsSurface().size();i++){
           float x =std::get<1>(this->tabLayer->getButton(i))[0];
           float y =std::get<1>(this->tabLayer->getButton(i))[1];
           if (x < event.mouseButton.x && event.mouseButton.x < x+200 && y < event.mouseButton.y && event.mouseButton.y< y+50){
             // cout << "mouse x: " <<event.mouseButton.x ;
             // cout << "  mouse y: " <<event.mouseButton.y ;
-            // cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
+            cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
             this->buttonPressed->setCommand(this->buttonPressed->getSkillName());
             this->buttonPressed->setAdditionalParam(std::get<0>(this->tabLayer->getButton(i)));
             this->stateChangedBool = true;
-            this->tabLayer->setSkillUsed(false);
+            // this->tabLayer->setSkillUsed(false);
             this->tabLayer->setAlreadyDisplayedOnce("None");
             this->buttonPressed->sendToEngine();
-            this->clickSkill= false;
+            this->clickSkill_Handler=false;
           }
         }
       } else {
@@ -102,20 +103,19 @@ void Scene::eventHandler (sf::Event event){
           if (x < event.mouseButton.x && event.mouseButton.x < x+200 && y < event.mouseButton.y && event.mouseButton.y< y+50){
             // cout << "mouse x: " <<event.mouseButton.x ;
             // cout << "  mouse y: " <<event.mouseButton.y ;
-            // cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
+            cout << " Button: " <<std::get<0>(this->tabLayer->getButton(i))<< endl;
             if (std::get<0>(this->tabLayer->getButton(i)).find("Add")!=std::string::npos || std::get<0>(this->tabLayer->getButton(i)).find("Remove")!=std::string::npos  ){
               this->buttonPressed->setCommand(std::get<0>(this->tabLayer->getButton(i)));
               TavernPersCoords(event.mouseButton.x,event.mouseButton.y);
               this->buttonPressed->sendToEngine();
               this->tabLayer->setAlreadyDisplayedOnce("None");
-              this->clickSkill= true;
-            }
-            else if (std::get<0>(this->tabLayer->getButton(i)).find("Attack")!=std::string::npos || std::get<0>(this->tabLayer->getButton(i)).find("Poison")!=std::string::npos  ){
-            //   this->stateChangedBool = true;
+              this->clickSkill_Name= true;
+            } else if (std::get<0>(this->tabLayer->getButton(i)).find("Attack")!=std::string::npos || std::get<0>(this->tabLayer->getButton(i)).find("Poison")!=std::string::npos  ){
+              this->stateChangedBool = true;
               this->buttonPressed->setSkillName(std::get<0>(this->tabLayer->getButton(i)));
-              this->tabLayer->setSkillUsed(true);
+              // this->tabLayer->setSkillUsed(true);
               this->tabLayer->setAlreadyDisplayedOnce("None");
-              this->clickSkill= true;
+              this->clickSkill_Name= true;
 
           } else {
             this->buttonPressed->setCommand(std::get<0>(this->tabLayer->getButton(i)));
@@ -146,7 +146,8 @@ void Scene::updateScreen (sf::RenderWindow* window){
 
 
   //cout << "Change1: "<<this->state->getChange()<<" test true: "<<true<<endl;
-  if (this->stateChangedBool || this->state->getChange()){
+  if (this->stateChangedBool || this->state->getChange() ){
+    // cout <<"here Update"<<endl;
   //if (this->stateChangedBool ){
     this->tabLayer->clearSurfaces();
     this->stateChangedBool = false;
@@ -154,6 +155,10 @@ void Scene::updateScreen (sf::RenderWindow* window){
     this->hai->setStateType(this->tabLayer->getElementTabTextures());
     this->state->stateChanged();
     this->tabLayer->setAlreadyDisplayedOnce("None");
+    if (this->clickSkill_Name){
+      this->clickSkill_Handler=true;
+      this->clickSkill_Name=false;
+    }
   }
   //cout << "Change2: "<<this->state->getChange()<<" test true: "<<true<<endl;
 
@@ -199,7 +204,7 @@ void Scene::updateScreen (sf::RenderWindow* window){
    //cout << 3;
 
    if (this->tabLayer->getButtonsSurface().size() != 0){
-     //cout <<"buttons"<<endl;
+     //cout <<"buttons display"<<endl;
      for (uint i=0;i<this->tabLayer->getButtonsSurface().size();i++){
        sprite = this->tabLayer->getButtonSurface(i)->getSprite();
        float x =std::get<1>(this->tabLayer->getButton(i))[0];
@@ -223,9 +228,9 @@ void Scene::draw (sf::RenderWindow* window){
 
   while (window->isOpen())
  {
-     //cout <<"HERE"<<endl;
+     // cout <<1;
      updateScreen (window);
-     //cout <<2<<endl;
+     // cout <<2;
 
      // handle events
      sf::Event event;
@@ -241,8 +246,9 @@ void Scene::draw (sf::RenderWindow* window){
        }
 
      }
+     // cout <<3;
      window->display();
-
+     // cout <<4<<endl;
 
  }
 }

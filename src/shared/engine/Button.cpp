@@ -72,6 +72,11 @@ std::vector<int> Button::getCommands (){
     this->commands.push_back(12);
   }else if(this->button.find("Remove")!=std::string::npos){
     this->commands.push_back(13);
+  }else if(this->button.find("1 Player")!=std::string::npos){
+    this->commands.push_back(3);
+  }else if(this->button.find("2 Players")!=std::string::npos){
+    this->commands.push_back(15);
+    this->commands.push_back(16);
   }else {
     this->commands.push_back(1);
     this->commands.push_back(7);

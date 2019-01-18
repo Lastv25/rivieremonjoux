@@ -35,7 +35,7 @@ HttpStatus ServicesManager::queryService (std::string& out, const std::string& i
     // Recherche un éventuel id (ex: /mon/service/<id>)
     const std::string& pattern(service->getPattern());
     int id = 0;
-    if (pattern.find("user")!=std::string::npos){
+    if (pattern.find("user")!=std::string::npos || pattern.find("command")!=std::string::npos){
       if (url.size() > pattern.size()+1) {
         std::string end = url.substr(pattern.size()+1);
         if (end.empty())

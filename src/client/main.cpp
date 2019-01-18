@@ -111,48 +111,7 @@ bool checkEmptyRecords(){
   }
   return false;
 }
-//Network put request
-int putNewPlayer(){
-  sf::Http http("http://localhost",8080);
-  //Post request to register new player
-  Json::Value player;
-  player["name"]="player";
-  sf::Http::Request req ("/user",sf::Http::Request::Post);
-  req.setBody(player.toStyledString());
-  sf::Http::Response response = http.sendRequest(req);
 
-  if (response.getStatus()==sf::Http::Response::Created){
-    //cout<< response.getBody()<<endl;
-    //Get This player Id
-    Json::Value root;
-    Json::Value players;
-    Json::Reader reader;
-    if (!reader.parse(response.getBody(),root,false)){cout <<reader.getFormattedErrorMessages()<<endl;}
-    int id=root["id"].asInt();
-    if (id==-1){
-      cout << "No more connections possible"<<endl;
-      return -1;
-    } else {
-      return id;
-    }
-  } else {
-    cout << "Post Request Failed: "<<response.getStatus()<<endl;
-    return -1;
-  }
-}
-//Network Get request
-void getPlayerList(){
-  sf::Http http("http://localhost",8080);
-  sf::Http::Response response;
-  sf::Http::Request req ("/user",sf::Http::Request::Get);
-  response = http.sendRequest(req);
-
-  if (response.getStatus()==sf::Http::Response::Ok){
-    cout<< response.getBody()<<endl;
-  } else {
-    cout << "Get Request Failed: "<<response.getStatus()<<endl;
-  }
-}
 //Network Delete request_completed
 void deletePlayer(int id){
   sf::Http http("http://localhost",8080);
@@ -666,24 +625,42 @@ int main(int argc,char* argv[])
       } else if (!strcmp(argv[1],"network") ) {
             affichagebeauTest("network");
 
-            //Connection to Host
-            sf::Http http("http://localhost",8080);
-            sf::Http::Response response;
+            State* s = new State();
+            Engine* e = new Engine(s);
 
-            //Adding new Player
-            int id =putNewPlayer();
+            Button* button = new Button(e);
+            HeuristicAI* hai = new HeuristicAI(s);
 
-            //Getting Players list
-            getPlayerList();
+            Scene* scene = new Scene(s,button,hai);
 
-            cout << "Pressez <entrée> pour effacer le joueur" << endl;
-            (void) getc(stdin);
+            Client* client = new Client(e,hai,true);
 
-            //Deleting Player
-            deletePlayer(id);
+            Menu* m = new Menu();
 
-            //Getting Players list
-            getPlayerList();
+            client->run();
+            sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1440,1160), "Darkest Dungeon Like");
+            e->addCommand(14);
+            e->update();
+            scene->draw(window);
+            client->end();
+            // //Connection to Host
+            // sf::Http http("http://localhost",8080);
+            // sf::Http::Response response;
+            //
+            // //Adding new Player
+            // int id =putNewPlayer();
+            //
+            // //Getting Players list
+            // getPlayerList();
+            //
+            // cout << "Pressez <entrée> pour effacer le joueur" << endl;
+            // (void) getc(stdin);
+            //
+            // //Deleting Player
+            // deletePlayer(id);
+            //
+            // //Getting Players list
+            // getPlayerList();
 
       } else {
         cout << "Veuillez tapez une des commandes suivantes s'il vous plait." << endl;

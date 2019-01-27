@@ -26,7 +26,7 @@ using namespace client;
 using namespace sf;
 
 void renderWindow(ElementTabLayer* layer) {
-
+    //Begin of the display
     sf::RenderWindow window(sf::VideoMode(1440,1160), "Darkest Dungeon Like");
 
     sf::Sprite sprite;
